@@ -1,4 +1,4 @@
-import { Container } from './config/container';
+import { Container } from './config/Container';
 export const components = {
   Container,
 };
