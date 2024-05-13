@@ -16,5 +16,5 @@ a {
   text-decoration: none;
 }
 a:hover {
-  color: #747bff;
+  color: var(--mantine-color-themePrimary-0);
 }
