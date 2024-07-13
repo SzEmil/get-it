@@ -22,8 +22,8 @@
     "negotiator": "^0.6.3",
     "next": "14.2.3",
     "prisma-field-encryption": "^1.5.2",
-    "react": "^18",
-    "react-dom": "^18",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "svix": "^1.25.0"
   },
   "devDependencies": {

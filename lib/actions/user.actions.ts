@@ -6,11 +6,17 @@ import prisma from '@/prisma/client';
 import { redirect } from 'next/navigation';
 import { CreateUserParams, UpdateUserParams } from '@/types/user.types';
 import { ROUTES } from '@/constants';
+import * as DB from "@prisma/client";
 
 export const createUser = async (user: CreateUserParams) => {
   try {
     const newUser = await prisma.user.create({
-      data: user,
+      data: {
+        ...user,
+        planId: null,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
     });
     return JSON.parse(JSON.stringify(newUser));
   } catch (e) {
@@ -80,4 +86,3 @@ export const deleteUser = async (clerkId: string) => {
     handleError(e);
   }
 };
-
