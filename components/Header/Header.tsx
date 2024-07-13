@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { ROUTES } from '@/constants';
 import { i18n } from '@/i18n/helpers';
 import { Typohraphy } from '../Typography/Typohraphy';
+import { UserButton } from '@clerk/nextjs';
 
 type HeaderProps = {
   lang: string;
@@ -27,7 +28,7 @@ export const Header = ({ lang }: HeaderProps) => {
         <Link href={ROUTES.HOME}>O nas</Link>
         <Link href={ROUTES.HOME}>Kontakt</Link>
       </nav>
-      <Typohraphy>Login</Typohraphy>
+      <UserButton afterSignOutUrl={ROUTES.HOME} />
     </Flex>
   );
 };

@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -14,7 +8,76 @@ datasource db {
 }
 
 model User {
-  id      Int      @id @default(autoincrement())
-  email   String   @unique
-  name    String?
+  id            Int      @id @default(autoincrement())
+  clerkId       String   @unique
+  email         String   @unique
+  username      String   @unique
+  photo         String
+  firstName     String?
+  lastName      String?
+  planId        Int?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  payments      Payment[]
+}
+
+model Course {
+  id          Int       @id @default(autoincrement())
+  courseId    Int
+  name        String
+  description String
+  images      String[]
+  language    String    @default("pl")
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  videos      Video[]
+}
+
+model Video {
+  id          Int      @id @default(autoincrement())
+  link        String
+  description String
+  image       String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  courseId    Int
+  course      Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+}
+
+model Payment {
+  id                Int           @id @default(autoincrement())
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+  paymentSessionId  String?
+  phone             String        /// @encrypted
+  email             String        /// @encrypted
+  firstName         String        /// @encrypted
+  lastName          String        /// @encrypted
+  street            String        /// @encrypted
+  houseNumber       String        /// @encrypted
+  flatNumber        String?       /// @encrypted
+  postalCode        String        /// @encrypted
+  city              String        /// @encrypted
+  paymentStatus     PaymentStatus @default(AWAITING)
+  paymentMethod     String
+  userId            Int
+  user              User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  courses           OrderCourse[]
+}
+
+model OrderCourse {
+  id          Int      @id @default(autoincrement())
+  courseId    Int
+  courseName  String
+  paymentId   Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now())
+  payment     Payment  @relation(fields: [paymentId], references: [id], onDelete: Cascade)
+}
+
+enum PaymentStatus {
+  AWAITING
+  PAID
+  FAILED
+  CANCELLED
 }
