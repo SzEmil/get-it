@@ -4,7 +4,7 @@ import { match } from '@formatjs/intl-localematcher';
 import Negotiator from 'negotiator';
 
 const locales = ['en', 'pl'];
-const defaultLocale = 'en';
+export const defaultLocale = 'en';
 
 function getLocale(request: NextRequest): string {
   const headers = new Headers(request.headers);
@@ -22,7 +22,7 @@ function getLocale(request: NextRequest): string {
 const isPublicRoute = createRouteMatcher([
   '/',
   '/contact(.*)',
-  '/api/webhooks/clerk',
+  '/api/clerk',
 ]);
 
 export default clerkMiddleware((auth, req) => {
