@@ -19,15 +19,14 @@ function getLocale(request: NextRequest): string {
   return match(languages, locales, defaultLocale);
 }
 
-const isPublicRoute = createRouteMatcher([
-  '/',
-  '/contact(.*)',
-  '/api/clerk',
+const isProtectedRoute = createRouteMatcher([
+  'dashboard/(.*)',
 ]);
 
 export default clerkMiddleware((auth, req) => {
-  if (isPublicRoute(req)) return; // if it's a public route, do nothing
-  auth().protect(); // for any other route, require auth
+  // if (isPublicRoute(req)) return; 
+  // auth().protect(); 
+  if (isProtectedRoute(req)) auth().protect();
 
   // Handle locale
   let locale = getLocale(req) ?? defaultLocale;
@@ -36,7 +35,6 @@ export default clerkMiddleware((auth, req) => {
     `/${locale}${pathname}${req.nextUrl.search}`,
     req.nextUrl
   );
-
   return NextResponse.rewrite(newUrl);
 });
 

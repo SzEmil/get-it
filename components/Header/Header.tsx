@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { ROUTES } from '@/constants';
 import { i18n } from '@/i18n/helpers';
 import { Typohraphy } from '../Typography/Typohraphy';
-import { UserButton } from '@clerk/nextjs';
+import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/nextjs';
 
 type HeaderProps = {
   lang: string;
@@ -28,7 +28,14 @@ export const Header = ({ lang }: HeaderProps) => {
         <Link href={ROUTES.HOME}>O nas</Link>
         <Link href={ROUTES.HOME}>Kontakt</Link>
       </nav>
-      <UserButton afterSignOutUrl={ROUTES.HOME} />
+      <div>
+        <SignedOut>
+          <SignInButton />
+        </SignedOut>
+        <SignedIn>
+          <UserButton />
+        </SignedIn>
+      </div>
     </Flex>
   );
 };
