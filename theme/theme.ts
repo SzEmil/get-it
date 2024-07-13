@@ -16,8 +16,8 @@ export const theme = createTheme({
       h6: { fontSize: rem(16) },
     },
   },
-  primaryColor: 'themePrimary',
-  components,
+  primaryColor: 'grayscaleWhite',
+  //components,
   colors,
   shadows: {
     sm: '0px 1px 4px 0px rgba(0, 0, 0, 0.12)',

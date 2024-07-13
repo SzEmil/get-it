@@ -1,10 +1,11 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+import Image from 'next/image';
+import { Box } from '@mantine/core';
+import { Typohraphy } from '@/components/Typography/Typohraphy';
 
 export default function Home() {
   return (
-    <main className={styles.main}>
-    
-    </main>
+    <Box pt={80}>
+      <Typohraphy>page content main</Typohraphy>
+    </Box>
   );
 }
