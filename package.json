@@ -12,19 +12,22 @@
   "dependencies": {
     "@clerk/nextjs": "^5.2.3",
     "@formatjs/intl-localematcher": "^0.5.4",
+    "@ingameltd/node-przelewy24": "^2.1.0",
     "@mantine/carousel": "^7.9.0",
     "@mantine/core": "^7.9.0",
     "@mantine/form": "^7.9.0",
     "@mantine/hooks": "^7.9.0",
     "@mantine/notifications": "^7.9.0",
     "@prisma/client": "^5.13.0",
+    "decimal.js-light": "^2.5.1",
     "embla-carousel-react": "^8.0.4",
     "negotiator": "^0.6.3",
     "next": "14.2.3",
     "prisma-field-encryption": "^1.5.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "svix": "^1.25.0"
+    "svix": "^1.25.0",
+    "zustand": "^4.5.4"
   },
   "devDependencies": {
     "@types/negotiator": "^0.6.3",
