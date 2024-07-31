@@ -2,7 +2,7 @@
 
 import { PaymentStatus } from '@prisma/client';
 import { PaymentClient } from './client';
-import { updateOrderPaymentStatus } from '@/lib/actions/orderCourse';
+import { updatePaymentStatus } from '@/lib/actions/payment';
 import { CHECK_PAYMENT_STATUS_INTERVALS } from '@/constants';
 
 export const checkPaymentStatus = async (sessionId: string) => {
@@ -20,9 +20,9 @@ export const checkPaymentStatus = async (sessionId: string) => {
           CHECK_PAYMENT_STATUS_INTERVALS.length - 1
         ]
       ) {
-        await updateOrderPaymentStatus(sessionId, PaymentStatus.FAILED);
+        await updatePaymentStatus(sessionId, PaymentStatus.FAILED);
       } else {
-        await updateOrderPaymentStatus(sessionId, status);
+        await updatePaymentStatus(sessionId, status);
       }
     }
   }

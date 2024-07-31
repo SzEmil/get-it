@@ -6,13 +6,17 @@ import prisma from '@/prisma/client';
 import { redirect } from 'next/navigation';
 import { CreateUserParams, UpdateUserParams } from '@/types/user.types';
 import { ROUTES } from '@/constants';
-import * as DB from "@prisma/client";
+import * as DB from '@prisma/client';
 
 export const createUser = async (user: CreateUserParams) => {
   try {
     const newUser = await prisma.user.create({
       data: {
-        ...user,
+        firstName: user.firstName ?? '',
+        lastName: user.lastName ?? '',
+        clerkId: user.clerkId,
+        email: user.email,
+        photo: user.photo,
         planId: null,
         createdAt: new Date(),
         updatedAt: new Date(),

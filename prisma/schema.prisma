@@ -15,12 +15,12 @@ model User {
   firstName   String
   lastName    String
   planId      Int?
-  phone       String /// @encrypted
-  street      String /// @encrypted
-  houseNumber String /// @encrypted
+  phone       String? /// @encrypted
+  street      String? /// @encrypted
+  houseNumber String? /// @encrypted
   flatNumber  String? /// @encrypted
-  postalCode  String /// @encrypted
-  city        String /// @encrypted
+  postalCode  String? /// @encrypted
+  city        String? /// @encrypted
 
   payments Payment[]
 

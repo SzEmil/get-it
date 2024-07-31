@@ -1,25 +1,22 @@
 import { PaymentStatus, Prisma } from '@prisma/client';
 import prisma from '../../prisma/client';
 import * as DB from '@prisma/client';
-import {  createOrderCourse } from './orderCourse';
+import { createOrderCourse } from './orderCourse';
 import { CartItem } from '@/types/types';
 
-export const savePayment = async (
-  customer: DB.User,
-  courses: CartItem[]
-) => {
+export const savePayment = async (customer: DB.User, courses: CartItem[]) => {
   const payment = await prisma.payment.create({
     data: {
       // TODO address
-      city: customer.city,
+      city: customer.city ?? '',
       email: customer.email,
       firstName: customer.firstName,
-      houseNumber: customer.houseNumber ?? null,
+      houseNumber: customer.houseNumber ?? '',
       lastName: customer.lastName,
-      phone: customer.phone,
-      postalCode: customer.postalCode,
-      street: customer.street,
-      flatNumber: customer.flatNumber ?? null,
+      phone: customer.phone ?? '',
+      postalCode: customer.postalCode ?? '',
+      street: customer.street ?? '',
+      flatNumber: customer.flatNumber ?? '',
       userId: customer.id,
     },
   });
@@ -31,7 +28,7 @@ export const savePayment = async (
 
 export const updatePaymentStatus = async (
   sessionId: string,
-  status: PaymentStatus,
+  status: PaymentStatus
 ) => {
   const payment = await prisma.payment.findFirst({
     where: { paymentSessionId: sessionId },
