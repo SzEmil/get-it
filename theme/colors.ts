@@ -29,8 +29,9 @@ const shapeOutline: MantineColorsTuple = [
 ];
 
 const themePrimary: MantineColorsTuple = [
+  '#cf0e81',
   '#e81e95',
-  '#ffeafa',
+  '#b90374',
   '#fed2ed',
   '#f7a4d5',
   '#f173bc',

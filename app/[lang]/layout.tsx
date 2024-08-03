@@ -41,7 +41,7 @@ const RootLayout = async ({ children, params: { lang } }: RootLayoutProps) => {
         <Providers>
           <AppShell bg={'rgb(6, 1, 17)'} color="grayscaleWhite.0">
             <AppShellHeader
-              bg={'rgb(6, 1, 17)'}
+              bg={"transparent"}
               pos={{ base: 'static', md: 'fixed' }}
               withBorder={false}
               style={{ boxShadow: '0px 2px 8px 0px rgba(0, 0, 0, 0.12)' }}
@@ -51,8 +51,8 @@ const RootLayout = async ({ children, params: { lang } }: RootLayoutProps) => {
             >
               <Header lang={lang} />
             </AppShellHeader>
-            <AppShellMain pos={'relative'} mt={50}>
-              <Container>{children}</Container>
+            <AppShellMain pos={'relative'}>
+              {children}
             </AppShellMain>
             <AppShellFooter
               bg={'rgb(6, 1, 17)'}

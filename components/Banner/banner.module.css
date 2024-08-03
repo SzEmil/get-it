@@ -1,0 +1,77 @@
+.banner {
+  width: 100%;
+  min-height: 100vh;
+  background-color: black;
+  background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
+    url('/background/baner.jpg');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  position: relative;
+}
+
+.banner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    45deg,
+    rgba(24, 7, 66, 0.05) 0%,
+    rgba(235, 71, 167, 0.05) 100%
+  );
+}
+
+.box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  text-align: center;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  max-width: 600px;
+  z-index: 10;
+}
+
+.sloganWrapper {
+  position: relative;
+  z-index: 10;
+  opacity: 1;
+  animation: sloganWrapperShow 1000ms ease;
+}
+
+.sloganWrapper::before {
+  display: block;
+  content: '';
+  position: absolute;
+  width: 550px;
+  height: 550px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.05);
+  top: -45%;
+  left: 50%;
+  z-index: 0;
+  transform: translateX(-50%);
+
+  animation: shine 3s infinite;
+
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0.01),
+    rgba(255, 255, 255, 0.2)
+  );
+  background-size: 200% 200%;
+}
+@keyframes shine {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}

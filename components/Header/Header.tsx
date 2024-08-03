@@ -20,7 +20,7 @@ export const Header = ({ lang }: HeaderProps) => {
       pr={24}
     >
       <Typohraphy fz={34} fw={500}>
-        GET-IT
+        DevQuest
       </Typohraphy>
       <nav className={css.navigation}>
         <Link href={ROUTES.HOME}>{i18n(lang).header.nav.home}</Link>
