@@ -18,6 +18,8 @@ export const savePayment = async (customer: DB.User, courses: CartItem[]) => {
       street: customer.street ?? '',
       flatNumber: customer.flatNumber ?? '',
       userId: customer.id,
+      amount: 0,
+      currency: "PLN"
     },
   });
 
