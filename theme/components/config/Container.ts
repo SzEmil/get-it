@@ -7,7 +7,7 @@ const containerPadding = {
 
 export const Container = ContainerConfig.extend({
   defaultProps: {
-    maw: 1400,
+    maw: 1440,
     w: "100%",
     fluid: true,
     pt: 0,

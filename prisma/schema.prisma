@@ -67,6 +67,8 @@ model Payment {
   flatNumber       String? /// @encrypted
   postalCode       String /// @encrypted
   city             String /// @encrypted
+  amount           Int
+  currency         String
   paymentStatus    PaymentStatus @default(AWAITING)
   paymentMethod    String?
   userId           Int
@@ -89,8 +91,11 @@ model Offer {
   name        String
   description String
   images      String[]
+  goals       String[]
   price       Float
+  currency    String     @default("PLN")
   language    String      @default("pl")
+  tags        String[]
   courseId    Int
   status      OfferStatus @default(DRAFT)
   createdAt   DateTime    @default(now())

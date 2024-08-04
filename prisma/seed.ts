@@ -1,24 +1,48 @@
 import { PrismaClient } from '@prisma/client';
+import { courses } from './initialData/data';
 
 const prisma = new PrismaClient();
 
 const main = async () => {
-  //   for (const method of deliveryMethods) {
-  //     await prisma.deliveryMethod.upsert({
-  //       where: { baselinkerId: method.baselinkerId },
-  //       update: method,
-  //       create: method,
-  //     });
-  //   }
+  for (const course of courses) {
+    // Usunięcie zagnieżdżonych obiektów, aby upsert działał poprawnie
+    const { videos, Offer, ...courseData } = course;
+
+    // Upsert dla kursu
+    await prisma.course.upsert({
+      where: { id: course.id },
+      update: courseData,
+      create: courseData,
+    });
+
+    // Upsert dla wideo
+    for (const video of videos.create) {
+      await prisma.video.upsert({
+        where: { id: video.id },
+        update: video,
+        create: video,
+      });
+    }
+
+    // Upsert dla oferty
+    if (Offer) {
+      await prisma.offer.upsert({
+        where: { id: Offer.create.id },
+        update: Offer.create,
+        create: Offer.create,
+      });
+    }
+  }
 };
 
 main()
   .then(() => prisma.$disconnect())
-  .catch(async e => {
+  .catch(async (e) => {
     console.error(e);
     await prisma.$disconnect();
-    process.exit();
+    process.exit(1);
   });
+
 // import { PrismaClient } from '@prisma/client';
 
 // const prisma = new PrismaClient();

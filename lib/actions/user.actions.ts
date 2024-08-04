@@ -28,17 +28,17 @@ export const createUser = async (user: CreateUserParams) => {
   }
 };
 
-export const getCurrentUser = async (userId: string) => {
+export const getCurrentUser = async (clerkId: string) => {
   try {
-    if (!userId) {
-      console.error(`User with id ${userId} is not logged in!`);
+    if (!clerkId) {
+      console.error(`User with id ${clerkId} is not logged in!`);
       redirect(ROUTES.HOME);
     }
     const user = await prisma.user.findUnique({
-      where: { clerkId: userId },
+      where: { clerkId: clerkId },
     });
 
-    if (!user) throw new Error(`User with id: ${userId} not found`);
+    if (!user) throw new Error(`User with id: ${clerkId} not found`);
     return JSON.parse(JSON.stringify(user));
   } catch (e) {
     handleError(e);

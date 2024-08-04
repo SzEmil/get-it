@@ -14,3 +14,7 @@ export const findOfferCoursesByCourseIds = FormatResponse(
     });
   }
 );
+
+export const findAllOffers = FormatResponse(async () => {
+  return prisma.offer.findMany();
+});

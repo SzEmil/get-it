@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { Box } from '@mantine/core';
-import { Typohraphy } from '@/components/Typography/Typohraphy';
+import { Typography } from '@/components/Typography/Typohraphy';
 import Banner from '@/components/Banner/Banner';
 import { I18nProps } from '@/types/types';
 

@@ -1,10 +1,13 @@
-import { Flex, Text } from '@mantine/core';
 import css from './Header.module.css';
+import { Flex } from '@mantine/core';
+import { Typography } from '../Typography/Typohraphy';
+import { APP_NAME } from '@/config';
 import Link from 'next/link';
-import { ROUTES } from '@/constants';
 import { i18n } from '@/i18n/helpers';
-import { Typohraphy } from '../Typography/Typohraphy';
-import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/nextjs';
+import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
+import { SignInCustomButton } from '../SignInCustomButton/SignInCustomButton';
+import { Routes } from '@/constants/endpoints';
+import { HeaderNavigation } from './components/HeaderNavigation';
 
 type HeaderProps = {
   lang: string;
@@ -13,24 +16,28 @@ type HeaderProps = {
 export const Header = ({ lang }: HeaderProps) => {
   return (
     <Flex
+      // ref={headerRef}
       direction={'row'}
       justify={'space-between'}
       align={'center'}
       pl={24}
       pr={24}
+      pt={15}
+      pb={15}
+      style={{
+        backgroundColor: 'rgba(0, 0, 0, 0.1)',
+        transition: 'background-color 0.3s ease',
+      }}
     >
-      <Typohraphy fz={34} fw={500}>
-        DevQuest
-      </Typohraphy>
-      <nav className={css.navigation}>
-        <Link href={ROUTES.HOME}>{i18n(lang).header.nav.home}</Link>
-        <Link href={ROUTES.HOME}>Oferta</Link>
-        <Link href={ROUTES.HOME}>O nas</Link>
-        <Link href={ROUTES.HOME}>Kontakt</Link>
-      </nav>
+      <Link href={Routes.home}>
+        <Typography fz={34} fw={700}>
+          {APP_NAME}
+        </Typography>
+      </Link>
+      <HeaderNavigation lang={lang} />
       <div>
         <SignedOut>
-          <SignInButton />
+          <SignInCustomButton lang={lang} variant="outline" color="white" />
         </SignedOut>
         <SignedIn>
           <UserButton />

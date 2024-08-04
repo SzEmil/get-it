@@ -11,8 +11,9 @@ import {
 } from '@mantine/core';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useAuth } from '@clerk/nextjs';
+import { SignInButton, useAuth } from '@clerk/nextjs';
 import styles from './banner.module.css';
+import { SignInCustomButton } from '../SignInCustomButton/SignInCustomButton';
 
 type BannerProps = {
   lang: string;
@@ -67,7 +68,7 @@ const Banner = ({ lang }: BannerProps) => {
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          height: '90vh',
+          height: '100vh',
         }}
       >
         <Box className={styles.sloganWrapper}>
@@ -78,7 +79,7 @@ const Banner = ({ lang }: BannerProps) => {
               color: 'white',
               textAlign: 'center',
               marginBottom: '2rem',
-              zIndex: 10
+              zIndex: 10,
             }}
           >
             Zostań programistą AI!
@@ -90,8 +91,8 @@ const Banner = ({ lang }: BannerProps) => {
               color: 'white',
               textAlign: 'center',
               marginBottom: '1rem',
-              maxWidth: "650px",
-              zIndex: 10
+              maxWidth: '650px',
+              zIndex: 10,
             }}
           >
             Kursy programowania dla poczatkujących
@@ -102,21 +103,29 @@ const Banner = ({ lang }: BannerProps) => {
               justifyContent: 'center',
               gap: '1rem',
               marginTop: '3rem',
-              zIndex: 10
+              zIndex: 10,
             }}
           >
-            <Button
-              style={{ fontSize: '1rem' }}
-              variant="filled"
-              color="themePrimary.1"
-              onClick={() => router.push(isSignedIn ? '/courses' : '/auth')}
-            >
-              {isSignedIn ? 'Kup Teraz' : 'Rejestracja'}
-            </Button>
+            {isSignedIn ? (
+              <Button
+                style={{ fontSize: '1rem' }}
+                variant="filled"
+                size="lg"
+                radius={30}
+                color="themePrimary.0"
+                onClick={() => router.push('/courses')}
+              >
+                {'Kup Teraz'}
+              </Button>
+            ) : (
+              <SignInCustomButton lang={lang} />
+            )}
             <Button
               style={{ fontSize: '1rem' }}
               variant="outline"
               color="yellow"
+              size="lg"
+              radius={30}
               component={Link}
               href="#howItWorks"
             >
