@@ -1,3 +1,4 @@
+'server only';
 import { LANGUAGES } from '@/config';
 import { dictionary } from '../content';
 import { defaultLocale } from '@/middleware';

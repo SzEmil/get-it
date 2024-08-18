@@ -12,12 +12,7 @@ type ProvidersProps = {
 
 export const Providers = ({ children }: ProvidersProps) => {
   return (
-    <ClerkProvider
-      appearance={{ variables: { colorPrimary: '#e81e95' } }}
-      afterSignInUrl={ROUTES.HOME}
-      afterSignUpUrl={ROUTES.HOME}
-    >
+
       <MantineProvider theme={theme}>{children}</MantineProvider>
-    </ClerkProvider>
   );
 };

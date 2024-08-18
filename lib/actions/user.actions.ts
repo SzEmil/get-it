@@ -1,12 +1,12 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { handleError } from '../utils';
 import prisma from '@/prisma/client';
 import { redirect } from 'next/navigation';
 import { CreateUserParams, UpdateUserParams } from '@/types/user.types';
 import { ROUTES } from '@/constants';
 import * as DB from '@prisma/client';
+import { FormatResponse } from './response';
 
 export const createUser = async (user: CreateUserParams) => {
   try {
@@ -24,7 +24,7 @@ export const createUser = async (user: CreateUserParams) => {
     });
     return JSON.parse(JSON.stringify(newUser));
   } catch (e) {
-    handleError(e);
+    console.log(e);
   }
 };
 
@@ -41,7 +41,7 @@ export const getCurrentUser = async (clerkId: string) => {
     if (!user) throw new Error(`User with id: ${clerkId} not found`);
     return JSON.parse(JSON.stringify(user));
   } catch (e) {
-    handleError(e);
+    console.log(e);
   }
 };
 
@@ -54,9 +54,24 @@ export const getUserById = async (userId: string) => {
     if (!user) throw new Error(`User with id: ${userId} not found`);
     return JSON.parse(JSON.stringify(user));
   } catch (e) {
-    handleError(e);
+    console.log(e);
   }
 };
+
+export const getUserCourses = FormatResponse(async (userId: string) => {
+  const user = await prisma.user.findUnique({
+    where: { clerkId: userId },
+    include: {
+      courses: true,
+    },
+  });
+
+  if (!user) {
+    throw new Error('User not found');
+  }
+
+  return user;
+});
 
 export const updateUser = async (clerkId: string, user: UpdateUserParams) => {
   try {
@@ -68,7 +83,7 @@ export const updateUser = async (clerkId: string, user: UpdateUserParams) => {
     if (!updatedUser) throw new Error(`Failed during update user`);
     return JSON.parse(JSON.stringify(updatedUser));
   } catch (e) {
-    handleError(e);
+    console.log(e);
   }
 };
 
@@ -87,6 +102,6 @@ export const deleteUser = async (clerkId: string) => {
     if (!deletedUser) throw new Error(`Failed during delete user`);
     return deletedUser ? JSON.parse(JSON.stringify(deletedUser)) : null;
   } catch (e) {
-    handleError(e);
+    console.log(e);
   }
 };

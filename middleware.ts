@@ -22,7 +22,10 @@ function getLocale(request: NextRequest): string {
   return match(languages, locales, defaultLocale);
 }
 
-const isProtectedRoute = createRouteMatcher(['dashboard/(.*)']);
+const isProtectedRoute = createRouteMatcher([
+  'dashboard/(.*)',
+  'offer/(.*)/checkout',
+]);
 
 export default clerkMiddleware((auth, req) => {
   if (isProtectedRoute(req)) {

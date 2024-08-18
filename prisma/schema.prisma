@@ -8,21 +8,22 @@ datasource db {
 }
 
 model User {
-  id          Int     @id @default(autoincrement())
-  clerkId     String  @unique
-  email       String  @unique
+  id          Int      @id @default(autoincrement())
+  clerkId     String   @unique
+  email       String   @unique
   photo       String
   firstName   String
   lastName    String
   planId      Int?
-  phone       String? /// @encrypted
-  street      String? /// @encrypted
-  houseNumber String? /// @encrypted
-  flatNumber  String? /// @encrypted
-  postalCode  String? /// @encrypted
-  city        String? /// @encrypted
+  phone       String?  /// @encrypted
+  street      String?  /// @encrypted
+  houseNumber String?  /// @encrypted
+  flatNumber  String?  /// @encrypted
+  postalCode  String?  /// @encrypted
+  city        String?  /// @encrypted
 
   payments Payment[]
+  courses  Course[]  // Implicit many-to-many relation with Course
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -40,6 +41,7 @@ model Course {
   updatedAt   DateTime     @updatedAt
   videos      Video[]
   Offer       Offer[]
+  users       User[]       // Implicit many-to-many relation with User
 }
 
 model Video {

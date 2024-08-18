@@ -33,11 +33,35 @@ const main = async () => {
       });
     }
   }
+  const payment = await prisma.payment.create({
+    data: {
+      userId: 23,
+      amount: 9999,
+      currency: 'PLN',
+      phone: '123123123',
+      email: 'emilszymczyk99@gmail.com',
+      street: 'street',
+      firstName: 'Emil',
+      lastName: 'Szymczyk',
+      houseNumber: '11',
+      postalCode: '10-100',
+      city: 'miasto',
+      paymentStatus: 'SUCCESS',
+      courses: {
+        create: [
+          {
+            courseId: 1,
+            courseName: 'Course One',
+          },
+        ],
+      },
+    },
+  });
 };
 
 main()
   .then(() => prisma.$disconnect())
-  .catch(async (e) => {
+  .catch(async e => {
     console.error(e);
     await prisma.$disconnect();
     process.exit(1);
