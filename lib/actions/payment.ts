@@ -5,6 +5,10 @@ import { createOrderCourse } from './orderCourse';
 import { CartItem } from '@/types/types';
 
 export const savePayment = async (customer: DB.User, courses: CartItem[]) => {
+  const totalAmount = courses.reduce(
+    (totalAmount, course) => totalAmount + course.amount,
+    0
+  );
   const payment = await prisma.payment.create({
     data: {
       // TODO address
@@ -18,8 +22,8 @@ export const savePayment = async (customer: DB.User, courses: CartItem[]) => {
       street: customer.street ?? '',
       flatNumber: customer.flatNumber ?? '',
       userId: customer.id,
-      amount: 0,
-      currency: "PLN"
+      amount: totalAmount,
+      currency: 'PLN',
     },
   });
 
