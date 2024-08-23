@@ -12,7 +12,7 @@ type HeaderNavigationProps = {
 export const HeaderNavigation = ({ lang }: HeaderNavigationProps) => {
   return (
     <nav className={css.navigation}>
-      <Link href={Routes.home}>{i18n(lang).header.nav.home}</Link>
+      <Link href={Routes.home}>Start</Link>
       <Link href={Routes.offer}>Oferta</Link>
       <Link href={Routes.home}>O nas</Link>
       <Link href={Routes.home}>Kontakt</Link>

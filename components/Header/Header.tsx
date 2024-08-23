@@ -3,7 +3,6 @@ import { Flex } from '@mantine/core';
 import { Typography } from '../Typography/Typohraphy';
 import { APP_NAME } from '@/config';
 import Link from 'next/link';
-import { i18n } from '@/i18n/helpers';
 import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
 import { SignInCustomButton } from '../SignInCustomButton/SignInCustomButton';
 import { Routes } from '@/constants/endpoints';
