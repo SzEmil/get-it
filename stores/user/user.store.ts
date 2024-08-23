@@ -1,5 +1,7 @@
-import { create } from "zustand";
-import { persist } from "zustand/middleware";
+'use client';
+
+import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 
 export type Privacy = {
   isAnalytics: boolean;
@@ -25,7 +27,7 @@ export const useUserStore = create<State>()(
   persist(
     (set, get) => ({
       ...initialStoreData,
-      setIsAnalyticsAccepted: (privacy) => set({ privacy }),
+      setIsAnalyticsAccepted: privacy => set({ privacy }),
       setAnalyticsDisabled: () =>
         set({
           privacy: {
@@ -35,7 +37,7 @@ export const useUserStore = create<State>()(
         }),
     }),
     {
-      name: "user-storage",
-    },
-  ),
+      name: 'user-storage',
+    }
+  )
 );

@@ -1,3 +1,5 @@
+"use client"
+
 import React from 'react';
 import * as DB from '@prisma/client';
 import {

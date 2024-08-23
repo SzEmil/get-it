@@ -1,5 +1,6 @@
 'use client';
 
+import useStore from '@/stores/store';
 import { useOrderStore } from '../stores/order/order.store';
 import { useForm } from '@mantine/form';
 
@@ -8,7 +9,7 @@ type ValidateData = {
 };
 
 export const useOrderForm = (lang: string) => {
-  const { customer: initialData } = useOrderStore();
+  const initialData = useStore(useOrderStore, state => state.customer);
 
   const validateData: ValidateData = {
     email: value => (/^\S+@\S+$/.test(value) ? null : 'Niepoprawny email'),

@@ -13,7 +13,7 @@ type CheckoutProps = {
   offer: DB.Offer;
 };
 
-export const Checkout = ({ lang, offer }: CheckoutProps) => {
+const Checkout = ({ lang, offer }: CheckoutProps) => {
   const { setCustomer } = useOrderStore();
   const customerForm = useOrderForm(lang);
 
@@ -110,9 +110,16 @@ export const Checkout = ({ lang, offer }: CheckoutProps) => {
             mt="md"
             c={'white'}
             classNames={{ input: css.input }}
-            color={"themePrimary.0"}
+            color={'themePrimary.0'}
           />
-          <Button type="submit" fullWidth mt="xl" size="md" radius={20} color={"themePrimary.0"}>
+          <Button
+            type="submit"
+            fullWidth
+            mt="xl"
+            size="md"
+            radius={20}
+            color={'themePrimary.0'}
+          >
             Złóż zamówienie
           </Button>
         </Box>
@@ -121,3 +128,4 @@ export const Checkout = ({ lang, offer }: CheckoutProps) => {
     </Flex>
   );
 };
+export default Checkout;

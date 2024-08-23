@@ -44,6 +44,7 @@ const RootLayout = async ({ children, params: { lang } }: RootLayoutProps) => {
     >
       <html lang={lang} className={inter.className}>
         <head>
+          <link rel="shortcut icon" href="/favicon.ico" />
           <ColorSchemeScript />
         </head>
         <body>

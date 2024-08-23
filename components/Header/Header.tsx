@@ -1,3 +1,5 @@
+"use client"
+
 import css from './Header.module.css';
 import { Flex } from '@mantine/core';
 import { Typography } from '../Typography/Typohraphy';

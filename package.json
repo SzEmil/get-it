@@ -13,7 +13,7 @@
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
   },
   "dependencies": {
-    "@clerk/nextjs": "^5.2.3",
+    "@clerk/nextjs": "5.2.5-snapshot.v910e99d",
     "@formatjs/intl-localematcher": "^0.5.4",
     "@ingameltd/node-przelewy24": "^2.1.0",
     "@mantine/carousel": "^7.9.0",
@@ -32,7 +32,7 @@
     "fs": "^0.0.1-security",
     "lodash": "^4.17.21",
     "negotiator": "^0.6.3",
-    "next": "^14.2.5",
+    "next": "^14.0.4",
     "nodemailer": "^6.9.14",
     "prisma-field-encryption": "^1.5.2",
     "react": "^18.3.1",

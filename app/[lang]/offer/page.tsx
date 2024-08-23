@@ -27,8 +27,8 @@ export default async function Offer({ params: { lang } }: PageProps) {
   const { data } = await findAllOffers();
   const offers = data ?? [];
 
-  const isLogged = await currentUser();
-  const user = isLogged ? await getCurrentUser(isLogged.id) : null;
+  //const isLogged = await currentUser();
+  // const user = isLogged ? await getCurrentUser(isLogged.id) : null;
 
   return (
     <BackgroundImage

@@ -9,14 +9,15 @@ import {
 } from '@/lib/actions/offer';
 import { currentUser } from '@clerk/nextjs/server';
 import { getUserCourses } from '@/lib/actions/user.actions';
-import { Checkout } from '@/components/Checkout/Checkout';
+// import { Checkout } from '@/components/Checkout/Checkout';
 import { SignedIn } from '@clerk/nextjs';
+import dynamic from 'next/dynamic';
 
 export const revalidate = 600;
 
 export async function generateStaticParams() {
   const offers = await findOffersIdsToGenereateParams();
-  const stringIds = offers.map(offer => offer.id.toString());
+  const stringIds = offers.map(offer => ({ id: offer.id.toString() }));
   return addLanguagesToStaticParams(stringIds);
 }
 
@@ -27,6 +28,16 @@ type Params = I18nProps & {
 type PageProps = {
   params: Params;
 };
+
+type CheckoutProps = {
+  lang: string;
+  offer: any;
+};
+
+// Lazy load the Checkout component with type definition
+const Checkout = dynamic(() => import('@/components/Checkout/Checkout'), {
+  ssr: false,
+});
 
 export default async function CheckoutPage({
   params: { lang, id },
@@ -43,12 +54,13 @@ export default async function CheckoutPage({
     );
   }
 
-  const isLogged = await currentUser();
-  const user = isLogged ? await getUserCourses(isLogged.id) : null;
+  // const isLogged = await currentUser();
+  // const user = isLogged ? await getUserCourses(isLogged.id) : null;
 
-  const alreadyOwnsCourse = user?.data?.courses.some(
-    course => course.id === +id
-  );
+  const alreadyOwnsCourse = false;
+  // user?.data?.courses.some(
+  //   course => course.id === +id
+  // );
 
   if (alreadyOwnsCourse) {
     return (
@@ -72,9 +84,7 @@ export default async function CheckoutPage({
       }}
     >
       <Container pt={150} w={'100%'}>
-        <SignedIn>
-          <Checkout lang={lang} offer={offer} />
-        </SignedIn>
+        <Checkout lang={lang} offer={offer} />
       </Container>
     </BackgroundImage>
   );
