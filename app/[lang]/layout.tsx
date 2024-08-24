@@ -20,6 +20,7 @@ import { Footer } from '@/components/Footer/Footer';
 import { ClerkProvider } from '@clerk/nextjs';
 import { ROUTES } from '@/constants';
 import { PrivacyBanner } from '@/components/PrivacyBanner/PrivacyBanner';
+import { TestModeModal } from '@/components/TestModeModal/TestModeModal';
 
 export const generateStaticParams = getLanguagesStaticParams;
 
@@ -65,6 +66,7 @@ const RootLayout = async ({ children, params: { lang } }: RootLayoutProps) => {
                 {children}
 
                 <PrivacyBanner lang={lang} />
+                <TestModeModal lang={lang} />
               </AppShellMain>
               <AppShellFooter
                 bg={'rgb(6, 1, 17)'}

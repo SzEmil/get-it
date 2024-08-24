@@ -10,7 +10,6 @@ import {
 import { currentUser } from '@clerk/nextjs/server';
 import { getUserCourses } from '@/lib/actions/user.actions';
 // import { Checkout } from '@/components/Checkout/Checkout';
-import { SignedIn } from '@clerk/nextjs';
 import dynamic from 'next/dynamic';
 
 export const revalidate = 600;
@@ -54,13 +53,12 @@ export default async function CheckoutPage({
     );
   }
 
-  // const isLogged = await currentUser();
-  // const user = isLogged ? await getUserCourses(isLogged.id) : null;
+  const isLogged = await currentUser();
+  const user = isLogged ? await getUserCourses(isLogged.id) : null;
 
-  const alreadyOwnsCourse = false;
-  // user?.data?.courses.some(
-  //   course => course.id === +id
-  // );
+  const alreadyOwnsCourse = user?.data?.courses.some(
+    course => course.id === +id
+  );
 
   if (alreadyOwnsCourse) {
     return (

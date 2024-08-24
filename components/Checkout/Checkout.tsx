@@ -28,7 +28,6 @@ const Checkout = ({ lang, offer }: CheckoutProps) => {
         style={{ width: '100%', maxWidth: '700px' }}
       >
         <Box w={'100%'}>
-          {/* Imię i Nazwisko w jednym wierszu */}
           <Flex gap="md" mb="sm">
             <TextInput
               label="Imię"

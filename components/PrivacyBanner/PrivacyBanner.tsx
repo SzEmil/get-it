@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import { Box } from "@mantine/core";
-import { Banner } from "./components/Banner/Banner";
-import { GoogleAnalyticsScript } from "./components/GoogleScript";
-import { Suspense } from "react";
-import { ClarityScript } from "./components/ClarityScript";
-import { useValidatePrivacy } from "@/hooks/useValidatePrivacy";
+import { Box } from '@mantine/core';
+import { Banner } from './components/Banner/Banner';
+import { GoogleAnalyticsScript } from './components/GoogleScript';
+import { Suspense } from 'react';
+import { ClarityScript } from './components/ClarityScript';
+import { useValidatePrivacy } from '@/hooks/useValidatePrivacy';
 
 type PrivacyBannerProps = {
   lang: string;
@@ -21,7 +21,7 @@ export const PrivacyBanner = ({ lang }: PrivacyBannerProps) => {
         {isPrivacyValid && (
           <>
             <GoogleAnalyticsScript />
-            {/* <ClarityScript /> */}
+            <ClarityScript />
           </>
         )}
       </Suspense>
