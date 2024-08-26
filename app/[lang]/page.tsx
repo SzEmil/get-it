@@ -1,11 +1,17 @@
 import Image from 'next/image';
 import { Box } from '@mantine/core';
-import { Typohraphy } from '@/components/Typography/Typohraphy';
+import { Typography } from '@/components/Typography/Typohraphy';
+import Banner from '@/components/Banner/Banner';
+import { I18nProps } from '@/types/types';
 
-export default function Home() {
+type Params = I18nProps;
+type PageProps = {
+  params: Params;
+};
+export default function Home({ params: { lang } }: PageProps) {
   return (
-    <Box pt={80}>
-      <Typohraphy>page content main</Typohraphy>
+    <Box pt={0}>
+      <Banner  lang={lang}/>
     </Box>
   );
 }

@@ -8,29 +8,40 @@ datasource db {
 }
 
 model User {
-  id            Int      @id @default(autoincrement())
-  clerkId       String   @unique
-  email         String   @unique
-  username      String   @unique
-  photo         String
-  firstName     String?
-  lastName      String?
-  planId        Int?
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-  payments      Payment[]
+  id          Int      @id @default(autoincrement())
+  clerkId     String   @unique
+  email       String   @unique
+  photo       String
+  firstName   String
+  lastName    String
+  planId      Int?
+  phone       String?  /// @encrypted
+  street      String?  /// @encrypted
+  houseNumber String?  /// @encrypted
+  flatNumber  String?  /// @encrypted
+  postalCode  String?  /// @encrypted
+  city        String?  /// @encrypted
+
+  payments Payment[]
+  courses  Course[]  // Implicit many-to-many relation with Course
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Course {
-  id          Int       @id @default(autoincrement())
+  id          Int          @id @default(autoincrement())
   courseId    Int
   name        String
   description String
   images      String[]
-  language    String    @default("pl")
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  language    String       @default("pl")
+  status      CourseStatus @default(DRAFT)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
   videos      Video[]
+  Offer       Offer[]
+  users       User[]       // Implicit many-to-many relation with User
 }
 
 model Video {
@@ -45,39 +56,73 @@ model Video {
 }
 
 model Payment {
-  id                Int           @id @default(autoincrement())
-  createdAt         DateTime      @default(now())
-  updatedAt         DateTime      @updatedAt
-  paymentSessionId  String?
-  phone             String        /// @encrypted
-  email             String        /// @encrypted
-  firstName         String        /// @encrypted
-  lastName          String        /// @encrypted
-  street            String        /// @encrypted
-  houseNumber       String        /// @encrypted
-  flatNumber        String?       /// @encrypted
-  postalCode        String        /// @encrypted
-  city              String        /// @encrypted
-  paymentStatus     PaymentStatus @default(AWAITING)
-  paymentMethod     String
-  userId            Int
-  user              User          @relation(fields: [userId], references: [id], onDelete: Cascade)
-  courses           OrderCourse[]
+  id               Int           @id @default(autoincrement())
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+  paymentSessionId String?
+  phone            String /// @encrypted
+  email            String /// @encrypted
+  firstName        String /// @encrypted
+  lastName         String /// @encrypted
+  street           String /// @encrypted
+  houseNumber      String /// @encrypted
+  flatNumber       String? /// @encrypted
+  postalCode       String /// @encrypted
+  city             String /// @encrypted
+  amount           Int
+  currency         String
+  paymentStatus    PaymentStatus @default(AWAITING)
+  paymentMethod    String?
+  userId           Int
+  user             User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  courses          OrderCourse[]
 }
 
 model OrderCourse {
-  id          Int      @id @default(autoincrement())
+  id         Int      @id @default(autoincrement())
+  courseId   Int
+  courseName String
+  paymentId  Int
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @default(now())
+  payment    Payment  @relation(fields: [paymentId], references: [id], onDelete: Cascade)
+}
+
+model Offer {
+  id          Int         @id @default(autoincrement())
+  name        String
+  description String
+  images      String[]
+  goals       String[]
+  price       Float
+  currency    String     @default("PLN")
+  language    String      @default("pl")
+  tags        String[]
   courseId    Int
-  courseName  String
-  paymentId   Int
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @default(now())
-  payment     Payment  @relation(fields: [paymentId], references: [id], onDelete: Cascade)
+  status      OfferStatus @default(DRAFT)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  course      Course      @relation(fields: [courseId], references: [id], onDelete: Cascade)
 }
 
 enum PaymentStatus {
   AWAITING
-  PAID
+  SUCCESS
+  ERROR
+  NO_PAYMENT
+  ADVANCE_PAYMENT
+  PAYMENT_RETURNED
   FAILED
+}
+
+enum CourseStatus {
+  ACTIVE
+  DRAFT
+  CANCELLED
+}
+
+enum OfferStatus {
+  ACTIVE
+  DRAFT
   CANCELLED
 }
