@@ -7,13 +7,19 @@ import React, { useEffect } from 'react';
 import * as DB from '@prisma/client';
 import { OrderSummary } from './components/OrderSummary';
 import css from './Checkout.module.css';
+import { Customer } from '@/stores/order/order.types';
+import { createOrder } from '@/lib/actions/orderProcessing';
+import { OrderData } from '@/types/types';
+import { useRouter } from 'next/navigation';
 
 type CheckoutProps = {
   lang: string;
   offer: DB.Offer;
+  userId: number;
 };
 
-const Checkout = ({ lang, offer }: CheckoutProps) => {
+const Checkout = ({ lang, offer, userId }: CheckoutProps) => {
+  const router = useRouter();
   const { setCustomer } = useOrderStore();
   const customerForm = useOrderForm(lang);
 
@@ -21,10 +27,28 @@ const Checkout = ({ lang, offer }: CheckoutProps) => {
     setCustomer(customerForm.values);
   }, [customerForm.values, setCustomer]);
 
+  const onSubmitCheckoutForm = async (values: Customer) => {
+    const orderData: OrderData = {
+      customer: values,
+      userId,
+      courses: [
+        {
+          courseId: offer.courseId,
+          courseName: offer.name,
+          amount: offer.price,
+          currency: offer.currency,
+        },
+      ],
+    };
+    const data = await createOrder(orderData);
+
+    if (data.data) router.push(data.data?.paymentUrl);
+  };
+
   return (
     <Flex w={'100%'} justify={'space-between'} align={'flex-start'}>
       <form
-        onSubmit={customerForm.onSubmit(values => console.log(values))}
+        onSubmit={customerForm.onSubmit(values => onSubmitCheckoutForm(values))}
         style={{ width: '100%', maxWidth: '700px' }}
       >
         <Box w={'100%'}>

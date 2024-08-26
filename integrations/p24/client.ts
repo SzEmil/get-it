@@ -1,8 +1,8 @@
-import { P24 } from "@ingameltd/node-przelewy24";
-import { OrderBySessionId } from "./types";
-import { formatPaymentSessionStatus } from "./PaymentSessionStatus";
-import { getPaymentData } from "./getPaymentData";
-import { parseBooleanFromEnv } from "@/helpers/enviromentVariables";
+import { P24 } from '@ingameltd/node-przelewy24';
+import { OrderBySessionId } from './types';
+import { formatPaymentSessionStatus } from './PaymentSessionStatus';
+import { getPaymentData } from './getPaymentData';
+import { parseBooleanFromEnv } from '@/helpers/enviromentVariables';
 
 export class PaymentClient {
   private static instance: P24;
@@ -10,6 +10,7 @@ export class PaymentClient {
   private constructor() {}
 
   public static getInstance(): P24 {
+
     if (!PaymentClient.instance) {
       PaymentClient.instance = new P24(
         parseInt(process.env.PAYMENT_MERCHANT_ID!),
@@ -18,10 +19,9 @@ export class PaymentClient {
         process.env.PAYMENT_CRC_KEY!,
         {
           sandbox: parseBooleanFromEnv(process.env.PAYMENT_SANDBOX_MODE),
-        },
+        }
       );
     }
-
     return PaymentClient.instance;
   }
 
@@ -31,7 +31,7 @@ export class PaymentClient {
 
   public static async getPaymentSessionStatus(sessionId: string) {
     const res = await PaymentClient.apiClient<OrderBySessionId>(
-      `transaction/by/sessionId/${sessionId}`,
+      `transaction/by/sessionId/${sessionId}`
     );
     return {
       status: await formatPaymentSessionStatus(res?.data.status),
@@ -39,4 +39,10 @@ export class PaymentClient {
   }
 }
 
-export { Currency, Country, Language, Encoding, P24Error } from "@ingameltd/node-przelewy24";
+export {
+  Currency,
+  Country,
+  Language,
+  Encoding,
+  P24Error,
+} from '@ingameltd/node-przelewy24';

@@ -7,11 +7,9 @@ import { updatePaymentStatus } from '@/lib/actions/payment';
 
 export const POST = errorHandler(
   p24Integration(async (req, res, sessionId, amount, paymentStatus) => {
+    console.log(paymentStatus);
     if (paymentStatus === PaymentStatus.SUCCESS) {
-      const result = await updatePaymentStatus(
-        sessionId,
-        paymentStatus,
-      );
+      const result = await updatePaymentStatus(sessionId, paymentStatus);
     }
     return NextResponse.json({ message: 'Success' });
   })

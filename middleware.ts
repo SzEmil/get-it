@@ -52,10 +52,14 @@ export default clerkMiddleware((auth, req) => {
 });
 
 export const config = {
+  // matcher: [
+  //   // Skip all static files, unless found in search params
+  //   '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
+  //   // Always run for api routes
+  //   '/(api|trpc)(.*)',
+  // ],
   matcher: [
-    // Skip all static files, unless found in search params
-    '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
-    // Always run for api routes
-    '/(api|trpc)(.*)',
+    // Skip middleware for API routes and static files
+    '/((?!api|_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
   ],
 };

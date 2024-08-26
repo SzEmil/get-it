@@ -54,11 +54,32 @@ export default async function CheckoutPage({
   }
 
   const isLogged = await currentUser();
+
+  // if (!isLogged) {
+  //   return (
+  //     <Box pt={100}>
+  //       <Container>
+  //         <Text>Zaloguj się aby kupić</Text>
+  //       </Container>
+  //     </Box>
+  //   );
+  // }
+
   const user = isLogged ? await getUserCourses(isLogged.id) : null;
 
   const alreadyOwnsCourse = user?.data?.courses.some(
     course => course.id === +id
   );
+
+  if (!user || !user.data) {
+    return (
+      <Box pt={100}>
+        <Container>
+          <Text>Zaloguj sie aby kupić</Text>
+        </Container>
+      </Box>
+    );
+  }
 
   if (alreadyOwnsCourse) {
     return (
@@ -82,7 +103,7 @@ export default async function CheckoutPage({
       }}
     >
       <Container pt={150} w={'100%'}>
-        <Checkout lang={lang} offer={offer} />
+        <Checkout lang={lang} offer={offer} userId={+user?.data.id} />
       </Container>
     </BackgroundImage>
   );
