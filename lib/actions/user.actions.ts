@@ -45,10 +45,24 @@ export const getCurrentUser = async (clerkId: string) => {
   }
 };
 
-export const getUserById = async (userId: string) => {
+export const getUserClerkId = async (userId: string) => {
   try {
     const user = await prisma.user.findUnique({
       where: { clerkId: userId },
+    });
+
+    if (!user) throw new Error(`User with id: ${userId} not found`);
+    return JSON.parse(JSON.stringify(user));
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+
+export const getUserById = async (userId: number) => {
+  try {
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
     });
 
     if (!user) throw new Error(`User with id: ${userId} not found`);

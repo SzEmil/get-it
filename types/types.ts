@@ -1,3 +1,4 @@
+import { Customer } from '@/stores/order/order.types';
 import * as DB from '@prisma/client';
 
 export type I18nProps = {
@@ -13,6 +14,6 @@ export type CartItem = {
 
 export type OrderData = {
   courses: CartItem[];
-  customer: DB.User;
-  areTermsAccepted: boolean;
+  customer: Customer;
+  userId: number;
 };

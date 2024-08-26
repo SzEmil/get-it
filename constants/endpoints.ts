@@ -1,5 +1,5 @@
 export enum Endpoints {
-  p24Integration = '/api/integrations/p24',
+  p24Integration = '/api/p24',
 }
 
 export enum Routes {

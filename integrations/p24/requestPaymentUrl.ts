@@ -24,7 +24,7 @@ export const requestPaymentUrl = async ({
   const urlStatus = `${process.env.VERCEL ? appUrl : process.env.APP_URL}${
     Endpoints.p24Integration
   }`;
-
+  console.log(urlStatus);
   const order: Order = {
     sessionId,
     amount,
