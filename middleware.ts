@@ -25,6 +25,9 @@ function getLocale(request: NextRequest): string {
 const isProtectedRoute = createRouteMatcher([
   'dashboard/(.*)',
   '/offer/:path*/checkout',
+  '/profile',
+  '/my-courses',
+  '/my-courses/(.*)',
 ]);
 
 export default clerkMiddleware((auth, req) => {

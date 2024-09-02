@@ -27,9 +27,9 @@ export default async function Offer({ params: { lang } }: PageProps) {
   const { data } = await findAllOffers();
   const offers = data ?? [];
 
-  //const isLogged = await currentUser();
-  // const user = isLogged ? await getCurrentUser(isLogged.id) : null;
-
+  const isLogged = await currentUser();
+  //const user = isLogged ? await getCurrentUser(isLogged.id) : null;
+  const user = await getCurrentUser(isLogged!.id);
   return (
     <BackgroundImage
       src={'/background/polygonSVG.svg'}
@@ -55,7 +55,7 @@ export default async function Offer({ params: { lang } }: PageProps) {
                   key={offer.id}
                   lang={lang}
                   offer={offer}
-                  userCoursesIds={[1]} // Example value, replace with actual logic
+                  userCoursesIds={user?.courses ? user.courses.map((course) => course.courseId) : []}
                 />
               ))}
             </SimpleGrid>

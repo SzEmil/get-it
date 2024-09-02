@@ -4,6 +4,10 @@ import * as DB from '@prisma/client';
 import { createOrderCourse } from './orderCourse';
 import { CartItem } from '@/types/types';
 import { UserOrderDataType } from './orderProcessing';
+import { revalidatePath } from 'next/cache';
+import { Routes } from '@/constants/endpoints';
+import { FormatResponse } from './response';
+
 
 export const savePayment = async (
   customer: UserOrderDataType,
@@ -67,6 +71,9 @@ export const updatePaymentStatus = async (
         });
 
         //dodać tutaj do usera kurs. czyli z apyment pobraćwszystkie orderCurse
+
+        revalidatePath(Routes.offer, 'page');
+
         return updatedPayment;
       }
     }
@@ -93,3 +100,4 @@ export const updatePayment = async (
     data: updatedPaymentData,
   });
 };
+

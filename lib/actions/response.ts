@@ -16,7 +16,7 @@ export function FormatResponse<T, P>(
       isError = true;
       error = err.message;
     }
-    console.log(error);
+
     return {
       data: response ?? null,
       isError,

@@ -36,10 +36,11 @@ export const getCurrentUser = async (clerkId: string) => {
     }
     const user = await prisma.user.findUnique({
       where: { clerkId: clerkId },
+      include: { courses: true },
     });
 
     if (!user) throw new Error(`User with id: ${clerkId} not found`);
-    return JSON.parse(JSON.stringify(user));
+    return user;
   } catch (e) {
     console.log(e);
   }
@@ -57,7 +58,6 @@ export const getUserClerkId = async (userId: string) => {
     console.log(e);
   }
 };
-
 
 export const getUserById = async (userId: number) => {
   try {

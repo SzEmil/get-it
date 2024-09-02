@@ -14,3 +14,17 @@ export const findCoursesByCourseIds = FormatResponse(
     });
   }
 );
+
+export const findUserCourses = FormatResponse(async (userId: number) => {
+  const userCourses = await prisma.course.findMany({
+    where: {
+      users: {
+        some: {
+          id: userId,
+        },
+      },
+    },
+  });
+
+  return userCourses;
+});

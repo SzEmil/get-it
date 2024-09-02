@@ -1,4 +1,4 @@
-"use client"
+'use client';
 
 import css from './Header.module.css';
 import { Flex } from '@mantine/core';
@@ -9,6 +9,7 @@ import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
 import { SignInCustomButton } from '../SignInCustomButton/SignInCustomButton';
 import { Routes } from '@/constants/endpoints';
 import { HeaderNavigation } from './components/HeaderNavigation';
+import { UserBtn } from '../UserBtn/UserBtn';
 
 type HeaderProps = {
   lang: string;
@@ -41,7 +42,8 @@ export const Header = ({ lang }: HeaderProps) => {
           <SignInCustomButton lang={lang} variant="outline" color="white" />
         </SignedOut>
         <SignedIn>
-          <UserButton />
+          {/* <UserButton /> */}
+          <UserBtn lang={lang} />
         </SignedIn>
       </div>
     </Flex>
