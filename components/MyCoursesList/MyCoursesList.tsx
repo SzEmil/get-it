@@ -45,9 +45,11 @@ export const MyCoursesList = ({ lang }: MyCoursesListPropss) => {
         </Center>
       ) : (
         <Center w={'100%'}>
-          {courses.map(course => (
-            <MyCoursesItem key={course.id} lang={lang} course={course} />
-          ))}
+          <Flex direction={'column'} gap={50} w={'100%'}>
+            {courses.map(course => (
+              <MyCoursesItem key={course.id} lang={lang} course={course} />
+            ))}
+          </Flex>
         </Center>
       )}
     </Flex>
