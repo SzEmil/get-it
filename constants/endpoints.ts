@@ -9,7 +9,9 @@ export enum Routes {
   privacyPolicy = 'privacy-policy',
   termsOfService = 'terms-of-services',
   signIn = "",
-  offer= "/offer"
+  offer= "/offer",
+  myCourses = "/my-courses",
+  profile= "/profile"
 }
 
 export enum SocialLinks {
