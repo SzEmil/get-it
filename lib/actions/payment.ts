@@ -8,6 +8,7 @@ import { revalidatePath } from 'next/cache';
 import { Routes } from '@/constants/endpoints';
 import { FormatResponse } from './response';
 
+
 export const savePayment = async (
   customer: UserOrderDataType,
   courses: CartItem[]
@@ -70,7 +71,9 @@ export const updatePaymentStatus = async (
         });
 
         //dodać tutaj do usera kurs. czyli z apyment pobraćwszystkie orderCurse
+
         revalidatePath(Routes.offer, 'page');
+
         return updatedPayment;
       }
     }
