@@ -8,6 +8,7 @@ export enum Routes {
   checkout = '/order/checkout',
   privacyPolicy = 'privacy-policy',
   termsOfService = 'terms-of-services',
+  cookiesTerms = "cookies-terms",
   signIn = "",
   offer= "/offer",
   myCourses = "/my-courses",
