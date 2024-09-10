@@ -20,7 +20,7 @@ export const requestPaymentUrl = async ({
   const appUrl = process.env.APP_URL || `https://${process.env.VERCEL_URL}`;
   const urlReturn = `${
     process.env.VERCEL ? appUrl : process.env.APP_URL
-  }/order/${id}`;
+  }/profile`;
   const urlStatus = `${process.env.VERCEL ? appUrl : process.env.APP_URL}${
     Endpoints.p24Integration
   }`;

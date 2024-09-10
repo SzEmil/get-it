@@ -1,11 +1,12 @@
 'use client';
 
 import { useUser } from '@clerk/nextjs';
-import { Center, Flex, Loader, Text } from '@mantine/core';
+import { Button, Center, Flex, Loader, Text } from '@mantine/core';
 import React, { useCallback, useEffect, useState } from 'react';
 import * as DB from '@prisma/client';
 import { MyPaymentsItem } from './components/MyPaymentsItem';
 import { findUserPayments } from '@/lib/actions/payment.actions';
+import sendEmail from '@/app/services/Email/operations/sendEmail';
 
 type MyPaymentsListPropss = {
   lang: string;
@@ -21,13 +22,15 @@ export const MyPaymentsList = ({ lang }: MyPaymentsListPropss) => {
 
   const { isLoaded, user } = useUser();
 
-  const fetchCourses = useCallback(async () => {
+  const fetchPayments = useCallback(async () => {
     setLoading(true);
     try {
       if (user && isLoaded) {
-        const coursesData = await findUserPayments(+user.id);
-        console.log(coursesData);
-        setPayments(coursesData.data ?? []);
+        const paymentsData = await findUserPayments(
+          //@ts-ignore
+          +user.publicMetadata.userId
+        );
+        setPayments(paymentsData.data ?? []);
       }
     } catch (e) {
       console.error(e);
@@ -38,12 +41,19 @@ export const MyPaymentsList = ({ lang }: MyPaymentsListPropss) => {
 
   useEffect(() => {
     if (user && isLoaded) {
-      fetchCourses();
+      fetchPayments();
     }
-  }, [fetchCourses]);
+  }, [fetchPayments]);
 
   return (
-    <Flex direction={'column'} gap={50} w={'100%'} mt={80}>
+    <Flex
+      direction={'column'}
+      gap={50}
+      w={'100%'}
+      mt={80}
+      mah={500}
+      style={{ overflowY: 'scroll' }}
+    >
       {loading ? (
         <Center w={'100%'}>
           <Loader mt={50} />
