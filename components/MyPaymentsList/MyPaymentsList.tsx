@@ -1,12 +1,15 @@
 'use client';
 
 import { useUser } from '@clerk/nextjs';
+
 import { Button, Center, Flex, Loader, Text } from '@mantine/core';
 import React, { useCallback, useEffect, useState } from 'react';
 import * as DB from '@prisma/client';
 import { MyPaymentsItem } from './components/MyPaymentsItem';
 import { findUserPayments } from '@/lib/actions/payment.actions';
+
 import sendEmail from '@/app/services/Email/operations/sendEmail';
+
 
 type MyPaymentsListPropss = {
   lang: string;
@@ -21,6 +24,7 @@ export const MyPaymentsList = ({ lang }: MyPaymentsListPropss) => {
   const [loading, setLoading] = useState(false);
 
   const { isLoaded, user } = useUser();
+
 
   const fetchPayments = useCallback(async () => {
     setLoading(true);
@@ -41,6 +45,7 @@ export const MyPaymentsList = ({ lang }: MyPaymentsListPropss) => {
 
   useEffect(() => {
     if (user && isLoaded) {
+
       fetchPayments();
     }
   }, [fetchPayments]);
