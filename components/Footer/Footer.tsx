@@ -4,6 +4,7 @@ import { Typography } from '../Typography/Typohraphy';
 import { FooterNavigation } from './components/FooterNavigation';
 import { Socials } from './components/Socials';
 import { APP_NAME } from '@/config';
+import { ContactForm } from '../ContactForm/ContactForm';
 
 type FooterProps = {
   lang: string;
@@ -11,7 +12,10 @@ type FooterProps = {
 
 export const Footer = ({ lang }: FooterProps) => {
   return (
-    <Box w={'100%'} pt={50} pb={20}>
+    <Box w={'100%'} pb={20}>
+      <Container fluid pt={50} pb={40}>
+        <ContactForm lang={lang} />
+      </Container>
       <Container>
         <Flex w={'100%'} justify={'space-between'}>
           <Typography fz={34} fw={700}>
@@ -21,7 +25,7 @@ export const Footer = ({ lang }: FooterProps) => {
           <Socials lang={lang} />
         </Flex>
       </Container>
-      <Divider mt={50} mb={20} color={'shapeLine.9'}  />
+      <Divider mt={50} mb={20} color={'shapeLine.9'} />
       <Center>
         <Typography>
           ©{new Date().getFullYear()} {APP_NAME}

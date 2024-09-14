@@ -42,6 +42,7 @@ model Course {
   videos      Video[]
   Offer       Offer[]
   users       User[]       // Implicit many-to-many relation with User
+  lessons     Json          @default("{}")
 }
 
 model Video {

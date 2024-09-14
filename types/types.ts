@@ -17,3 +17,10 @@ export type OrderData = {
   customer: Customer;
   userId: number;
 };
+export type Lesson = {
+  id: number;
+  title: string;
+  about: { description: string; image: string }[];
+  videoLink: string
+};
+export type CourseType = { lessons: Lesson[] } & Omit<DB.Course, 'lessons'>;

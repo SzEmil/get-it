@@ -29,7 +29,7 @@ export const MyCoursesItem = ({ lang, course }: MyCoursesItemProps) => {
           <div className={`${css.spanLine} ${css.lineVisible}`}></div>
           <p className={css.description}>{course.description}</p>
           <div className={css.btnBox}>
-            <Link className={css.btn} href={Routes.myCourses}>
+            <Link className={css.btn} href={`${Routes.myCourses}/${course.id}`}>
               <FaPlay size={16} />
               Wybierz
             </Link>
