@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   Burger,
   Grid,
@@ -17,20 +17,54 @@ import { CourseType } from '@/types/types';
 import Link from 'next/link';
 import { Routes } from '@/constants/endpoints';
 import { FaLongArrowAltLeft } from 'react-icons/fa';
+import { useUser } from '@clerk/nextjs';
+import { findUserCourseById } from '@/lib/actions/course';
 
 type CourseLayoutProps = {
-  course: CourseType | null;
+  courseId: string;
 };
 
-export const CourseLayout = ({ course }: CourseLayoutProps) => {
+export const CourseLayout = ({ courseId }: CourseLayoutProps) => {
   const [opened, setOpened] = useState(false); // For burger menu toggle
   const [activeLessonId, setActiveLessonId] = useState<number | null>(null);
   const theme = useMantineTheme();
+  const [course, setCourse] = useState<CourseType | null>(null);
+  const [loading, setLoading] = useState(false);
 
   const handleLessonClick = (lessonId: number) => {
     setActiveLessonId(lessonId);
     setOpened(false);
   };
+
+  const { isLoaded, user } = useUser();
+
+  const fetchCourse = useCallback(async () => {
+    setLoading(true);
+    try {
+      if (user && isLoaded) {
+        console.log(user.id);
+        const { data } = await findUserCourseById({
+          userId: user.id,
+          courseId: +courseId,
+        });
+        const courseData = data as CourseType;
+        setCourse(courseData ?? null);
+        if (course) {
+          setActiveLessonId(course?.lessons[0].id);
+        }
+      }
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setLoading(false);
+    }
+  }, [user, isLoaded]);
+
+  useEffect(() => {
+    if (user && isLoaded) {
+      fetchCourse();
+    }
+  }, [fetchCourse]);
 
   return (
     <Container

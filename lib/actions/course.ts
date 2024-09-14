@@ -30,13 +30,13 @@ export const findUserCourses = FormatResponse(async (userId: number) => {
 });
 
 export const findUserCourseById = FormatResponse(
-  async ({ userId, courseId }: { userId: number; courseId: number }) => {
+  async ({ userId, courseId }: { userId: string; courseId: number }) => {
     const userCourse = await prisma.course.findFirst({
       where: {
         id: courseId,
         users: {
           some: {
-            id: userId,
+            clerkId: userId,
           },
         },
       },

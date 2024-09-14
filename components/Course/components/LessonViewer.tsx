@@ -1,3 +1,4 @@
+"use client"
 import React from 'react';
 import { Box, Flex, Loader, Text } from '@mantine/core';
 import * as DB from '@prisma/client';

@@ -25,17 +25,7 @@ type PageProps = {
 export default async function Course({
   params: { lang, courseId },
 }: PageProps) {
-  const { userId } = auth();
-  if (!userId) {
-    return <div>You need to be logged in to view this page.</div>;
-  }
 
-  const user = await getUserClerkId(userId);
-  const { data } = await findUserCourseById({
-    userId: +user.id,
-    courseId: +courseId,
-  });
-  const courseData = data as CourseType;
   return (
     <BackgroundImage
       src={'/background/polygonSVG.svg'}
@@ -49,7 +39,7 @@ export default async function Course({
     >
       <Container pt={100} pb={100}>
         <Box w={'100%'}>
-          <CourseLayout course={courseData} />
+          <CourseLayout courseId={courseId} />
         </Box>
       </Container>
     </BackgroundImage>
