@@ -4,6 +4,7 @@ import prisma from '../../prisma/client';
 import * as DB from '@prisma/client';
 import { FormatResponse } from './response';
 import { CartItem } from '@/types/types';
+import { cache } from 'react';
 
 export const findCoursesByCourseIds = FormatResponse(
   async (courseItems: CartItem[]) => {
@@ -45,3 +46,6 @@ export const findUserCourseById = FormatResponse(
     return userCourse;
   }
 );
+export const findCursesIdsToGenereateParams = cache(async () => {
+  return prisma.course.findMany({ select: { id: true } });
+});
