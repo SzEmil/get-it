@@ -31,7 +31,7 @@ export async function GET(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    // Budowanie ścieżki do pliku obrazu
+    // Budowanie ścieżki do pliku obrazu BEZ encodeURI
     const courseFolderPath = path.join(
       process.cwd(),
       'assets/coursesAssets',
@@ -39,8 +39,8 @@ export async function GET(
     );
     const filePath = path.join(courseFolderPath, imageName);
 
-    // Zakodowanie ścieżki w przypadku spacji
-    const encodedFilePath = encodeURI(filePath);
+    // Wyświetlanie ścieżki dla debugowania
+    console.log('Sprawdzam ścieżkę:', filePath);
 
     // Sprawdzenie, czy folder dla kursu istnieje, jeśli nie - utworzenie go
     if (!fs.existsSync(courseFolderPath)) {
@@ -48,15 +48,16 @@ export async function GET(
     }
 
     // Sprawdzenie, czy plik istnieje
-    const fileExists = fs.existsSync(encodedFilePath);
-    console.log('czy istnieje?', fileExists, encodedFilePath);
+    const fileExists = fs.existsSync(filePath);
+    console.log('Czy istnieje?', fileExists);
+
     if (!fileExists) {
       return NextResponse.json({ error: 'File not found' }, { status: 404 });
     }
 
     // Odczyt pliku
-    const file = fs.readFileSync(encodedFilePath);
-    const extension = path.extname(encodedFilePath).toLowerCase();
+    const file = fs.readFileSync(filePath);
+    const extension = path.extname(filePath).toLowerCase();
 
     // Ustawienie odpowiedniego typu MIME na podstawie rozszerzenia
     const mimeType =

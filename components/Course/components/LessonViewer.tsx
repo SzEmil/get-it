@@ -1,11 +1,12 @@
 'use client';
 import React from 'react';
-import { Box, Flex, Loader, Text } from '@mantine/core';
+import { Box, Center, Flex, Loader, Text } from '@mantine/core';
 import * as DB from '@prisma/client';
 import Image from 'next/image';
 import { CourseType } from '@/types/types';
 import { CourseImage } from '@/components/CourseImage/CourseImage';
 import { isArray } from 'lodash';
+import VideoPlayer from '@/components/VideoPlayer/VideoPlayer';
 
 type LessonViewerProps = {
   course: CourseType | null;
@@ -35,16 +36,12 @@ export const LessonViewer = ({ course, activeLessonId }: LessonViewerProps) => {
 
       {/* Video lekcji */}
       <Flex mb={20} direction={'column'} justify={'center'}>
-        <iframe
-          width="700"
-          height="400"
-          src={activeLesson.videoLink}
-          title={activeLesson.title}
-          frameBorder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-          style={{ borderRadius: '8px', width: '100%', maxWidth: '700px' }}
-        />
+        <Center>
+          <VideoPlayer
+            videoLink={activeLesson.videoLink}
+            title={activeLesson.title}
+          />
+        </Center>
       </Flex>
 
       {/* Opisy i zdjęcia */}
@@ -71,37 +68,24 @@ export const LessonViewer = ({ course, activeLessonId }: LessonViewerProps) => {
             </Text>
           )}
           {detail.image && (
-            // <Image
-            //   width={700}
-            //   height={400}
-            //   style={{
-            //     width: '100%',
-            //     maxWidth: '500px',
-            //     height: 'auto',
-            //     display: 'block',
-            //     objectFit: 'contain',
-            //     borderRadius: '8px',
-            //     marginTop: '1rem',
-            //   }}
-            //   src={detail.image}
-            //   alt="Lesson Image"
-            // />
-            <CourseImage
-              width={700}
-              height={400}
-              style={{
-                width: '100%',
-                maxWidth: '500px',
-                height: 'auto',
-                display: 'block',
-                objectFit: 'contain',
-                borderRadius: '8px',
-                marginTop: '1rem',
-              }}
-              courseId={course.id.toString()}
-              imageName={detail.image}
-              alt="Lesson Image"
-            />
+            <Center>
+              <CourseImage
+                width={700}
+                height={400}
+                style={{
+                  width: '100%',
+                  maxWidth: '500px',
+                  height: 'auto',
+                  display: 'block',
+                  objectFit: 'contain',
+                  borderRadius: '8px',
+                  marginTop: '1rem',
+                }}
+                courseId={course.id.toString()}
+                imageName={detail.image}
+                alt="Lesson Image"
+              />
+            </Center>
           )}
         </Box>
       ))}
