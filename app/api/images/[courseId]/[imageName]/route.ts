@@ -34,11 +34,12 @@ export async function GET(
     // Budowanie ścieżki do pliku obrazu BEZ encodeURI
     const courseFolderPath = path.join(
       process.cwd(),
-      'assets/coursesAssets',
+      'public/assets/coursesAssets',
       courseId
     );
     const filePath = path.join(courseFolderPath, imageName);
-
+    console.log('Katalog roboczy na produkcji:', process.cwd());
+    console.log('Ścieżka do obrazu:', filePath);
     // Wyświetlanie ścieżki dla debugowania
     console.log('Sprawdzam ścieżkę:', filePath);
 
