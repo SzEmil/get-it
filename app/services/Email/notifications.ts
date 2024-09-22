@@ -1,6 +1,13 @@
 import { notifications } from '@mantine/notifications';
 
 export const notify = {
+  onErrorMessage: (message: string) =>
+    notifications.show({
+      title: 'Coś poszło nie tak',
+      message,
+      color: 'red',
+      autoClose: 4000,
+    }),
   onErrorOrderProcessing: () =>
     notifications.show({
       title: 'Coś poszło nie tak',

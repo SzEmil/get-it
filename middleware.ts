@@ -28,7 +28,13 @@ const isProtectedRoute = createRouteMatcher([
   '/profile',
   '/my-courses',
   '/my-courses/(.*)',
+  '/api/images/(.*)',
 ]);
+
+const isApiRoute = (req: NextRequest) => {
+  const pathname = req.nextUrl.pathname;
+  return pathname.startsWith('/api');
+};
 
 export default clerkMiddleware((auth, req) => {
   if (isProtectedRoute(req)) {
@@ -41,6 +47,10 @@ export default clerkMiddleware((auth, req) => {
   const svix_signature = req.headers.get('svix-signature');
 
   if (svix_id && svix_timestamp && svix_signature) {
+    return NextResponse.next();
+  }
+
+  if (isApiRoute(req)) {
     return NextResponse.next();
   }
 
@@ -64,5 +74,7 @@ export const config = {
   matcher: [
     // Skip middleware for API routes and static files
     '/((?!api|_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
+    // Zawsze uruchamiaj dla Clerk w trasach API
+    '/api/(.*)',
   ],
 };

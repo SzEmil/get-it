@@ -11,6 +11,7 @@ import { Customer } from '@/stores/order/order.types';
 import { createOrder } from '@/lib/actions/orderProcessing';
 import { OrderData } from '@/types/types';
 import { useRouter } from 'next/navigation';
+import { notify } from '@/app/services/Email/notifications';
 
 type CheckoutProps = {
   lang: string;
@@ -40,9 +41,10 @@ const Checkout = ({ lang, offer, userId }: CheckoutProps) => {
         },
       ],
     };
-    const data = await createOrder(orderData);
+    // const data = await createOrder(orderData);
 
-    if (data.data) router.push(data.data?.paymentUrl);
+    // if (data.data) router.push(data.data?.paymentUrl);
+    notify.onErrorMessage('Płatności są obecnie nieaktywne');
   };
 
   return (

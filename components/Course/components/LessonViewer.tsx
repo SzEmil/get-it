@@ -1,9 +1,11 @@
-"use client"
+'use client';
 import React from 'react';
 import { Box, Flex, Loader, Text } from '@mantine/core';
 import * as DB from '@prisma/client';
 import Image from 'next/image';
 import { CourseType } from '@/types/types';
+import { CourseImage } from '@/components/CourseImage/CourseImage';
+import { isArray } from 'lodash';
 
 type LessonViewerProps = {
   course: CourseType | null;
@@ -48,24 +50,59 @@ export const LessonViewer = ({ course, activeLessonId }: LessonViewerProps) => {
       {/* Opisy i zdjęcia */}
       {activeLesson.about.map((detail, index) => (
         <Box key={index} mt={10} mb={20}>
-          <Text style={{ fontSize: '1.2rem', lineHeight: '1.6' }}>
-            {detail.description}
-          </Text>
-          <Image
-            width={700}
-            height={400}
-            style={{
-              width: '100%',
-              maxWidth: '500px',
-              height: 'auto',
-              display: 'block',
-              objectFit: 'contain',
-              borderRadius: '8px',
-              marginTop: '1rem',
-            }}
-            src={detail.image}
-            alt="Lesson Image"
-          />
+          {detail.title && (
+            <Text style={{ fontSize: '1.6rem', lineHeight: '1.8' }}>
+              {detail.title}
+            </Text>
+          )}
+          {detail.description && isArray(detail.description) ? (
+            <Box component="ul">
+              {detail.description.map((item, index) => (
+                <Box key={index} component="li">
+                  <Text style={{ fontSize: '1.2rem', lineHeight: '1.6' }}>
+                    {item}
+                  </Text>
+                </Box>
+              ))}
+            </Box>
+          ) : (
+            <Text style={{ fontSize: '1.2rem', lineHeight: '1.6' }}>
+              {detail.description}
+            </Text>
+          )}
+          {detail.image && (
+            // <Image
+            //   width={700}
+            //   height={400}
+            //   style={{
+            //     width: '100%',
+            //     maxWidth: '500px',
+            //     height: 'auto',
+            //     display: 'block',
+            //     objectFit: 'contain',
+            //     borderRadius: '8px',
+            //     marginTop: '1rem',
+            //   }}
+            //   src={detail.image}
+            //   alt="Lesson Image"
+            // />
+            <CourseImage
+              width={700}
+              height={400}
+              style={{
+                width: '100%',
+                maxWidth: '500px',
+                height: 'auto',
+                display: 'block',
+                objectFit: 'contain',
+                borderRadius: '8px',
+                marginTop: '1rem',
+              }}
+              courseId={course.id.toString()}
+              imageName={detail.image}
+              alt="Lesson Image"
+            />
+          )}
         </Box>
       ))}
     </Box>

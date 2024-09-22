@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 const main = async () => {
   for (const course of courses) {
     // Usunięcie zagnieżdżonych obiektów, aby upsert działał poprawnie
-    const { videos, Offer, ...courseData } = course;
+    const {  Offer, ...courseData } = course;
 
     // Upsert dla kursu
     await prisma.course.upsert({
@@ -16,13 +16,13 @@ const main = async () => {
     });
 
     // Upsert dla wideo
-    for (const video of videos.create) {
-      await prisma.video.upsert({
-        where: { id: video.id },
-        update: video,
-        create: video,
-      });
-    }
+    // for (const video of videos.create) {
+    //   await prisma.video.upsert({
+    //     where: { id: video.id },
+    //     update: video,
+    //     create: video,
+    //   });
+    // }
 
     // Upsert dla oferty
     if (Offer) {
