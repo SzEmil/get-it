@@ -23,7 +23,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
           position: 'relative',
         }}
       >
-        <iframe
+        {/* <iframe
           src={videoSrc}
           style={{
             width: '100%',
@@ -34,7 +34,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
           allow="autoplay; fullscreen"
           allowFullScreen
           frameBorder="0"
-        ></iframe>
+        ></iframe> */}
       </div>
     </div>
   );
