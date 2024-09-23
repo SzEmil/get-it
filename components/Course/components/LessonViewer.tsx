@@ -7,6 +7,7 @@ import { CourseType } from '@/types/types';
 import { CourseImage } from '@/components/CourseImage/CourseImage';
 import { isArray } from 'lodash';
 import VideoPlayer from '@/components/VideoPlayer/VideoPlayer';
+import ProtectedVideoPlayer from '@/components/VideoPlayer/ProtectedVideoPlayer';
 
 type LessonViewerProps = {
   course: CourseType | null;
@@ -37,10 +38,10 @@ export const LessonViewer = ({ course, activeLessonId }: LessonViewerProps) => {
       {/* Video lekcji */}
       <Flex mb={20} direction={'column'} justify={'center'}>
         <Center>
-          <VideoPlayer
-            videoLink={activeLesson.videoLink}
-            title={activeLesson.title}
-          />
+        <ProtectedVideoPlayer 
+          videoId={activeLesson.videoLink}
+          courseId={course.id.toString()}      
+        />
         </Center>
       </Flex>
 

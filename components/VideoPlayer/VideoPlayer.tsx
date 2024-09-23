@@ -1,40 +1,41 @@
 import React from 'react';
-import { Box } from '@mantine/core';
-import ReactPlayer from 'react-player';
 
-interface VideoPlayerProps {
-  videoLink: string;
-  title: string;
-}
+type VideoPlayerProps = {
+  videoSrc: string;
+  width?: string;
+  height?: string;
+};
 
-const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoLink, title }) => {
-  // Function to disable right-click context menu
-  const handleContextMenu = (e: React.MouseEvent) => {
-    e.preventDefault();
-  };
-
+const VideoPlayer: React.FC<VideoPlayerProps> = ({
+  videoSrc,
+  width = '700px',
+  height = 'auto',
+}) => {
   return (
-    <div>
-      <Box style={{ position: 'relative', width: '100%', maxWidth: '700px' }}>
-        <div onContextMenu={handleContextMenu}>
-          <ReactPlayer
-            url={videoLink}
-            controls={true}
-            width="700px"
-            height="400px"
-            style={{
-              borderRadius: '8px',
-              boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-            }}
-            config={{
-              youtube: {
-                playerVars: { showinfo: 0, modestbranding: 1 },
-              },
-            }}
-            title={title}
-          />
-        </div>
-      </Box>
+    <div
+      style={{ display: 'flex', justifyContent: 'center', margin: '20px 0' }}
+    >
+      <div
+        style={{
+          width: '700px',
+          height: height,
+          aspectRatio: '16/9',
+          position: 'relative',
+        }}
+      >
+        <iframe
+          src={videoSrc}
+          style={{
+            width: '100%',
+            height: '100%',
+            border: 'none',
+            borderRadius: '8px',
+          }}
+          allow="autoplay; fullscreen"
+          allowFullScreen
+          frameBorder="0"
+        ></iframe>
+      </div>
     </div>
   );
 };

@@ -29,6 +29,7 @@ const isProtectedRoute = createRouteMatcher([
   '/my-courses',
   '/my-courses/(.*)',
   '/api/images/(.*)',
+  '/api/videos/(.*)',
 ]);
 
 const isApiRoute = (req: NextRequest) => {
@@ -73,7 +74,7 @@ export const config = {
   // ],
   matcher: [
     // Skip middleware for API routes and static files
-    '/((?!api|_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
+    '/((?!api|_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest|mp4)).*)',
     // Zawsze uruchamiaj dla Clerk w trasach API
     '/api/(.*)',
   ],
