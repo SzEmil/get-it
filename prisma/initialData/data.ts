@@ -107,9 +107,10 @@ export const courses = [
             title: 'Podsumowanie',
             description:
               'Flowise daje użytkownikom możliwość tworzenia zaawansowanych aplikacji konwersacyjnych w oparciu o LLM, bez potrzeby znajomości programowania. Zrozumienie działania tokenów oraz wyboru odpowiedniego modelu pozwala na lepsze dostosowanie aplikacji do konkretnych potrzeb. Ostatecznie, wybór narzędzi i modelu zależy od celu aplikacji – czy to szybkie odpowiedzi, czy bardziej skomplikowane analizy. Dzięki takim rozwiązaniom, jak Flowise, tworzenie aplikacji AI staje się bardziej dostępne niż kiedykolwiek.',
-          }
+          },
         ],
-        videoLink: '13J9zRH5fjEIdxTT-wUdUqHXs1VYR7S0o',
+        //videoLink: '13J9zRH5fjEIdxTT-wUdUqHXs1VYR7S0o',
+        videoLink: 'wstep.mp4',
       },
       {
         id: 102,

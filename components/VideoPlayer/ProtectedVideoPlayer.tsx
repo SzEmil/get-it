@@ -16,30 +16,64 @@ const ProtectedVideoPlayer: React.FC<ProtectedVideoPlayerProps> = ({
   const [videoUrl, setVideoUrl] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
+  // useEffect(() => {
+  //   const fetchVideoUrl = async () => {
+  //     if (!userId) {
+  //       setError('Unauthorized');
+  //       return;
+  //     }
+
+  //     try {
+  //       // Pobieranie linku do wideo z API
+  //       const response = await fetch(`/api/videos/${courseId}/${videoId}`);
+  //       const data = await response.json();
+
+  //       if (response.ok) {
+  //         setVideoUrl(data.videoUrl); // Ustawiamy URL wideo z Google Drive
+  //       } else {
+  //         setError(data.error || 'Unauthorized access');
+  //       }
+  //     } catch (err) {
+  //       console.log(err);
+  //       setError('Error fetching video');
+  //     }
+  //   };
+
+  //   fetchVideoUrl();
+  // }, [courseId, videoId, userId]);
+
   useEffect(() => {
-    const fetchVideoUrl = async () => {
+    const fetchVideo = async () => {
       if (!userId) {
         setError('Unauthorized');
         return;
       }
 
       try {
-        // Pobieranie linku do wideo z API
+        // Pobieranie wideo z API
         const response = await fetch(`/api/videos/${courseId}/${videoId}`);
-        const data = await response.json();
 
-        if (response.ok) {
-          setVideoUrl(data.videoUrl); // Ustawiamy URL wideo z Google Drive
-        } else {
+        if (!response.ok) {
+          const data = await response.json(); // Próba parsowania błędu jako JSON
           setError(data.error || 'Unauthorized access');
+          return;
         }
+
+        // Zamiast parsowania jako JSON, pobieramy dane binarne w formie Blob
+        const blob = await response.blob();
+
+        // Tworzenie URL dla <video>
+        const videoObjectUrl = URL.createObjectURL(blob);
+
+        // Ustawienie URL wideo w stanie
+        setVideoUrl(videoObjectUrl);
       } catch (err) {
         console.log(err);
         setError('Error fetching video');
       }
     };
 
-    fetchVideoUrl();
+    fetchVideo();
   }, [courseId, videoId, userId]);
 
   if (error) {
