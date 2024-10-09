@@ -99,6 +99,7 @@ export async function GET(
         'Content-Type': mimeType,
         'Content-Disposition': 'inline', // Odtwarzaj wideo w przeglądarce
         'Cache-Control': 'public, max-age=31536000, immutable', // Caching na rok
+        'Access-Control-Allow-Origin': '*',
       },
     });
   } catch (error) {
