@@ -49,8 +49,8 @@ export const CourseLayout = ({ courseId }: CourseLayoutProps) => {
         });
         const courseData = data as CourseType;
         setCourse(courseData ?? null);
-        if (course) {
-          setActiveLessonId(course?.lessons[0].id);
+        if (courseData) {
+          setActiveLessonId(courseData?.lessons[0].id);
         }
       }
     } catch (e) {

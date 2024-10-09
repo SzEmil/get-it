@@ -18,6 +18,7 @@ export const CourseImage: React.FC<CourseImageProps> = ({
   if (!userId) {
     return null;
   }
-  const imageUrl = `/api/images/${courseId}/${imageName}`;
+ // const imageUrl = `/api/images/${courseId}/${imageName}`;
+ const imageUrl = `/assets/coursesAssets/${courseId}/${imageName}`
   return <Image src={imageUrl} alt={alt} {...rest} />;
 };

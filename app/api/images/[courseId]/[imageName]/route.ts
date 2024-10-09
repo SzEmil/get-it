@@ -29,9 +29,10 @@ export async function GET(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    // Serve the image from the public folder using a URL instead of fs
-    const imageUrl = `/assets/coursesAssets/${courseId}/${imageName}`;
-    
+    const host = req.headers.get('host');
+    const protocol = req.headers.get('x-forwarded-proto') || 'http';
+    const imageUrl = `${protocol}://${host}/assets/coursesAssets/${courseId}/${imageName}`;
+    console.log(imageUrl);
     return NextResponse.redirect(imageUrl); // Proxy the image URL
   } catch (error) {
     console.error('Error serving file:', error);

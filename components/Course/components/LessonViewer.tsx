@@ -8,6 +8,7 @@ import { CourseImage } from '@/components/CourseImage/CourseImage';
 import { isArray } from 'lodash';
 import VideoPlayer from '@/components/VideoPlayer/VideoPlayer';
 import ProtectedVideoPlayer from '@/components/VideoPlayer/ProtectedVideoPlayer';
+import styles from './LessonViewer.module.css';
 
 type LessonViewerProps = {
   course: CourseType | null;
@@ -38,10 +39,10 @@ export const LessonViewer = ({ course, activeLessonId }: LessonViewerProps) => {
       {/* Video lekcji */}
       <Flex mb={20} direction={'column'} justify={'center'}>
         <Center>
-        <ProtectedVideoPlayer 
-          videoId={activeLesson.videoLink}
-          courseId={course.id.toString()}      
-        />
+          <ProtectedVideoPlayer 
+            videoId={activeLesson.videoLink}
+            courseId={course.id.toString()}      
+          />
         </Center>
       </Flex>
 
@@ -53,29 +54,34 @@ export const LessonViewer = ({ course, activeLessonId }: LessonViewerProps) => {
               {detail.title}
             </Text>
           )}
+
+          {/* Renderowanie HTML z klasą dla stylów */}
           {detail.description && isArray(detail.description) ? (
-            <Box component="ul">
+            <Box component="ul" className={styles.descriptionContainer}>
               {detail.description.map((item, index) => (
                 <Box key={index} component="li">
-                  <Text style={{ fontSize: '1.2rem', lineHeight: '1.6' }}>
-                    {item}
-                  </Text>
+                  <div
+                    className={styles.descriptionContainer}
+                    dangerouslySetInnerHTML={{ __html: item }} // Renderowanie HTML dla każdego elementu tablicy
+                  />
                 </Box>
               ))}
             </Box>
           ) : (
-            <Text style={{ fontSize: '1.2rem', lineHeight: '1.6' }}>
-              {detail.description}
-            </Text>
+            <div
+              className={styles.descriptionContainer}
+              dangerouslySetInnerHTML={{ __html: detail.description }} // Renderowanie HTML
+            />
           )}
+
           {detail.image && (
             <Center>
               <CourseImage
-                width={700}
+                width={800}
                 height={400}
                 style={{
                   width: '100%',
-                  maxWidth: '500px',
+                  maxWidth: '600px',
                   height: 'auto',
                   display: 'block',
                   objectFit: 'contain',
