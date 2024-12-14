@@ -116,6 +116,10 @@ export const courses = [
             link: '13J9zRH5fjEIdxTT-wUdUqHXs1VYR7S0o',
             name: 'Wprowadzenie do Flowise',
           },
+          {
+            link: '1mwSatqytUpDjAz_xfg2_bo5tHL653-q8',
+            name: 'Wygląd aplikacji Flowise',
+          },
         ],
       },
       // 2
@@ -611,10 +615,236 @@ export const courses = [
             description:
               '<p>W tym artykule przejdziemy przez proces stworzenia prostego przepływu w aplikacji FlowiseAI. Skonfigurujemy model językowy OpenAI, połączymy go z odpowiednimi komponentami, a także dodamy elementy pamięci i szablonów (Prompt Templates) dla bardziej zaawansowanych interakcji.</p>',
           },
+          {
+            title: '1. Przygotowanie Przepływu: Dodawanie Modelu OpenAI',
+            description:
+              '<p>Na początek, zakładamy, że masz już zainstalowaną aplikację Flowise i możesz przystąpić do budowy swojego pierwszego przepływu.</p>',
+          },
+          {
+            description:
+              '<p><strong>1. Uruchomienie Flowise:</strong> Otwórz aplikację i kliknij ikonę „+” na głównym ekranie, aby dodać pierwszy element. Wybierz opcję Chat Models.</p>',
+          },
+          {
+            description:
+              '<p><strong>2. Dodanie Modelu OpenAI:</strong> Przewiń listę dostępnych modeli w dół i wybierz ChatOpenAI. Przeciągnij go na obszar roboczy. Teraz skonfigurujemy podstawowe parametry tego modelu:</p>',
+          },
+          {
+            description: [
+              '<p><strong>API Key:</strong> Aby połączyć się z modelem OpenAI, musisz uzyskać klucz API. Przejdź na stronę OpenAI, zaloguj się, a następnie w zakładce API wygeneruj nowy klucz. Skopiuj go i wróć do Flowise, aby wkleić go w odpowiednie pole.</p>',
+              '<p><strong>Temperatura:</strong> Ustawienie temperatury wpływa na kreatywność odpowiedzi modelu. Dla stabilnych odpowiedzi sugerujemy wartość około 0.7. Wartości wyższe (np. 0.9) mogą sprawić, że model będzie generował bardziej twórcze odpowiedzi.</p>',
+            ],
+            image: 'ls_5_0.jpg',
+          },
+          {
+            description:
+              '<p>Po wklejeniu klucza kliknij przycisk <strong>Connect</strong>, aby połączyć model z API.</p>',
+          },
+          {
+            title: '2. Dodawanie Łańcuchów i Pamięci',
+            description:
+              '<p>Po skonfigurowaniu modelu językowego przejdźmy do dodania łańcuchów konwersacyjnych i pamięci.</p>',
+          },
+          {
+            description:
+              '<p><strong>1. Dodawanie Łańcucha Konwersacji (Conversation Chain):</strong> Kliknij ponownie ikonę „+” i przejdź do sekcji Chains. Wybierz opcję Conversation Chain i przeciągnij ją na obszar roboczy. Połącz ten element z wcześniej dodanym modelem OpenAI.</p>',
+            image: 'ls_5_1.jpg',
+          },
+          {
+            description:
+              '<p><strong>2. Dodawanie Pamięci (Memory):</strong> Kliknij „+” i przejdź do sekcji Memory. Wybierz Buffer Memory i przeciągnij ją na obszar roboczy. Połącz ją z łańcuchem konwersacji. Dzięki temu model będzie mógł zapamiętywać poprzednie interakcje i dostosowywać odpowiedzi na podstawie wcześniejszych rozmów.</p>',
+          },
+          {
+            description:
+              '<p>W tym momencie Twój podstawowy przepływ jest gotowy. Możesz go przetestować, klikając przycisk Save Chatflow w prawym górnym rogu i nadając nazwę, np. „Test”. Następnie przejdź do okienka czatu, aby sprawdzić, jak model reaguje na Twoje zapytania.</p>',
+          },
+          {
+            title: '3. Tworzenie Szablonów Promptów (Prompt Templates)',
+            description:
+              '<p>Kolejnym krokiem będzie dodanie szablonów promptów, które pozwalają precyzyjnie określić sposób, w jaki model powinien odpowiadać na zapytania.</p>',
+          },
+          {
+            description: [
+              '<p><strong>1. Dodanie Szablonu Promptu:</strong> Kliknij „+” i wybierz LLM Chain. Następnie dodaj Prompt Template. Przeciągnij element na obszar roboczy i połącz go z modelem OpenAI.</p>',
+              '<p><strong>2. Konfiguracja Promptu:</strong> W polu tekstowym promptu możesz wstawić dynamiczne zmienne, np. {temat}, które będą uzupełniane na podstawie danych wprowadzonych przez użytkownika. Na przykład: Opowiedz mi żart o {temat}.</p>',
+              '<p><strong>3. Zmienna Wejściowa (Input Variable):</strong> Aby szablon działał dynamicznie, musisz dodać zmienną wejściową. Kliknij opcję Format Prompt Values i dodaj zmienną „temat”. Teraz model będzie mógł generować różne żarty, w zależności od wpisanego tematu.</p>',
+            ],
+            image: 'ls_5_2.jpg',
+          },
+          {
+            title: '4. Testowanie i Dalsze Dostosowania',
+            description:
+              '<p>Zapisz zmiany i przejdź do okienka czatu, aby przetestować nowy szablon. Na przykład wpisz „Opowiedz mi żart o psach” i sprawdź, czy model rzeczywiście zmienia temat zgodnie z instrukcją.</p>',
+          },
+          {
+            description:
+              '<p>Jeśli wszystko działa poprawnie, Twój przepływ jest gotowy do użycia!</p>',
+          },
+          {
+            title: 'Wyjaśnienie Pojęć Technicznych',
+          },
+          {
+            title: '1. Model Językowy (Chat Model)',
+            description:
+              '<p>Model językowy, taki jak ChatOpenAI, to algorytm sztucznej inteligencji stworzony do generowania tekstu na podstawie dostarczonych danych. W kontekście FlowiseAI model ten odpowiada na pytania, generuje tekst lub realizuje inne zadania tekstowe w ramach stworzonego przepływu. Kluczowe parametry to:</p>',
+          },
+          {
+            description: [
+              '<p><strong>API Key:</strong> Klucz dostępu, który łączy aplikację z zewnętrznym serwisem, takim jak OpenAI. Jest on wymagany, aby model mógł generować odpowiedzi.</p>',
+              '<p><strong>Temperatura:</strong> Parametr, który kontroluje „kreatywność” odpowiedzi. Niska wartość (np. 0.1) sprawia, że model będzie bardziej przewidywalny, natomiast wysoka (np. 0.9) powoduje, że odpowiedzi będą bardziej różnorodne i kreatywne.</p>',
+            ],
+            image: 'ls_5_3.png',
+          },
+          {
+            title: '2. Łańcuch Konwersacyjny (Conversation Chain)',
+            description:
+              '<p>Łańcuch konwersacyjny to element, który umożliwia prowadzenie dialogu z modelem językowym, utrzymując kontekst rozmowy. Dzięki niemu odpowiedzi modelu mogą być dostosowywane na podstawie wcześniejszych interakcji.</p>',
+          },
+          {
+            description: [
+              '<p><strong>Buffer Memory:</strong> Ten rodzaj pamięci pozwala modelowi przechowywać historię rozmów, co jest kluczowe, aby model mógł „pamiętać” wcześniejsze odpowiedzi i dostosowywać się do dalszego kontekstu.</p>',
+            ],
+          },
+          {
+            title: '3. Pamięć (Memory)',
+            description:
+              '<p>Pamięć w modelach AI to mechanizm, który umożliwia przechowywanie i przypominanie sobie informacji z poprzednich interakcji. Dzięki niej model może analizować wcześniejsze rozmowy i dostosowywać odpowiedzi do kolejnych zapytań użytkownika.</p>',
+          },
+          {
+            description: [
+              '<p><strong>Buffer Memory:</strong> Najczęściej używany typ pamięci w Flowise, który przechowuje określoną liczbę wcześniejszych interakcji w celu zachowania kontekstu.</p>',
+            ],
+          },
+          {
+            title: '4. Szablon Promptu (Prompt Template)',
+            description:
+              '<p>Szablon promptu to predefiniowana instrukcja, która określa, jak model ma odpowiadać na pytania. Umożliwia ona wprowadzenie zmiennych, które mogą być dynamicznie uzupełniane podczas interakcji.</p>',
+          },
+          {
+            description: [
+              '<p><strong>Zmienna Wejściowa (Input Variable):</strong> To dynamiczna część promptu, która może być uzupełniona na podstawie tego, co wpisze użytkownik. Przykład: {temat} w szablonie „Opowiedz mi żart o {temat}” pozwala użytkownikowi samodzielnie decydować, o czym ma być żart.</p>',
+            ],
+          },
+          {
+            title: '5. Frontend a Backend w FlowiseAI',
+            description:
+              '<p>W kontekście Flowise, front to warstwa użytkownika – to, co użytkownik widzi i jak może wchodzić w interakcję z aplikacją (np. wpisywanie zapytań). Backend to wszystko, co dzieje się „za kulisami” – przetwarzanie danych, generowanie odpowiedzi przez model, a także logika szablonów promptów i zarządzanie pamięcią.</p>',
+          },
+          {
+            title: 'Podsumowanie',
+            description:
+              '<p>To wszystko na temat tworzenia podstawowego przepływu w FlowiseAI. Ten przewodnik powinien pomóc Ci w zbudowaniu funkcjonalnej aplikacji, która wykorzystuje zaawansowane techniki, takie jak łańcuchy konwersacyjne i szablony promptów, aby dostosować interakcje do potrzeb użytkownika.</p>',
+          },
         ],
         videoLink: [
           {
-            link: '1RJNZ0oCLQi7BJPjxM6z1zRd5KmFV03mG',
+            link: '1GHN1sWYOofHhCMTxAAslWbc3xzwwwfl7',
+            name: 'Przewodnik po podstawach FlowiseAI: Tworzenie i zarządzanie projektami Chatflow',
+          },
+        ],
+      },
+      // 6
+      {
+        id: 106,
+        title:
+          'Lekcja 6 - Jak Monitorować Aplikacje z Modelami Językowymi za Pomocą LangSmith',
+        about: [
+          {
+            title:
+              'Jak Monitorować Aplikacje z Modelami Językowymi za Pomocą LangSmith',
+          },
+          {
+            title: 'Dlaczego Monitoring Jest Ważny?',
+            description:
+              '<p>W przypadku aplikacji opartych na modelach językowych, takich jak GPT-3 czy GPT-4, monitorowanie działania jest kluczowe z kilku powodów:</p>',
+          },
+          {
+            title: '1. Śledzenie Zużycia Tokenów i Optymalizacja Kosztów',
+            description:
+              '<p>Każda interakcja z modelem AI wymaga przetworzenia określonej liczby tokenów, które bezpośrednio przekładają się na koszty. Tokeny to jednostki tekstowe, na które model dzieli dane – mogą to być słowa, znaki lub ich fragmenty. Im bardziej złożone zapytanie, tym więcej tokenów jest zużywanych. Dzięki LangSmith możesz monitorować liczbę zużytych tokenów w czasie rzeczywistym, co pozwala na bieżąco kontrolować wydatki i optymalizować zapytania tak, aby były jak najkrótsze, jednocześnie zachowując precyzyjne odpowiedzi. To narzędzie działa jako "middleware", który przechwytuje każde zapytanie i analizuje, ile tokenów zostało użytych oraz jakie są z tym związane koszty.</p>',
+          },
+          {
+            title: '2. Analiza Wydajności i Latencji',
+            description:
+              '<p>Wydajność aplikacji AI jest kluczowa dla zapewnienia pozytywnych doświadczeń użytkowników. LangSmith precyzyjnie mierzy czas odpowiedzi modelu na każde zapytanie, co pozwala na monitorowanie latencji oraz identyfikowanie wąskich gardeł w przetwarzaniu danych. LangSmith działa w czasie rzeczywistym, przechwytując każde zapytanie i rejestrując metryki takie jak średni czas odpowiedzi, co umożliwia szybką reakcję na problemy związane z wydajnością. Narzędzie to śledzi przepływ danych pomiędzy aplikacją a modelem AI, zapewniając dokładne informacje na temat latencji i efektywności działania.</p>',
+          },
+          {
+            title: '3. Diagnostyka i Klasyfikacja Błędów',
+            description:
+              '<p>Błędy w generowanych odpowiedziach mogą wynikać z wielu przyczyn, od źle sformułowanych zapytań, przez problemy techniczne, aż po nieadekwatne przetwarzanie danych przez model. LangSmith rejestruje każdą interakcję, identyfikując przypadki, w których wystąpiły błędy. Co więcej, narzędzie to automatycznie klasyfikuje błędy według rodzaju i priorytetu, co pozwala na szybkie diagnozowanie problemów oraz ich skuteczne rozwiązywanie. Analiza tych logów pozwala lepiej zrozumieć, dlaczego model AI generuje błędy i jak można poprawić jego działanie.</p>',
+          },
+          {
+            title: '4. Zrozumienie Zachowań Użytkowników',
+            description:
+              '<p>Monitorowanie interakcji użytkowników z aplikacją jest kluczowe do dostosowania jej funkcji do rzeczywistych potrzeb. LangSmith rejestruje wszystkie zapytania oraz odpowiedzi generowane przez model, co pozwala na analizę wzorców użycia oraz identyfikację najczęstszych zapytań. Dzięki temu można lepiej dostosować aplikację do preferencji użytkowników, poprawiając jej efektywność i użyteczność. To narzędzie dostarcza interaktywnych dashboardów, które umożliwiają filtrowanie danych według różnych kryteriów, takich jak czas, typ zapytania czy występowanie błędów, co daje pełny wgląd w działanie aplikacji.</p>',
+            image: 'ls_6_0.png',
+          },
+          {
+            title: 'Jak Działa LangSmith?',
+            description:
+              '<p>LangSmith integruje się z twoją aplikacją jako dodatkowa warstwa monitorująca, działając w czasie rzeczywistym. Kiedy użytkownik wysyła zapytanie do modelu AI, LangSmith przechwytuje te dane przed ich przetworzeniem przez model. Następnie, każde zapytanie oraz odpowiedź są rejestrowane i analizowane, co pozwala na śledzenie kluczowych wskaźników, takich jak liczba zużytych tokenów, czas odpowiedzi oraz występowanie błędów.</p>',
+          },
+          {
+            description:
+              '<p>Dane te są przetwarzane w czasie rzeczywistym za pomocą systemów przetwarzania strumieniowego (streaming), co oznacza, że metryki i raporty są natychmiast dostępne w dashboardzie. LangSmith działa jako „middleware”, który przechwytuje każde zapytanie i odpowiedź, dostarczając cennych informacji na temat tego, jak model AI przetwarza dane, jakie wyniki generuje oraz ile to wszystko kosztuje.</p>',
+          },
+          {
+            title: 'Jak Używać LangSmith w Praktyce?',
+            description:
+              '<p>Poniżej znajduje się szczegółowy przewodnik, jak krok po kroku skonfigurować LangSmith w twojej aplikacji opartej na Flowise.</p>',
+          },
+          {
+            title: '1. Tworzenie API Key na LangSmith',
+            description: [
+              '<p>Zarejestruj się na <a href="https://smith.langchain.com/" target="_blank">LangSmith</a>.</p>',
+              '<p>Przejdź do zakładki „Manage Organizations” i wygeneruj nowy klucz API. Nazwij go np. „Flowise Monitoring” i skopiuj.</p>',
+            ],
+          },
+          {
+            title: '2. Integracja z Flowise',
+            description: [
+              '<p>W aplikacji Flowise przejdź do sekcji „Configuration” i wybierz „Analyse Chatflow”.</p>',
+              '<p>Wybierz „LangSmith” i kliknij „Create New”. Wklej skopiowany klucz API i skonfiguruj nazwę profilu monitorowania.</p>',
+              '<p>Zapisz ustawienia i uruchom monitoring.</p>',
+            ],
+          },
+          {
+            title: '3. Sprawdzanie Statystyk w LangSmith',
+            description: [
+              '<p>Przejdź do zakładki „Projects” w LangSmith. Znajdziesz tam kluczowe informacje, takie jak liczba tokenów, koszty, czas odpowiedzi oraz szczegółowe dane o interakcjach użytkowników z twoją aplikacją.</p>',
+            ],
+          },
+          {
+            title: 'Dlaczego Warto Korzystać z LangSmith?',
+            description:
+              '<p>LangSmith wyróżnia się tym, że oferuje kompleksową analizę działania aplikacji AI, nie tylko monitorując zużycie zasobów, ale także dostarczając głębszych informacji na temat interpretacji i przetwarzania danych przez model. Dzięki przejrzystym dashboardom i raportom, narzędzie to umożliwia szybką identyfikację problemów oraz dostosowanie konfiguracji aplikacji. Niezależnie od skali projektu, LangSmith jest w stanie dostarczyć precyzyjne dane potrzebne do efektywnego zarządzania aplikacją, optymalizując jej działanie i kontrolując koszty.</p>',
+          },
+          {
+            description:
+              '<p>Podsumowując, LangSmith działa jako zaawansowane narzędzie analityczne, które monitoruje każdy aspekt działania aplikacji AI, dostarczając kluczowych danych, które są niezbędne do jej optymalizacji i rozwoju. Dzięki temu narzędziu masz pełny wgląd w działanie twojej aplikacji, co pozwala na szybsze reagowanie na problemy oraz skuteczniejsze zarządzanie zasobami.</p>',
+          },
+        ],
+        videoLink: [
+          {
+            link: '1Xx-XcYwgd-Pl0CsPzRuxSvscX_3oS1CK',
+            name: 'Przewodnik po podstawach FlowiseAI: Tworzenie i zarządzanie projektami Chatflow',
+          },
+        ],
+      },
+      // 7
+      {
+        id: 107,
+        title:
+          'Lekcja 7 - Weryfikacja informacji i łączenie modeli w FlowiseAI',
+        about: [
+          {
+            title: 'Weryfikacja informacji i łączenie modeli w FlowiseAI',
+            description:
+              '<p>W tym przewodniku przeanalizujemy dwie techniki w FlowiseAI: weryfikację informacji z użyciem szablonów promptów oraz łączenie modeli (prompt chaining). Te podejścia umożliwiają budowanie inteligentnych przepływów pracy, takich jak automatyczna analiza prawdziwości stwierdzeń czy ocena wygenerowanych treści.</p>',
+          },
+        ],
+        videoLink: [
+          {
+            link: '1Xx-XcYwgd-Pl0CsPzRuxSvscX_3oS1CK',
             name: 'Przewodnik po podstawach FlowiseAI: Tworzenie i zarządzanie projektami Chatflow',
           },
         ],
