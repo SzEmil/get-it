@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import { Box, Center, Flex, Loader, Text } from '@mantine/core';
+import { Box, Center, Flex, Loader, Stack, Text } from '@mantine/core';
 import * as DB from '@prisma/client';
 import Image from 'next/image';
 import { CourseType } from '@/types/types';
@@ -37,14 +37,26 @@ export const LessonViewer = ({ course, activeLessonId }: LessonViewerProps) => {
       </h2>
 
       {/* Video lekcji */}
-      <Flex mb={20} direction={'column'} justify={'center'}>
-        <Center>
-          <ProtectedVideoPlayer 
-            videoId={activeLesson.videoLink}
-            courseId={course.id.toString()}      
-          />
-        </Center>
-      </Flex>
+      <Stack gap={2} display={'flex'}>
+        {activeLesson.videoLink.map(video => (
+          <Flex
+            key={video.link}
+            mb={20}
+            direction={'column'}
+            justify={'center'}
+          >
+            <Center>
+              <Stack>
+                <Text mb={2}>{video.name}</Text>
+                <ProtectedVideoPlayer
+                  videoId={video.link}
+                  courseId={course.id.toString()}
+                />
+              </Stack>
+            </Center>
+          </Flex>
+        ))}
+      </Stack>
 
       {/* Opisy i zdjęcia */}
       {activeLesson.about.map((detail, index) => (

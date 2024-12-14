@@ -21,6 +21,6 @@ export type Lesson = {
   id: number;
   title: string;
   about: { title: string; description: string | string[]; image: string }[];
-  videoLink: string;
+  videoLink: { link: string; name: string }[];
 };
 export type CourseType = { lessons: Lesson[] } & Omit<DB.Course, 'lessons'>;
