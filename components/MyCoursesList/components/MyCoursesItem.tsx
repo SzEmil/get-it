@@ -42,14 +42,12 @@ export const MyCoursesItem = ({ lang, course }: MyCoursesItemProps) => {
                       {course.progressData.sections.length} */}
               </p>
             </div>
-            <div className={css.statsBox}>
+            {/* <div className={css.statsBox}>
               <MdQuiz size={24} />
               <p className={css.frame}>
                 Quiz 0/0
-                {/* {course.progressData.quizesCompleted}/
-                      {course.progressData.sections.length} */}
               </p>
-            </div>
+            </div> */}
           </div>
         </div>
 
