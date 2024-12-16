@@ -41,10 +41,10 @@ const Checkout = ({ lang, offer, userId }: CheckoutProps) => {
         },
       ],
     };
-     const data = await createOrder(orderData);
+    //  const data = await createOrder(orderData);
 
-     if (data.data) router.push(data.data?.paymentUrl);
-    // notify.onErrorMessage('Płatności są obecnie nieaktywne');
+    //  if (data.data) router.push(data.data?.paymentUrl);
+    notify.onErrorMessage('Płatności są obecnie nieaktywne');
   };
 
   return (
