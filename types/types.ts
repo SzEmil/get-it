@@ -16,6 +16,14 @@ export type OrderData = {
   courses: CartItem[];
   customer: Customer;
   userId: number;
+
+  invoice_name?: String;
+  invoice_address?: String;
+  invoice_postal_code?: String;
+  invoice_town?: String;
+  invoice_country?: String;
+  invoice_nip?: String;
+  invoice_type?: DB.InvoiceType;
 };
 export type Lesson = {
   id: number;

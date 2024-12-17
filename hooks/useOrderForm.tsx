@@ -8,7 +8,7 @@ type ValidateData = {
   [fieldName: string]: (value: any) => string | null;
 };
 
-export const useOrderForm = (lang: string) => {
+export const useOrderForm = (lang: string, isCompanyInvoice: boolean) => {
   const initialData = useStore(useOrderStore, state => state.customer);
 
   const validateData: ValidateData = {
@@ -22,12 +22,28 @@ export const useOrderForm = (lang: string) => {
       value.length === 0 ? 'Kod pocztowy jest wymagany' : null,
     phone: value =>
       value.length === 0
-        ? 'Numer telefony jest wymagany'
+        ? 'Numer telefonu jest wymagany'
         : /^[0-9\-\+\. ]+$/.test(value)
         ? null
         : 'Niepoprawny numer telefonu',
     acceptedTerms: value =>
       value === true ? null : 'Musisz zaakceptować regulamin',
+
+    // Dynamiczna walidacja pól fakturowych
+    invoice_name: value =>
+      isCompanyInvoice && value.length === 0 ? 'Nazwa firmy jest wymagana' : null,
+    invoice_address: value =>
+      isCompanyInvoice && value.length === 0 ? 'Adres faktury jest wymagany' : null,
+    invoice_postal_code: value =>
+      isCompanyInvoice && value.length === 0
+        ? 'Kod pocztowy faktury jest wymagany'
+        : null,
+    invoice_town: value =>
+      isCompanyInvoice && value.length === 0 ? 'Miasto faktury jest wymagane' : null,
+    invoice_country: value =>
+      isCompanyInvoice && value.length === 0 ? 'Kraj faktury jest wymagany' : null,
+    invoice_nip: value =>
+      isCompanyInvoice && value.length === 0 ? 'NIP jest wymagany' : null,
   };
 
   return useForm({

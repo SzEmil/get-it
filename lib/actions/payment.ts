@@ -8,30 +8,38 @@ import { revalidatePath } from 'next/cache';
 import { Routes } from '@/constants/endpoints';
 import { FormatResponse } from './response';
 
-
 export const savePayment = async (
   customer: UserOrderDataType,
   courses: CartItem[]
 ) => {
-  const totalAmount = courses.reduce(
-    (totalAmount, course) => totalAmount + course.amount,
-    0
-  );
+  const totalAmount = courses
+    .reduce(
+      (totalAmount, course) =>
+        totalAmount + parseFloat(course.amount.toFixed(2)),
+      0
+    )
+    .toFixed(2);
+
   const payment = await prisma.payment.create({
     data: {
-      // TODO address
       city: customer.city ?? '',
       email: customer.email,
       firstName: customer.firstName,
-      houseNumber: customer.houseNumber ?? '',
       lastName: customer.lastName,
       phone: customer.phone ?? '',
       postalCode: customer.postalCode ?? '',
-      street: customer.street ?? '',
-      flatNumber: customer.flatNumber ?? '',
       userId: customer.id,
-      amount: totalAmount,
+      amount: +totalAmount,
       currency: 'PLN',
+      address: customer.address,
+
+      invoice_name: customer.invoice_name,
+      invoice_address: customer.invoice_address,
+      invoice_postal_code: customer.invoice_postal_code,
+      invoice_town: customer.invoice_town,
+      invoice_country: customer.invoice_country,
+      invoice_nip: customer.invoice_nip ?? '',
+      invoice_type: customer.invoice_type,
     },
   });
 
@@ -100,4 +108,3 @@ export const updatePayment = async (
     data: updatedPaymentData,
   });
 };
-

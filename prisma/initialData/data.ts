@@ -9,7 +9,6 @@ export const courses = [
     images: ['image1.png', 'image2.png'],
     language: 'pl',
     status: CourseStatus.ACTIVE,
-
     //
 
     lessons: [],

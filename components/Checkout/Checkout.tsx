@@ -2,8 +2,8 @@
 
 import { useOrderForm } from '@/hooks/useOrderForm';
 import { useOrderStore } from '@/stores/order/order.store';
-import { Box, Flex, TextInput, Checkbox, Button } from '@mantine/core';
-import React, { useEffect } from 'react';
+import { Box, Flex, TextInput, Checkbox, Button, Switch } from '@mantine/core';
+import React, { useEffect, useState } from 'react';
 import * as DB from '@prisma/client';
 import { OrderSummary } from './components/OrderSummary';
 import css from './Checkout.module.css';
@@ -20,31 +20,58 @@ type CheckoutProps = {
 };
 
 const Checkout = ({ lang, offer, userId }: CheckoutProps) => {
+  const [isSubmmiting, setIsSubmmiting] = useState(false);
+
   const router = useRouter();
   const { setCustomer } = useOrderStore();
-  const customerForm = useOrderForm(lang);
+
+  // Stan dla wyboru typu faktury
+  const [isCompanyInvoice, setIsCompanyInvoice] = useState(false);
+
+  const customerForm = useOrderForm(lang, isCompanyInvoice);
 
   useEffect(() => {
     setCustomer(customerForm.values);
   }, [customerForm.values, setCustomer]);
 
   const onSubmitCheckoutForm = async (values: Customer) => {
-    const orderData: OrderData = {
-      customer: values,
-      userId,
-      courses: [
-        {
-          courseId: offer.courseId,
-          courseName: offer.name,
-          amount: offer.price,
-          currency: offer.currency,
-        },
-      ],
-    };
-    //  const data = await createOrder(orderData);
+    try {
+      setIsSubmmiting(true);
+      const orderData: OrderData = {
+        customer: values,
+        userId,
+        courses: [
+          {
+            courseId: offer.courseId,
+            courseName: offer.name,
+            amount: offer.price,
+            currency: offer.currency,
+          },
+        ],
 
-    //  if (data.data) router.push(data.data?.paymentUrl);
-    notify.onErrorMessage('Płatności są obecnie nieaktywne');
+        invoice_name: isCompanyInvoice
+          ? values.invoice_name
+          : values.firstName + ' ' + values.lastName,
+        invoice_address: isCompanyInvoice
+          ? values.invoice_address
+          : values.address,
+        invoice_postal_code: isCompanyInvoice
+          ? values.invoice_postal_code
+          : values.postalCode,
+        invoice_town: isCompanyInvoice ? values.invoice_town : values.city,
+        invoice_country: isCompanyInvoice
+          ? values.invoice_country
+          : values.country,
+        invoice_nip: isCompanyInvoice ? values.invoice_nip : undefined,
+        invoice_type: isCompanyInvoice ? 'COMPANY' : 'PERSONAL',
+      };
+
+      //const data = await createOrder(orderData);
+      //  if (data.data) router.push(data.data?.paymentUrl);
+      notify.onErrorMessage('Płatności są obecnie nieaktywne');
+    } finally {
+      setIsSubmmiting(false);
+    }
   };
 
   return (
@@ -54,6 +81,7 @@ const Checkout = ({ lang, offer, userId }: CheckoutProps) => {
         style={{ width: '100%', maxWidth: '700px' }}
       >
         <Box w={'100%'}>
+          {/* Dane podstawowe */}
           <Flex gap="md" mb="sm">
             <TextInput
               label="Imię"
@@ -90,7 +118,6 @@ const Checkout = ({ lang, offer, userId }: CheckoutProps) => {
             classNames={{ input: css.input }}
           />
 
-          {/* Kod pocztowy i Miasto w jednym wierszu */}
           <Flex gap="md" mt="sm" mb="sm">
             <TextInput
               label="Kod pocztowy"
@@ -126,6 +153,84 @@ const Checkout = ({ lang, offer, userId }: CheckoutProps) => {
             mt="sm"
             classNames={{ input: css.input }}
           />
+
+          {/* Przełącznik dla faktury */}
+          <Switch
+            label="Chcę fakturę dla firmy"
+            checked={isCompanyInvoice}
+            onChange={event => setIsCompanyInvoice(event.currentTarget.checked)}
+            mt="lg"
+            styles={{
+              track: {
+                backgroundColor: isCompanyInvoice ? 'themePrimary.0' : '#555',
+              },
+              thumb: {
+                backgroundColor: 'white',
+                border: '2px solid themePrimary.0',
+              },
+              label: {
+                color: 'white',
+              },
+            }}
+          />
+
+          {/* Pola dla faktury firmowej */}
+          {isCompanyInvoice && (
+            <>
+              <TextInput
+                label="Nazwa firmy"
+                placeholder="Nazwa firmy"
+                {...customerForm.getInputProps('invoice_name')}
+                required
+                mt="sm"
+                classNames={{ input: css.input }}
+              />
+              <TextInput
+                label="Adres faktury"
+                placeholder="Adres faktury"
+                {...customerForm.getInputProps('invoice_address')}
+                required
+                mt="sm"
+                classNames={{ input: css.input }}
+              />
+              <Flex gap="md" mt="sm">
+                <TextInput
+                  label="Kod pocztowy"
+                  placeholder="Kod pocztowy"
+                  {...customerForm.getInputProps('invoice_postal_code')}
+                  required
+                  classNames={{ input: css.input }}
+                  style={{ flex: 1 }}
+                />
+                <TextInput
+                  label="Miasto"
+                  placeholder="Miasto"
+                  {...customerForm.getInputProps('invoice_town')}
+                  required
+                  classNames={{ input: css.input }}
+                  style={{ flex: 2 }}
+                />
+              </Flex>
+              <TextInput
+                label="Kraj"
+                placeholder="Kraj"
+                {...customerForm.getInputProps('invoice_country')}
+                required
+                mt="sm"
+                classNames={{ input: css.input }}
+              />
+              <TextInput
+                label="NIP"
+                placeholder="NIP"
+                {...customerForm.getInputProps('invoice_nip')}
+                required
+                mt="sm"
+                classNames={{ input: css.input }}
+              />
+            </>
+          )}
+
+          {/* Akceptacja regulaminu */}
           <Checkbox
             label="Akceptuję regulamin"
             {...customerForm.getInputProps('acceptedTerms', {
@@ -137,6 +242,8 @@ const Checkout = ({ lang, offer, userId }: CheckoutProps) => {
             classNames={{ input: css.input }}
             color={'themePrimary.0'}
           />
+
+          {/* Przycisk */}
           <Button
             type="submit"
             fullWidth
@@ -144,8 +251,9 @@ const Checkout = ({ lang, offer, userId }: CheckoutProps) => {
             size="md"
             radius={20}
             color={'themePrimary.0'}
+            disabled={isSubmmiting}
           >
-            Złóż zamówienie
+            {isSubmmiting ? 'Ładowanie' : 'Złóż zamówienie'}
           </Button>
         </Box>
       </form>
@@ -153,4 +261,5 @@ const Checkout = ({ lang, offer, userId }: CheckoutProps) => {
     </Flex>
   );
 };
+
 export default Checkout;

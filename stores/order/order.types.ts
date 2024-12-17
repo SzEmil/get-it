@@ -9,6 +9,13 @@ export type Customer = {
   city: string;
   postalCode: string;
   phone: string;
+
+  invoice_name?: string;
+  invoice_address?: string;
+  invoice_postal_code?: string;
+  invoice_town?: string;
+  invoice_country?: string;
+  invoice_nip?: string;
 };
 
 type OrderStoreData = {

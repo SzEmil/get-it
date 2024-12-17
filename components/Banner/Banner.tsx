@@ -113,7 +113,7 @@ const Banner = ({ lang }: BannerProps) => {
                 size="lg"
                 radius={30}
                 color="themePrimary.0"
-                onClick={() => router.push('/courses')}
+                onClick={() => router.push('/offer')}
               >
                 {'Kup Teraz'}
               </Button>

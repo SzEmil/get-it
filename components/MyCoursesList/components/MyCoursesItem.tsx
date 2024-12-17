@@ -9,6 +9,7 @@ import * as DB from '@prisma/client';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Routes } from '@/constants/endpoints';
+import { CourseImage } from '@/components/CourseImage/CourseImage';
 
 type MyCoursesItemProps = {
   lang: string;
@@ -60,6 +61,23 @@ export const MyCoursesItem = ({ lang, course }: MyCoursesItemProps) => {
             height={200}
             style={{ display: 'block', width: '100%', height: '100%' }}
           />
+
+          {/* <CourseImage
+            width={800}
+            height={400}
+            style={{
+              width: '100%',
+              maxWidth: '600px',
+              height: 'auto',
+              display: 'block',
+              objectFit: 'contain',
+              borderRadius: '8px',
+              marginTop: '1rem',
+            }}
+            courseId={course.id.toString()}
+            imageName={course.images[0]}
+            alt="Lesson Image"
+          /> */}
         </div>
       </div>
     </li>

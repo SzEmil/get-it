@@ -11,9 +11,13 @@ import { Customer } from '@/stores/order/order.types';
 import { getUserById } from './user.actions';
 
 export type UserOrderDataType = {
-  houseNumber?: string;
-  flatNumber?: string;
-  street?: string;
+  invoice_name?: String;
+  invoice_address?: String;
+  invoice_postal_code?: String;
+  invoice_town?: String;
+  invoice_country?: String;
+  invoice_nip?: String;
+  invoice_type?: DB.InvoiceType;
 } & Customer &
   Pick<DB.User, 'id'>;
 
@@ -30,6 +34,7 @@ export const createOrder = FormatResponse(
       ...customer,
       id: user.id,
     } satisfies UserOrderDataType;
+
 
     const orderDb = await savePayment(customerData, courses);
 

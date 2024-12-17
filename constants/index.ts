@@ -14,5 +14,13 @@ export const CUSTOMER_INITIAL_STATE = {
   city: "",
   postalCode: "",
   phone: "",
-  acceptedTerms: false
+  acceptedTerms: false,
+
+  isCompanyInvoice: false,
+  invoice_name: '',
+  invoice_address: '',
+  invoice_postal_code: '',
+  invoice_town: '',
+  invoice_country: '',
+  invoice_nip: '',
 };

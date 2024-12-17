@@ -21,7 +21,10 @@ export const MyCoursesList = ({ lang }: MyCoursesListPropss) => {
     setLoading(true);
     try {
       if (user && isLoaded) {
-        const coursesData = await findUserCourses(+user.id);
+        const coursesData = await findUserCourses(
+          //@ts-ignore
+          +user.publicMetadata.userId
+        );
         setCourses(coursesData.data ?? []);
       }
     } catch (e) {
