@@ -66,8 +66,8 @@ const Checkout = ({ lang, offer, userId }: CheckoutProps) => {
         invoice_type: isCompanyInvoice ? 'COMPANY' : 'PERSONAL',
       };
 
-      //const data = await createOrder(orderData);
-      //  if (data.data) router.push(data.data?.paymentUrl);
+      const data = await createOrder(orderData);
+       if (data.data) router.push(data.data?.paymentUrl);
       notify.onErrorMessage('Płatności są obecnie nieaktywne');
     } finally {
       setIsSubmmiting(false);

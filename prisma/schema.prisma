@@ -85,9 +85,56 @@ model Payment {
   invoice_country   String? 
   invoice_nip       String?
   invoice_type      InvoiceType @default(PERSONAL)
+
+  invoices         Invoice[]     @relation("PaymentInvoices")
 }
 
+model Invoice {
+  id               Int           @id @default(autoincrement())
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
 
+
+  invoice_number      String  
+  seller_name         String    @default("Karol Sapiołko Narevka")
+  seller_address      String    @default("Hajnowska 1 A ")
+  seller_postalCode   String    @default("17-220")
+  seller_town         String    @default("Narewka")
+  seller_NIP          String    @default("6030083353")
+  seller_REGON        String    @default("527787213")
+  seller_code         String    @default("+48")
+  seller_phone        String    @default("887600255")   
+  seller_country      String    @default("Polska")
+
+  buyer_name          String    
+  buyer_address       String    
+  buyer_postalCode    String    
+  buyer_town          String  
+  buyer_NIP           String  
+  buyer_country       String
+
+  bank_name           String?    @default("mbank")
+  bank_account        String?    @default("661140 2004 0000 3502 7459 8267")
+  bank_swift          String?    
+ 
+  price               Float
+  currency            String    
+
+  paymentId           Int       @unique
+  paymentMethod       String   
+  payment_name        String   
+  payment_date        DateTime
+  sold_date           DateTime
+  exchange_rate       Float? 
+  exchange_rate_date  DateTime?
+
+  type                InvoiceType
+
+  product_id          Int
+  product_name        String
+
+  payment             Payment   @relation("PaymentInvoices", fields: [paymentId], references: [id], onDelete: Cascade)
+}
 
 // Definicja enum dla invoice_type
 enum InvoiceType {

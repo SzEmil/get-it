@@ -13,3 +13,15 @@ export const findUserPayments = FormatResponse(async (userId: number) => {
 
   return userPayments;
 });
+
+export const findPaymentById = FormatResponse(async (paymentId: number) => {
+  const payment = await prisma.payment.findUnique({
+    where: { id: paymentId },
+  });
+
+  if (!payment) {
+    throw new Error(`Payment with ID ${paymentId} not found`);
+  }
+
+  return payment;
+});
