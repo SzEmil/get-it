@@ -12,7 +12,7 @@ const PriceToPolishWords = require('price-to-polish-words');
 export const generateInvoicePdf = async (
   invoice: Invoice
   // logo: string
-): Promise<Uint8Array<ArrayBufferLike>> => {
+): Promise<Buffer> => {
   let html;
 
   const currentDate = new Date();
@@ -63,7 +63,10 @@ export const generateInvoicePdf = async (
   });
 
   await browser.close();
-  return pdfBuffer;
+
+  const convertedBuffer = await Buffer.from(pdfBuffer);
+
+  return convertedBuffer;
 };
 
 function replaceInvoicePlaceholders(html: string, invoice: Invoice): string {

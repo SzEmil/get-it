@@ -55,7 +55,7 @@ export const createInvoice = FormatResponse(async (paymentId: number) => {
     attachments: [
       {
         filename: `${invoice.invoice_number}.pdf`,
-        content: Buffer.from(pdfBuffer),
+        content: pdfBuffer,
       },
     ],
   });
