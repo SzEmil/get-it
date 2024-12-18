@@ -11,7 +11,7 @@ import { Customer } from '@/stores/order/order.types';
 import { createOrder } from '@/lib/actions/orderProcessing';
 import { OrderData } from '@/types/types';
 import { useRouter } from 'next/navigation';
-import { notify } from '@/app/services/Email/notifications';
+import { notify } from '@/services/Email/notifications';
 
 type CheckoutProps = {
   lang: string;

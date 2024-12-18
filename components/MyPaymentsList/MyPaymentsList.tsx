@@ -8,8 +8,8 @@ import * as DB from '@prisma/client';
 import { MyPaymentsItem } from './components/MyPaymentsItem';
 import { findUserPayments } from '@/lib/actions/payment.actions';
 
-import sendEmail from '@/app/services/Email/operations/sendEmail';
-
+import sendEmail from '@/services/Email/operations/sendEmail';
+import { createInvoice } from '@/lib/actions/invoice.actions';
 
 type MyPaymentsListPropss = {
   lang: string;
@@ -24,7 +24,6 @@ export const MyPaymentsList = ({ lang }: MyPaymentsListPropss) => {
   const [loading, setLoading] = useState(false);
 
   const { isLoaded, user } = useUser();
-
 
   const fetchPayments = useCallback(async () => {
     setLoading(true);
@@ -45,11 +44,17 @@ export const MyPaymentsList = ({ lang }: MyPaymentsListPropss) => {
 
   useEffect(() => {
     if (user && isLoaded) {
-
       fetchPayments();
     }
   }, [fetchPayments]);
 
+  const handleTestInvoice = async () => {
+    try {
+      await createInvoice(29);
+    } catch (e) {
+      console.log(e);
+    }
+  };
   return (
     <Flex
       direction={'column'}
@@ -59,6 +64,9 @@ export const MyPaymentsList = ({ lang }: MyPaymentsListPropss) => {
       mah={500}
       style={{ overflowY: 'scroll' }}
     >
+      {/* <Button onClick={handleTestInvoice}>
+        Stworz fakture na podstawie płatnosci
+      </Button> */}
       {loading ? (
         <Center w={'100%'}>
           <Loader mt={50} />

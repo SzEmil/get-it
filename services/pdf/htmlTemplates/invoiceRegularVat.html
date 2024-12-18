@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Faktura VAT</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        color: #000;
+        font-size: 12px;
+      }
+      .container {
+        width: 100%;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      .header {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+      .header img {
+        max-height: 80px;
+      }
+      .info-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+      .info-header div {
+        flex: 1;
+        text-align: center;
+      }
+      .info-header div > div {
+        margin-bottom: 5px;
+      }
+      .info {
+        margin-bottom: 20px;
+        font-size: 14px;
+      }
+      .info div {
+        margin-bottom: 5px;
+      }
+      .info strong {
+        font-weight: bold;
+      }
+      .details {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 20px;
+      }
+      .details-left,
+      .details-right {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .details-left {
+        flex: 1;
+        margin-right: 20px;
+      }
+      .details-right {
+        align-items: flex-end;
+      }
+      .details-right-box {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+        font-size: 10px;
+      }
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 4px;
+        text-align: left;
+      }
+      th {
+        background-color: #f2f2f2;
+      }
+      .totals {
+        margin-top: 20px;
+        text-align: left;
+        margin-bottom: 50px;
+      }
+      .totals div {
+        margin-bottom: 5px;
+        font-weight: bold;
+      }
+      .footer {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 100px;
+        font-size: 12px;
+        color: gray;
+      }
+      .invoice-title {
+        font-size: 20px;
+        font-weight: bold;
+      }
+      .invoice-number {
+        font-size: 16px;
+      }
+      .original {
+        font-size: 16px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <img
+          src="data:image/webp;base64,{{tenant_logo}}"
+          alt="alt text"
+        />
+      </div>
+      <div class="info-header">
+        <div>
+          <div><strong>{{currentDate}} {{tenant_city}}</strong></div>
+          <div>Data i miejsce wystawienia dokumentu</div>
+          <div><strong>{{sold_date}}</strong></div>
+          <div>Data sprzedaży</div>
+        </div>
+        <div>
+          <div class="invoice-title">Faktura VAT</div>
+          <div class="invoice-number">Nr: {{invoice_number}}</div>
+        </div>
+        <div class="original">Oryginał</div>
+      </div>
+
+      <div class="details">
+        <div class="details-left">
+          <div>
+            <div>Sprzedawca: <strong>{{seller_name}}</strong></div>
+            <div>
+              Adres:
+              <strong
+                >{{seller_address}} {{seller_postalCode}}
+                {{seller_city}}</strong
+              >
+            </div>
+            <div>NIP: <strong>{{seller_NIP}}</strong></div>
+            <div>
+              Telefon: <strong>{{seller_code}} {{seller_phone}}</strong>
+            </div>
+            <div>Email: <strong>{{seller_email}}</strong></div>
+          </div>
+          <div>
+            <div>Forma płatności: <strong>{{paymentMethod}}</strong></div>
+            <div>Termin płatności: <strong>{{payment_date}}</strong></div>
+          </div>
+          <div>
+            <div>Bank: <strong>{{bank_name}}</strong></div>
+            <div>Konto: <strong>{{bank_account}}</strong></div>
+            <div>SWIFT: <strong>{{bank_swift}}</strong></div>
+          </div>
+        </div>
+        <div class="details-right">
+          <div class="details-right-box">
+            <div>
+              <div>Nabywca: <strong>{{buyer_name}}</strong></div>
+              <div>
+                Adres:
+                <strong
+                  >{{buyer_address}} {{buyer_postalCode}} {{buyer_city}}</strong
+                >
+              </div>
+              <div>NIP: <strong>{{buyer_NIP}}</strong></div>
+            </div>
+            <div>
+              <div>Odbiorca: <strong>{{receiver_name}}</strong></div>
+              <div>
+                Adres:
+                <strong
+                  >{{receiver_address}} {{receiver_postalCode}}
+                  {{receiver_city}}</strong
+                >
+              </div>
+              <div>NIP: <strong>{{receiver_NIP}}</strong></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Nr</th>
+            <th>Nazwa</th>
+            <th>Ilość</th>
+            <th>Jm</th>
+            <th>Cena netto</th>
+            <th>SWW/PKWiU</th>
+            <th>Stawka VAT [%]</th>
+            <th>Wartość netto USD</th>
+            <th>Wartość brutto USD</th>
+            <th>Wartość netto PLN</th>
+            <th>Kwota VAT PLN</th>
+            <th>Wartość brutto PLN</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>{{payment_name}}</td>
+            <td>1,00</td>
+            <td>szt.</td>
+            <td>{{price}}</td>
+            <td>n.p.</td>
+            <td>0,00</td>
+            <td>{{price}}</td>
+            <td>{{price}}</td>
+            <td>{{price_pln}}</td>
+            <td>0,00</td>
+            <td>{{price_pln}}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="totals">
+        <div>Razem do zapłaty: <strong>{{price}} {{currency}}</strong></div>
+        <div>Słownie: <strong>{{price_words}}</strong></div>
+      </div>
+
+      <div class="footer">
+        <div>Nazwisko i podpis osoby upoważnionej do odebrania dokumentu</div>
+        <div>Wystawił: <strong>{{seller_name}}</strong></div>
+      </div>
+    </div>
+  </body>
+</html>

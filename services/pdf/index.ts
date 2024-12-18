@@ -21,7 +21,7 @@ export const generateInvoicePdf = async (
   const generatedTime = currentDate.toISOString();
 
   html = await fs.readFile(
-    path.join('templates', 'invoiceRegularVat.html'),
+    path.join(process.cwd(), 'services', 'pdf', 'htmlTemplates', 'invoiceRegularVat.html'),
     'utf8'
   );
 

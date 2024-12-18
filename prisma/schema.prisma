@@ -120,7 +120,7 @@ model Invoice {
   price               Float
   currency            String    
 
-  paymentId           Int       @unique
+  paymentId           Int       
   paymentMethod       String   
   payment_name        String   
   payment_date        DateTime

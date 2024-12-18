@@ -4,10 +4,10 @@ import React from 'react';
 import { useContactForm } from '../../hooks/useContactForm';
 
 import { ContactFormInitialData } from '../../hooks/useContactForm';
-import { EmailTemplate } from '@/app/services/Email/templates';
-import sendEmail from '@/app/services/Email/operations/sendEmail';
-import { notify } from '@/app/services/Email/notifications';
+import sendEmail from '@/services/Email/operations/sendEmail';
+import { notify } from '@/services/Email/notifications';
 import { ContactFormField } from './ContactForm.types';
+import { EmailTemplate } from '@/services/Email/templates';
 
 type ContactFormProps = {
   lang: string;
@@ -55,7 +55,7 @@ export const ContactForm = ({ lang }: ContactFormProps) => {
             {...contactForm.getInputProps(ContactFormField.message)}
           />
         </Flex>
-        <Button w={170} mt={20} type="submit" color='themePrimary.0'>
+        <Button w={170} mt={20} type="submit" color="themePrimary.0">
           Wyślij
         </Button>
       </form>

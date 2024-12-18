@@ -4,8 +4,8 @@ import { FormatResponse } from './response';
 import prisma from '../../prisma/client';
 import * as path from 'path';
 import * as fs from 'fs';
-import { generateInvoicePdf } from '@/app/services/pdf';
-import sendEmail from '@/app/services/Email/operations/sendEmail';
+import { generateInvoicePdf } from '@/services/pdf';
+import sendEmail from '@/services/Email/operations/sendEmail';
 
 export const createInvoice = FormatResponse(async (paymentId: number) => {
   const payment = await prisma.payment.findUnique({
@@ -47,7 +47,7 @@ export const createInvoice = FormatResponse(async (paymentId: number) => {
   });
 
   const pdfBuffer = await generateInvoicePdf(invoice);
-
+//   console.log(payment.email);
   await sendEmail('pl', {
     to: payment.email,
     subject: `Faktura potwierdzenia opłaty za produkt: ${invoice.product_name}`,

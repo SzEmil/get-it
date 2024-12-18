@@ -32,6 +32,7 @@ export const savePayment = async (
       amount: +totalAmount,
       currency: 'PLN',
       address: customer.address,
+      paymentMethod: "Płatność online",
 
       invoice_name: customer.invoice_name,
       invoice_address: customer.invoice_address,
