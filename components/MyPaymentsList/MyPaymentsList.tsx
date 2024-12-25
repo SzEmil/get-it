@@ -9,7 +9,7 @@ import { MyPaymentsItem } from './components/MyPaymentsItem';
 import { findUserPayments } from '@/lib/actions/payment.actions';
 
 import sendEmail from '@/services/Email/operations/sendEmail';
-import { createInvoice } from '@/lib/actions/invoice.actions';
+import { createInvoice, sendInvoiceById } from '@/lib/actions/invoice.actions';
 
 type MyPaymentsListPropss = {
   lang: string;
@@ -50,7 +50,10 @@ export const MyPaymentsList = ({ lang }: MyPaymentsListPropss) => {
 
   const handleTestInvoice = async () => {
     try {
-      await createInvoice(29);
+      await sendInvoiceById({
+        invoiceId: 8,
+        email: 'emilszymczyk99@gmail.com',
+      });
     } catch (e) {
       console.log(e);
     }
@@ -64,9 +67,7 @@ export const MyPaymentsList = ({ lang }: MyPaymentsListPropss) => {
       mah={500}
       style={{ overflowY: 'scroll' }}
     >
-      {/* <Button onClick={handleTestInvoice}>
-        Stworz fakture na podstawie płatnosci
-      </Button> */}
+      {/* <Button onClick={handleTestInvoice}>Wyslij fakture o id 8</Button> */}
       {loading ? (
         <Center w={'100%'}>
           <Loader mt={50} />

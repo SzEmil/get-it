@@ -47,7 +47,7 @@ export const createInvoice = FormatResponse(async (paymentId: number) => {
   });
 
   const pdfBuffer = await generateInvoicePdf(invoice);
-//   console.log(payment.email);
+  //   console.log(payment.email);
   await sendEmail('pl', {
     to: payment.email,
     subject: `Faktura potwierdzenia opłaty za produkt: ${invoice.product_name}`,
@@ -61,4 +61,35 @@ export const createInvoice = FormatResponse(async (paymentId: number) => {
   });
 
   return invoice;
+});
+
+export const sendInvoiceById = FormatResponse(async ({ invoiceId, email }: { invoiceId: number; email: string }) => {
+  // Pobierz fakturę na podstawie przekazanego ID
+  const invoice = await prisma.invoice.findUnique({
+    where: { id: invoiceId },
+  });
+
+  if (!invoice) {
+    throw new Error(`Invoice with ID ${invoiceId} not found`);
+  }
+
+  // Wygeneruj plik PDF faktury
+  const pdfBuffer = await generateInvoicePdf(invoice);
+
+  // Wyślij fakturę jako załącznik e-mail
+  await sendEmail('pl', {
+    to: email, // Zakładam, że e-mail znajduje się w relacji payment
+    subject: `Faktura: ${invoice.invoice_number}`,
+    html: `<p>Dziękujemy za zakupy. W załączniku znajdziesz swoją fakturę.</p>`,
+    attachments: [
+      {
+        filename: `${invoice.invoice_number}.pdf`,
+        content: pdfBuffer,
+      },
+    ],
+  });
+
+  return {
+    message: `Invoice with ID ${invoiceId} has been sent successfully`,
+  };
 });
