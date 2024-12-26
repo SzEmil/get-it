@@ -179,8 +179,8 @@ export const CourseLayout = ({ courseId }: CourseLayoutProps) => {
         lesson => lesson.id === activeLessonId
       );
       if (currentIndex > 0) {
-        setActiveLessonId(course.lessons[currentIndex - 1].id);
         window.scrollTo({ top: 0, behavior: 'smooth' });
+        setActiveLessonId(course.lessons[currentIndex - 1].id);
       }
     }
   };
@@ -191,8 +191,8 @@ export const CourseLayout = ({ courseId }: CourseLayoutProps) => {
         lesson => lesson.id === activeLessonId
       );
       if (currentIndex < course.lessons.length - 1) {
-        setActiveLessonId(course.lessons[currentIndex + 1].id);
         window.scrollTo({ top: 0, behavior: 'smooth' });
+        setActiveLessonId(course.lessons[currentIndex + 1].id);
       }
     }
   };
