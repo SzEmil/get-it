@@ -12,12 +12,6 @@ export const courses = [
     //
 
     lessons: [],
-    trailers: [
-      {
-        name: 'Trailer kursu - Langchain Flowise AI - kurs podstawowy',
-        link: 'https://www.youtube.com/watch?v=9bZkp7q19f0',
-      },
-    ],
     Offer: {
       create: {
         id: 1,
