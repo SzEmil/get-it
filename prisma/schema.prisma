@@ -24,6 +24,7 @@ model User {
 
   payments Payment[]
   courses  Course[]  // Implicit many-to-many relation with Course
+  progress UserProgress[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -45,6 +46,18 @@ model Course {
   Offer       Offer[]
   users       User[]       // Implicit many-to-many relation with User
   lessons     Json          @default("{}")
+}
+
+model UserProgress {
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  userId      Int
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  courseId    Int
+  completedLessons Json @default("[]") 
+  status      CourseProgressStatus @default(IN_PROGRESS) 
+  additionalData Json? // Pole opcjonalne na dodatkowe dane
 }
 
 model Video {
@@ -188,4 +201,10 @@ enum OfferStatus {
   ACTIVE
   DRAFT
   CANCELLED
+}
+
+enum CourseProgressStatus {
+  IN_PROGRESS
+  COMPLETED 
+  NOT_STARTED
 }

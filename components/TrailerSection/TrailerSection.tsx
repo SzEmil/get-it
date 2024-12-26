@@ -84,7 +84,7 @@ export const TrailerSection = () => {
               gradient={{ from: '#cf0e81', to: '#ff6ec7' }}
               style={{ marginTop: '2rem' }}
             >
-              Zapisz się teraz!
+              Zobacz teraz!
             </Button>
           </Anchor>
 

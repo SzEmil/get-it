@@ -5,7 +5,8 @@ export const courses = [
     id: 1,
     courseId: 1,
     name: 'Langchain Flowise AI - kurs podstawowy',
-    description: 'Opis kursu pierwszego',
+    description:
+    'Kurs podstawowy Langchain Flowise AI to doskonałe wprowadzenie do nowoczesnych technologii AI. Nauczysz się korzystać z frameworka LangChain oraz środowiska bez kodu Flowise AI, tworząc praktyczne projekty oparte na sztucznej inteligencji. Dzięki temu kursowi zrozumiesz kluczowe pojęcia i narzędzia, które pozwolą Ci projektować i wdrażać innowacyjne aplikacje AI w różnych dziedzinach.',
     images: ['image1.png', 'image2.png'],
     language: 'pl',
     status: CourseStatus.ACTIVE,
@@ -34,38 +35,5 @@ export const courses = [
         status: OfferStatus.ACTIVE,
       },
     },
-  },
-  {
-    id: 2,
-    courseId: 2,
-    name: 'Course Two',
-    description: 'Description for the second course',
-    images: ['image3.png', 'image4.png'],
-    language: 'en',
-    status: CourseStatus.ACTIVE,
-    lessons: [
-      {
-        id: 201,
-        title: 'Lesson 1 - Course Two',
-        about: [
-          {
-            title: 'Introduction to Course Two',
-            description:
-              'This lesson introduces the basic concepts of Course Two. You will learn the fundamentals of the course structure, and how the materials are organized to guide you step by step through more advanced topics.',
-            image: 'https://picsum.photos/900',
-          },
-          {
-            description:
-              'We also delve into specific topics related to performance optimization, providing practical examples of how to improve your applications.',
-          },
-        ],
-        videoLink: [
-          {
-            link: 'https://www.youtube.com/watch?v=k1OEeqknoR0',
-            name: 'Wprowadzenie do pziomu zaawansowanego',
-          },
-        ],
-      },
-    ],
   },
 ];

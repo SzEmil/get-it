@@ -6,29 +6,62 @@ import React, { useCallback, useEffect, useState } from 'react';
 import * as DB from '@prisma/client';
 import { MyCoursesItem } from './components/MyCoursesItem';
 import { findUserCourses } from '@/lib/actions/course';
+import { getUserProgressByCourse } from '@/lib/actions/userProgress.actions';
 
-type MyCoursesListPropss = {
+type MyCoursesListProps = {
   lang: string;
 };
 
-export const MyCoursesList = ({ lang }: MyCoursesListPropss) => {
-  const [courses, setCourses] = useState<DB.Course[]>([]);
+export type CourseWithProgress = DB.Course & {
+  userProgress: DB.UserProgress | null;
+};
+
+export const MyCoursesList = ({ lang }: MyCoursesListProps) => {
+  const [courses, setCourses] = useState<CourseWithProgress[]>([]);
   const [loading, setLoading] = useState(false);
 
   const { isLoaded, user } = useUser();
 
-  const fetchCourses = useCallback(async () => {
+  const fetchCoursesAndProgress = useCallback(async () => {
     setLoading(true);
     try {
       if (user && isLoaded) {
-        const coursesData = await findUserCourses(
-          //@ts-ignore
-          +user.publicMetadata.userId
+        //@ts-expect-error types
+        const userId = +user.publicMetadata.userId;
+
+        // Pobierz kursy użytkownika
+        const coursesData = await findUserCourses(userId);
+        const courses = coursesData.data ?? [];
+
+        // Pobierz progres dla każdego kursu
+        const coursesWithProgress = await Promise.all(
+          courses.map(async course => {
+            try {
+              const { data: progressData } = await getUserProgressByCourse({
+                clerkId: user.id,
+                courseId: course.id,
+              });
+
+              if (progressData) {
+                return {
+                  ...course,
+                  userProgress: progressData[0] ?? null,
+                };
+              }
+            } catch (e) {
+              console.error(
+                `Nie udało się pobrać progresu dla kursu ${course.id}`,
+                e
+              );
+              return { ...course, userProgress: null };
+            }
+          })
         );
-        setCourses(coursesData.data ?? []);
+        console.log(coursesWithProgress);
+        setCourses(coursesWithProgress.filter(course => course !== undefined));
       }
     } catch (e) {
-      console.error(e);
+      console.error('Błąd podczas pobierania kursów i progresu:', e);
     } finally {
       setLoading(false);
     }
@@ -36,9 +69,9 @@ export const MyCoursesList = ({ lang }: MyCoursesListPropss) => {
 
   useEffect(() => {
     if (user && isLoaded) {
-      fetchCourses();
+      fetchCoursesAndProgress();
     }
-  }, [fetchCourses]);
+  }, [fetchCoursesAndProgress]);
 
   return (
     <Flex direction={'column'} gap={50} w={'100%'} mt={80}>
@@ -50,7 +83,12 @@ export const MyCoursesList = ({ lang }: MyCoursesListPropss) => {
         <Center w={'100%'}>
           <Flex direction={'column'} gap={50} w={'100%'}>
             {courses.map(course => (
-              <MyCoursesItem key={course.id} lang={lang} course={course} />
+              <MyCoursesItem
+                key={course.id}
+                lang={lang}
+                course={course}
+                progress={course.userProgress}
+              />
             ))}
           </Flex>
         </Center>

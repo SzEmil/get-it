@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import React, { useCallback, useRef } from 'react';
 import { Box, Center, Flex, Loader, Stack, Text } from '@mantine/core';
 import * as DB from '@prisma/client';
 import Image from 'next/image';
@@ -13,24 +13,47 @@ import styles from './LessonViewer.module.css';
 type LessonViewerProps = {
   course: CourseType | null;
   activeLessonId: number | null;
+  onScrollProgress: (scrolledPercentage: number) => Promise<void>;
 };
 
-export const LessonViewer = ({ course, activeLessonId }: LessonViewerProps) => {
-  if (!course) {
-    return <Loader />;
-  }
+export const LessonViewer = ({
+  course,
+  activeLessonId,
+  onScrollProgress,
+}: LessonViewerProps) => {
+  const containerRef = useRef<HTMLDivElement | null>(null);
 
-  // Znalezienie aktywnej lekcji na podstawie unikalnego `id` lekcji
   const activeLesson = course?.lessons?.find(
     lesson => lesson.id === activeLessonId
   );
+
+  const handleScroll = useCallback(() => {
+    if (!containerRef.current || !onScrollProgress) return;
+
+    const { scrollTop, scrollHeight, clientHeight } = containerRef.current;
+    const scrolled = (scrollTop / (scrollHeight - clientHeight)) * 100;
+    
+    onScrollProgress(scrolled);
+  }, [onScrollProgress]);
+
+  if (!course) {
+    return <Loader />;
+  }
 
   if (!activeLesson) {
     return <Text>Brak lekcji do wyświetlenia</Text>;
   }
 
   return (
-    <Box>
+    <Box
+      ref={containerRef}
+      onScroll={handleScroll}
+      style={{
+        maxHeight: '80vh', // Przykładowa wysokość; dostosuj do potrzeb
+        overflowY: 'auto',
+        paddingRight: '1rem',
+      }}
+    >
       {/* Tytuł lekcji */}
       <h2 style={{ margin: 0, fontSize: '1.8rem', marginBottom: '1rem' }}>
         {activeLesson.title}

@@ -11,6 +11,7 @@ export const OrderSummary = ({ offer }: OrderSummaryProps) => {
   return (
     <Box
       style={theme => ({
+        maxWidth: "500px",
         backgroundColor: 'rgba(255, 255, 255, 0.1)',
         borderRadius: theme.radius.md,
         border: `1px solid ${theme.colors.gray[4]}`,
