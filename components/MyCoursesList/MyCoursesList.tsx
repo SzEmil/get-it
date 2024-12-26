@@ -26,7 +26,7 @@ export const MyCoursesList = ({ lang }: MyCoursesListProps) => {
     setLoading(true);
     try {
       if (user && isLoaded) {
-        //@ts-expect-error types
+        // @ts-expect-error types
         const userId = +user.publicMetadata.userId;
 
         // Pobierz kursy użytkownika
@@ -35,30 +35,34 @@ export const MyCoursesList = ({ lang }: MyCoursesListProps) => {
 
         // Pobierz progres dla każdego kursu
         const coursesWithProgress = await Promise.all(
-          courses.map(async course => {
+          courses.map(async (course): Promise<CourseWithProgress> => {
             try {
               const { data: progressData } = await getUserProgressByCourse({
                 clerkId: user.id,
                 courseId: course.id,
               });
 
-              if (progressData) {
-                return {
-                  ...course,
-                  userProgress: progressData[0] ?? null,
-                };
-              }
+              // ZAWSZE zwracamy obiekt - nawet gdy brak progressData
+              return {
+                ...course,
+                userProgress: progressData?.[0] ?? null,
+              };
             } catch (e) {
               console.error(
                 `Nie udało się pobrać progresu dla kursu ${course.id}`,
                 e
               );
-              return { ...course, userProgress: null };
+              return {
+                ...course,
+                userProgress: null,
+              };
             }
           })
         );
+
         console.log(coursesWithProgress);
-        setCourses(coursesWithProgress.filter(course => course !== undefined));
+        // Nie potrzebujemy .filter(course => course !== undefined)
+        setCourses(coursesWithProgress);
       }
     } catch (e) {
       console.error('Błąd podczas pobierania kursów i progresu:', e);
