@@ -246,6 +246,7 @@ export const CourseLayout = ({ courseId }: CourseLayoutProps) => {
             course={course}
             activeLessonId={activeLessonId}
             onLessonClick={handleLessonChange}
+            progress ={progress}
           />
         </GridCol>
 
@@ -273,6 +274,7 @@ export const CourseLayout = ({ courseId }: CourseLayoutProps) => {
           course={course}
           activeLessonId={activeLessonId}
           onLessonClick={setActiveLessonId}
+          progress={progress}
         />
       </Drawer>
 
