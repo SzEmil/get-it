@@ -1,5 +1,5 @@
 'use client';
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { Box, Center, Flex, Loader, Stack, Text } from '@mantine/core';
 import * as DB from '@prisma/client';
 import Image from 'next/image';
@@ -27,14 +27,20 @@ export const LessonViewer = ({
     lesson => lesson.id === activeLessonId
   );
 
+  const [maxScroll, setMaxScroll] = useState(0);
+
   const handleScroll = useCallback(() => {
-    if (!containerRef.current || !onScrollProgress) return;
+    if (!containerRef.current) return;
 
     const { scrollTop, scrollHeight, clientHeight } = containerRef.current;
-    const scrolled = (scrollTop / (scrollHeight - clientHeight)) * 100;
-    
-    onScrollProgress(scrolled);
-  }, [onScrollProgress]);
+    const currentScroll = (scrollTop / (scrollHeight - clientHeight)) * 100;
+
+    if (currentScroll > maxScroll) {
+      setMaxScroll(currentScroll);
+      onScrollProgress(currentScroll);
+    }
+
+  }, [maxScroll, onScrollProgress]);
 
   if (!course) {
     return <Loader />;
