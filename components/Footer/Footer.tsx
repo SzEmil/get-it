@@ -14,7 +14,7 @@ export const Footer = ({ lang }: FooterProps) => {
   return (
     <Box w={'100%'} pb={20}>
       <Container fluid pt={50} pb={40}>
-        <ContactForm lang={lang} />
+        <ContactForm lang={lang} type='footer'/>
       </Container>
       <Container>
         <Flex w={'100%'} justify={'space-between'}>

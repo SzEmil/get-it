@@ -29,7 +29,7 @@ export default async function Offer({ params: { lang } }: PageProps) {
 
   const isLogged = await currentUser();
   //const user = isLogged ? await getCurrentUser(isLogged.id) : null;
-  const user = await getCurrentUser(isLogged!.id);
+  const user = isLogged ? await getCurrentUser(isLogged.id) : null;
   return (
     <BackgroundImage
       src={'/background/polygonSVG.svg'}
@@ -55,7 +55,11 @@ export default async function Offer({ params: { lang } }: PageProps) {
                   key={offer.id}
                   lang={lang}
                   offer={offer}
-                  userCoursesIds={user?.courses ? user.courses.map((course) => course.courseId) : []}
+                  userCoursesIds={
+                    user?.courses
+                      ? user.courses.map(course => course.courseId)
+                      : []
+                  }
                 />
               ))}
             </SimpleGrid>

@@ -8,7 +8,7 @@ type VideoPlayerProps = {
 
 const VideoPlayer: React.FC<VideoPlayerProps> = ({
   videoSrc,
-  width = '700px',
+  width = '800px',
   height = 'auto',
 }) => {
   return (
@@ -17,7 +17,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
     >
       <div
         style={{
-          width: '700px',
+          width: width,
           height: height,
           aspectRatio: '16/9',
           position: 'relative',

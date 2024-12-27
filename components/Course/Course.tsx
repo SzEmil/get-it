@@ -67,24 +67,29 @@ export const CourseLayout = ({ courseId }: CourseLayoutProps) => {
         setProgress(progressData[0]);
 
         if (courseData?.lessons?.length) {
-          console.log(courseData.lessons[0].id);
-          setActiveLessonId(courseData.lessons[0].id);
+          // Znajdź pierwszą nieukończoną lekcję
+          const firstIncompleteLesson = courseData.lessons.find(lesson => {
+            const lessonProgress = progressData[0]?.completedLessons.find(
+              completed => Number(completed.lessonId) === Number(lesson.id)
+            );
+            return (
+              !lessonProgress ||
+              lessonProgress.status !== DB.CourseProgressStatus.COMPLETED
+            );
+          });
 
-          // a) Czy w "progress" mamy tę lekcję jako ukończoną?
-          const isCompleted = progressData[0]?.completedLessons.find(
-            completed => Number(completed.lessonId) === Number(courseData.lessons[0].id)
+          // Ustaw `activeLessonId` na pierwszą nieukończoną lekcję, lub na pierwszą lekcję, jeśli wszystkie są ukończone
+          setActiveLessonId(
+            firstIncompleteLesson?.id || courseData.lessons[0].id
           );
-          console.log(isCompleted);
-          // b) Jeśli tak, na starcie pasek = 100%, a progressRef = true
-          if (isCompleted) {
-            if (isCompleted.status === DB.CourseProgressStatus.COMPLETED) {
-              setCompletionPercentage(100);
-              progressRef.current = true;
-            } else {
-              // c) W przeciwnym razie zaczynamy od 0%
-              setCompletionPercentage(0);
-              progressRef.current = false;
-            }
+
+          // Jeśli wybrana lekcja jest ukończona, ustaw pasek na 100%
+          if (firstIncompleteLesson) {
+            setCompletionPercentage(0);
+            progressRef.current = false;
+          } else {
+            setCompletionPercentage(100);
+            progressRef.current = true;
           }
         }
       }
@@ -246,7 +251,7 @@ export const CourseLayout = ({ courseId }: CourseLayoutProps) => {
             course={course}
             activeLessonId={activeLessonId}
             onLessonClick={handleLessonChange}
-            progress ={progress}
+            progress={progress}
           />
         </GridCol>
 

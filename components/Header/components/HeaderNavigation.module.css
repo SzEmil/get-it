@@ -1,0 +1,5 @@
+.activeLink {
+    color: var(--mantine-color-themePrimary-0); /* Użyj koloru Mantine */
+    font-weight: bold; /* Opcjonalne wyróżnienie */
+    text-decoration: underline; /* Opcjonalne */
+  }

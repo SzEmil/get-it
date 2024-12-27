@@ -15,7 +15,7 @@ export const HeaderNavigation = ({ lang }: HeaderNavigationProps) => {
       <Link href={Routes.home}>Start</Link>
       <Link href={Routes.offer}>Oferta</Link>
       <Link href={Routes.home}>O nas</Link>
-      <Link href={Routes.home}>Kontakt</Link>
+      <Link href={Routes.contact}>Kontakt</Link>
     </nav>
   );
 };

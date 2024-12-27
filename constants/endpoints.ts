@@ -13,6 +13,7 @@ export enum Routes {
   offer = '/offer',
   myCourses = '/my-courses',
   profile = '/profile',
+  contact = "/contact"
 }
 
 export enum SocialLinks {

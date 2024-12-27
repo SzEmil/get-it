@@ -11,9 +11,9 @@ export type ContactFormInitialData = {
   error?: any;
 };
 
-export const useContactForm = (lang: string) => {
+export const useContactForm = (lang: string, userEmail?: string) => {
   const initialData: ContactFormInitialData = {
-    email: '',
+    email: userEmail ?? '',
     topic: '',
     message: '',
     error: null,

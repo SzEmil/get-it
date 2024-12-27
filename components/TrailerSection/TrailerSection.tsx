@@ -46,7 +46,7 @@ export const TrailerSection = () => {
 
           {/* Video Section */}
           <Box style={{ maxWidth: '800px', width: '100%' }}>
-            <VideoPlayer
+            <VideoPlayer width='800px'
               videoSrc={
                 'https://drive.google.com/file/d/16YRYhURFzjwIOBOOO9m7oP75JlipDoG8/preview'
               }
@@ -91,7 +91,7 @@ export const TrailerSection = () => {
           {/* Promo Banner */}
           <Box style={{ textAlign: 'center', marginTop: '2rem' }}>
             <Image
-              src="https://via.placeholder.com/700x400?text=Promo+Banner"
+              src="https://picsum.photos/700/350"
               alt="Promocyjny baner"
               radius="md"
               style={{ maxWidth: '700px', width: '100%' }}

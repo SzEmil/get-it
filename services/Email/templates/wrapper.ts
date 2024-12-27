@@ -31,8 +31,8 @@ export const wrapper = (children: string) => ` <!doctype html>
         >
         <br />
           <span
-            ><a href="mailto:powiadomienia@minfdev.com" id="sigEmail" style="color: #428bca"
-              >powiadomienia@minfdev.com</a
+            ><a href="mailto:info@narevka.com" id="sigEmail" style="color: #428bca"
+              >info@narevka.com</a
             ></span
           >
           <span id="sigMobile">/ +48 609-050-548</span>
@@ -50,8 +50,8 @@ export const wrapper = (children: string) => ` <!doctype html>
           <strong><span id="sigCompany">Minfdev sp. z o.o.</span></strong
           ><br />
           <span
-            ><a href="http://www.minfdev.com" id="sigWebsite" style="color: #428bca"
-              >http://www.minfdev.com</a
+            ><a href="https://toknowai.pl" id="sigWebsite" style="color: #428bca"
+              >https://toknowai.pl</a
             ></span
           >
           <br />
@@ -65,14 +65,14 @@ export const wrapper = (children: string) => ` <!doctype html>
           "
         >
           <span id="facebookIcon"
-            ><a href="https://www.facebook.com/profile.php?id=61556457022066"
+            ><a href="/"
               ><img
                 src="https://s3.amazonaws.com/rkjha/signature-maker/icons/facebook_circle_color-20.png"
                 width="20px"
                 height="20px" /></a
           ></span>
           <span id="linkedinIcon"
-            ><a href="https://www.linkedin.com/company/minfdev"
+            ><a href="/"
               ><img
                 src="https://s3.amazonaws.com/rkjha/signature-maker/icons/linkedin_circle_color-20.png"
                 width="20px"

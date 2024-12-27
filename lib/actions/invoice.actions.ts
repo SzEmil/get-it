@@ -20,7 +20,7 @@ export const createInvoice = FormatResponse(async (paymentId: number) => {
   const existingInvoicesCount = await prisma.invoice.count();
 
   const currentYear = new Date().getFullYear();
-  const invoiceNumber = `${existingInvoicesCount + 1}/${currentYear}`;
+  const invoiceNumber = `AI/${existingInvoicesCount + 1}/${currentYear}`;
 
   const invoice = await prisma.invoice.create({
     data: {
