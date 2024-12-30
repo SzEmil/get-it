@@ -8,6 +8,7 @@ import {
   BackgroundImage,
   Overlay,
   Box,
+  Flex,
 } from '@mantine/core';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -36,15 +37,6 @@ const Banner = ({ lang }: BannerProps) => {
       className={styles.banner}
       id="home"
     >
-      {/* <BackgroundImage
-        src={'/background/baner.jpg'}
-        style={{
-          width: '100%',
-          height: '100%',
-          minHeight: '95vh',
-          zIndex: -1,
-        }}
-      > */}
       <Overlay
         style={{
           position: 'absolute',
@@ -71,70 +63,77 @@ const Banner = ({ lang }: BannerProps) => {
           height: '100vh',
         }}
       >
-        <Box className={styles.sloganWrapper}>
-          <Title
-            style={{
-              fontSize: '1.5rem',
-              fontWeight: 100,
-              color: 'white',
-              textAlign: 'center',
-              marginBottom: '2rem',
-              zIndex: 10,
-            }}
-          >
-            Zostań programistą AI!
-          </Title>
-          <Title
-            style={{
-              fontSize: '58px',
-              fontWeight: 900,
-              color: 'white',
-              textAlign: 'center',
-              marginBottom: '1rem',
-              maxWidth: '650px',
-              zIndex: 10,
-            }}
-          >
-            Kursy programowania dla poczatkujących
-          </Title>
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              gap: '1rem',
-              marginTop: '3rem',
-              zIndex: 10,
-            }}
-          >
-            {isSignedIn ? (
+        <Flex
+          w={'100%'}
+          h={'100%'}
+          direction={'column'}
+          justify={'center'}
+          align={'center'}
+        >
+          <Box className={styles.sloganWrapper}>
+            <Title
+              style={{
+                fontSize: '1.5rem',
+                fontWeight: 100,
+                color: 'white',
+                textAlign: 'center',
+                marginBottom: '2rem',
+                zIndex: 10,
+              }}
+            >
+              Zostań programistą AI!
+            </Title>
+            <Title
+              style={{
+                color: 'white',
+                textAlign: 'center',
+                maxWidth: '650px',
+                zIndex: 10,
+              }}
+              fw={900}
+              fz={{ base: 24, sm: 48, md: 58 }}
+              mb={2}
+            >
+              Kursy programowania dla poczatkujących
+            </Title>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                gap: '1rem',
+                marginTop: '3rem',
+                zIndex: 10,
+              }}
+            >
+              {isSignedIn ? (
+                <Button
+                  style={{ fontSize: '1rem' }}
+                  variant="filled"
+                  size="lg"
+                  radius={30}
+                  color="themePrimary.0"
+                  onClick={() => router.push('/offer')}
+                >
+                  {'Kup Teraz'}
+                </Button>
+              ) : (
+                <SignInCustomButton lang={lang} />
+              )}
               <Button
                 style={{ fontSize: '1rem' }}
-                variant="filled"
+                variant="outline"
+                color="yellow"
                 size="lg"
                 radius={30}
-                color="themePrimary.0"
-                onClick={() => router.push('/offer')}
+                component={Link}
+                href="#howItWorks"
               >
-                {'Kup Teraz'}
+                Jak to Działa
               </Button>
-            ) : (
-              <SignInCustomButton lang={lang} />
-            )}
-            <Button
-              style={{ fontSize: '1rem' }}
-              variant="outline"
-              color="yellow"
-              size="lg"
-              radius={30}
-              component={Link}
-              href="#howItWorks"
-            >
-              Jak to Działa
-            </Button>
-          </div>
-        </Box>
+            </div>
+          </Box>
+        </Flex>
       </Container>
-      {/* </BackgroundImage> */}
     </section>
   );
 };

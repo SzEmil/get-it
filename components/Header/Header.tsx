@@ -1,7 +1,7 @@
 'use client';
 
 import css from './Header.module.css';
-import { Flex } from '@mantine/core';
+import { Burger, Button, Drawer, Flex, Stack } from '@mantine/core';
 import { Typography } from '../Typography/Typohraphy';
 import { APP_NAME } from '@/config';
 import Link from 'next/link';
@@ -10,42 +10,122 @@ import { SignInCustomButton } from '../SignInCustomButton/SignInCustomButton';
 import { Routes } from '@/constants/endpoints';
 import { HeaderNavigation } from './components/HeaderNavigation';
 import { UserBtn } from '../UserBtn/UserBtn';
+import { useState } from 'react';
+import { FiMenu } from 'react-icons/fi';
 
 type HeaderProps = {
   lang: string;
 };
 
 export const Header = ({ lang }: HeaderProps) => {
+  const [opened, setOpened] = useState(false);
+
   return (
-    <Flex
-      // ref={headerRef}
-      direction={'row'}
-      justify={'space-between'}
-      align={'center'}
-      pl={24}
-      pr={24}
-      pt={15}
-      pb={15}
-      style={{
-        backgroundColor: 'rgba(0, 0, 0, 0.1)',
-        transition: 'background-color 0.3s ease',
-      }}
-    >
-      <Link href={Routes.home}>
-        <Typography fz={34} fw={700}>
-          {APP_NAME}
-        </Typography>
-      </Link>
-      <HeaderNavigation lang={lang} />
-      <div>
-        <SignedOut>
-          <SignInCustomButton lang={lang} variant="outline" color="white" />
-        </SignedOut>
-        <SignedIn>
-          {/* <UserButton /> */}
-          <UserBtn lang={lang} />
-        </SignedIn>
-      </div>
-    </Flex>
+    <>
+      <Flex
+        direction="row"
+        justify="space-between"
+        align="center"
+        pl={24}
+        pr={24}
+        pt={15}
+        pb={15}
+        style={{
+          backgroundColor: 'rgba(0, 0, 0, 0.1)',
+          transition: 'background-color 0.3s ease',
+        }}
+      >
+        {/* Logo */}
+        <Link href={Routes.home}>
+          <Typography fz={34} fw={700}>
+            {APP_NAME}
+          </Typography>
+        </Link>
+
+        {/* Desktop Navigation */}
+        <Flex display={{ base: 'none', md: 'flex' }} align="center">
+          <HeaderNavigation lang={lang} />
+        </Flex>
+
+        {/* Mobile Menu and User Section */}
+        <Flex align="center" gap={16}>
+          <SignedOut>
+            <SignInCustomButton lang={lang} variant="outline" color="white" />
+          </SignedOut>
+          <SignedIn>
+            <UserBtn lang={lang} />
+          </SignedIn>
+          <Button
+            onClick={() => setOpened(!opened)}
+            display={{ base: 'block', md: 'none' }}
+            style={{
+              backgroundColor: 'transparent', // Przycisk bez tła
+              border: 'none', // Brak obramowania
+              padding: 0, // Usuń padding dla lepszej estetyki
+              alignItems: 'center',
+              justifyContent: 'center',
+              cursor: 'pointer',
+            }}
+            aria-label="Otwórz menu"
+          >
+            <FiMenu size={24} color="white" /> {/* Ikona menu */}
+          </Button>
+        </Flex>
+      </Flex>
+
+      {/* Mobile Drawer */}
+      <Drawer
+        opened={opened}
+        onClose={() => setOpened(false)}
+        title={APP_NAME}
+        padding="md"
+        size="xs"
+        zIndex={99999999}
+        styles={{
+          content: {
+            backgroundColor: 'black', // Czarny kolor tła dla Drawer
+            paddingTop: '20px', // Padding od góry
+          },
+        }}
+        overlayProps={{
+          opacity: 0.55,
+          blur: 3,
+        }}
+        withCloseButton
+      >
+        <Stack>
+          <Link
+            href={Routes.home}
+            onClick={() => setOpened(false)}
+            style={{
+              color: 'white', // Białe linki
+              textDecoration: 'none', // Usuń podkreślenie
+            }}
+          >
+            Start
+          </Link>
+          <Link
+            href={Routes.offer}
+            onClick={() => setOpened(false)}
+            style={{
+              color: 'white', // Białe linki
+              textDecoration: 'none', // Usuń podkreślenie
+            }}
+          >
+            Oferta
+          </Link>
+          <Link
+            href={Routes.contact}
+            onClick={() => setOpened(false)}
+            style={{
+              color: 'white', // Białe linki
+              textDecoration: 'none', // Usuń podkreślenie
+            }}
+          >
+            Kontakt
+          </Link>
+        </Stack>
+      </Drawer>
+    </>
   );
 };

@@ -6,7 +6,7 @@ export const courses = [
     courseId: 1,
     name: 'Langchain Flowise AI - kurs podstawowy',
     description:
-    'Kurs podstawowy Langchain Flowise AI to doskonałe wprowadzenie do nowoczesnych technologii AI. Nauczysz się korzystać z frameworka LangChain oraz środowiska bez kodu Flowise AI, tworząc praktyczne projekty oparte na sztucznej inteligencji. Dzięki temu kursowi zrozumiesz kluczowe pojęcia i narzędzia, które pozwolą Ci projektować i wdrażać innowacyjne aplikacje AI w różnych dziedzinach.',
+      'Kurs podstawowy Langchain Flowise AI to doskonałe wprowadzenie do nowoczesnych technologii AI. Nauczysz się korzystać z frameworka LangChain oraz środowiska bez kodu Flowise AI, tworząc praktyczne projekty oparte na sztucznej inteligencji. Dzięki temu kursowi zrozumiesz kluczowe pojęcia i narzędzia, które pozwolą Ci projektować i wdrażać innowacyjne aplikacje AI w różnych dziedzinach.',
     images: ['image1.png', 'image2.png'],
     language: 'pl',
     status: CourseStatus.ACTIVE,
