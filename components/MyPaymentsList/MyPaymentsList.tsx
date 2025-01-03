@@ -17,6 +17,7 @@ type MyPaymentsListPropss = {
 
 export type PaymentWithOrdrCourse = {
   courses: DB.OrderCourse[];
+   invoices: DB.Invoice[];
 } & DB.Payment;
 
 export const MyPaymentsList = ({ lang }: MyPaymentsListPropss) => {
@@ -48,16 +49,7 @@ export const MyPaymentsList = ({ lang }: MyPaymentsListPropss) => {
     }
   }, [fetchPayments]);
 
-  const handleTestInvoice = async () => {
-    try {
-      await sendInvoiceById({
-        invoiceId: 8,
-        email: 'emilszymczyk99@gmail.com',
-      });
-    } catch (e) {
-      console.log(e);
-    }
-  };
+
   return (
     <Flex
       direction={'column'}

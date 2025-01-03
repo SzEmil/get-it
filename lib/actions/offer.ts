@@ -17,7 +17,7 @@ export const findOfferCoursesByCourseIds = FormatResponse(
 );
 
 export const findAllOffers = FormatResponse(async () => {
-  return prisma.offer.findMany();
+  return prisma.offer.findMany({where: {status: DB.OfferStatus.ACTIVE}});
 });
 
 export const findOffersIdsToGenereateParams = cache(async () => {

@@ -8,7 +8,7 @@ export const findUserPayments = FormatResponse(async (userId: number) => {
     where: {
       userId: userId,
     },
-    include: { courses: true },
+    include: { courses: true, invoices: true },
   });
 
   return userPayments;

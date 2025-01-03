@@ -6,6 +6,7 @@ import * as path from 'path';
 import * as fs from 'fs';
 import { generateInvoicePdf } from '@/services/pdf';
 import sendEmail from '@/services/Email/operations/sendEmail';
+import { saveAs } from 'file-saver';
 
 export const createInvoice = FormatResponse(async (paymentId: number) => {
   const payment = await prisma.payment.findUnique({
@@ -107,3 +108,25 @@ export const sendInvoiceById = FormatResponse(
     };
   }
 );
+
+export const handleDownloadInvoice = async (invoiceId: number) => {
+  try {
+    const invoice = await prisma.invoice.findUnique({
+      where: { id: invoiceId },
+    });
+
+    if (!invoice) {
+      throw new Error(`Invoice with ID ${invoiceId} not found`);
+    }
+
+    // Wygeneruj plik PDF faktury
+    const pdfBuffer = await generateInvoicePdf(invoice);
+
+    return {
+      base64: pdfBuffer.toString('base64'),
+      fileName: `${invoice.invoice_number}.pdf`,
+    };
+  } catch (e) {
+    console.error('Failed to download invoice:', e);
+  }
+};
