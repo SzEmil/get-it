@@ -15,16 +15,17 @@ export const MyPaymentsItem = ({ lang, payment }: MyPaymentsItemProps) => {
   const [selectedInvoiceId, setSelectedInvoiceId] = useState<number | null>(
     null
   );
+  const [loading, setLoading] = useState(false);
 
   const handleDownload = async () => {
     console.log(selectedInvoiceId);
     if (!selectedInvoiceId) return;
     try {
       const response = await handleDownloadInvoice(Number(selectedInvoiceId));
-   
+
       if (response) {
         const { base64, fileName } = response;
-      
+
         const binary = atob(base64);
         const array = new Uint8Array(binary.length);
         for (let i = 0; i < binary.length; i++) {
@@ -40,13 +41,31 @@ export const MyPaymentsItem = ({ lang, payment }: MyPaymentsItemProps) => {
         document.body.appendChild(a);
         a.click();
         a.remove();
-     
       }
     } catch (e) {
       console.error('Failed to download invoice:', e);
     }
   };
+  // const handleDownload = async () => {
+  //   setLoading(true);
+  //   if(!selectedInvoiceId) return;
+  //   try {
+  //     // Fetch invoice data from the server
+  //     const invoice = await handleDownloadInvoice(Number(selectedInvoiceId));
 
+  //     if (invoice) {
+  //       // Use the client-side PDF generation function
+  //       await generateInvoicePdfClientSide(INVOICE_TEMPLATE, invoice, `${invoice.invoice_number}.pdf`);
+  //       console.log('PDF generated successfully');
+  //     } else {
+  //       console.error('Invoice data not found');
+  //     }
+  //   } catch (error) {
+  //     console.error('Failed to generate or download the invoice:', error);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
   return (
     <Flex w={'100%'} justify={'space-between'} align={'flex-start'} p={10}>
       <Flex direction={'column'}>

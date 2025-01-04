@@ -7,6 +7,7 @@ import * as fs from 'fs';
 import { generateInvoicePdf } from '@/services/pdf';
 import sendEmail from '@/services/Email/operations/sendEmail';
 import { saveAs } from 'file-saver';
+import { generateInvoicePdfLib } from '@/services/pdf/generatePdf';
 
 export const createInvoice = FormatResponse(async (paymentId: number) => {
   const payment = await prisma.payment.findUnique({
@@ -121,8 +122,8 @@ export const handleDownloadInvoice = async (invoiceId: number) => {
     }
 
     // Wygeneruj plik PDF faktury
-    const pdfBuffer = await generateInvoicePdf(invoice);
-
+    // const pdfBuffer = await generateInvoicePdf(invoice);
+    const pdfBuffer = await generateInvoicePdfLib(invoice)
     return {
       base64: pdfBuffer.toString('base64'),
       fileName: `${invoice.invoice_number}.pdf`,

@@ -34,7 +34,7 @@ export const INVOICE_TEMPLATE = `
       >
         <h1 style="margin: 0; font-size: 24px">Faktura</h1>
         <p style="margin: 0; font-size: 24px">
-          <strong>{{invoice_number}}</strong>
+          <strong> {{invoice_number}} </strong>
         </p>
       </header>
 
@@ -50,19 +50,19 @@ export const INVOICE_TEMPLATE = `
         <div style="display: flex; flex-direction: column; gap: 10px">
           <div style="display: flex; flex-direction: column; gap: 5px">
             <p style="font-weight: bold; font-size: 10px">Miejscowość:</p>
-            <p style="font-size: 10px">{{seller_city}}</p>
+            <p style="font-size: 10px"> {{seller_city}} </p>
           </div>
 
           <div style="display: flex; flex-direction: column; gap: 5px">
             <p style="font-weight: bold; font-size: 10px">
               Data zakończenia dostawy lub wykonania usługi:
             </p>
-            <p style="font-size: 10px">{{invoice_createdAt}}</p>
+            <p style="font-size: 10px"> {{invoice_createdAt}} </p>
           </div>
 
           <div style="display: flex; flex-direction: column; gap: 5px">
             <p style="font-weight: bold; font-size: 10px">Data wystawienia:</p>
-            <p style="font-size: 10px">{{invoice_createdAt}}</p>
+            <p style="font-size: 10px"> {{invoice_createdAt}} </p>
           </div>
         </div>
 

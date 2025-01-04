@@ -1,14 +1,14 @@
 'use server';
 
-import * as puppeteer from 'puppeteer';
+// import * as puppeteer from 'puppeteer';
 import { ToWords } from 'to-words';
 import { readFileSync, existsSync } from 'fs';
-import * as fs from 'fs/promises';
-import * as path from 'path';
 import { Invoice, Payment } from '@prisma/client';
 import { formatDate } from '@/helpers/date';
 import { INVOICE_TEMPLATE } from '@/templates/invoiceRegularVat';
 const PriceToPolishWords = require('price-to-polish-words');
+// import chromium from '@sparticuz/chromium';
+import puppeteer from 'puppeteer-core';
 
 export const generateInvoicePdf = async (
   invoice: Invoice
@@ -21,29 +21,20 @@ export const generateInvoicePdf = async (
 
   const generatedTime = currentDate.toISOString();
 
-  // const htmlPath = path.join(process.cwd(), 'templates', 'invoiceRegularVat.html');
-  // html = await fs.readFile(path.join(htmlPath), 'utf8');
-
-  //   try {
-  //     if (existsSync(logo)) {
-  //       logo = readFileSync(logo).toString('base64');
-  //     } else {
-  //       logo = readFileSync(path.join('public', 'apple-touch-icon.png')).toString(
-  //         'base64'
-  //       );
-  //     }
-  //   } catch (e) {
-  //     logo = readFileSync(path.join('public', 'apple-touch-icon.png')).toString(
-  //       'base64'
-  //     );
-  //   }
-
   const replacedHtml = replaceInvoicePlaceholders(INVOICE_TEMPLATE, invoice);
 
   const browser = await puppeteer.launch({
     headless: true,
     args: ['--no-sandbox', '--disable-setuid-sandbox'],
   });
+
+  // const browser = await puppeteer.launch({
+  //   executablePath: await chromium.executablePath,
+  //   // headless:chromium.headless === 'shell' ? 'chrome' : (chromium.headless as boolean),
+  //   headless: chromium.headless,
+  //   args: chromium.args,
+  //   defaultViewport: chromium.defaultViewport,
+  // });
 
   const page = await browser.newPage();
   await page.setContent(replacedHtml, { waitUntil: 'domcontentloaded' });
@@ -64,9 +55,7 @@ export const generateInvoicePdf = async (
 
   await browser.close();
 
-  const convertedBuffer = await Buffer.from(pdfBuffer);
-
-  return convertedBuffer;
+  return pdfBuffer;
 };
 
 function replaceInvoicePlaceholders(html: string, invoice: Invoice): string {
