@@ -181,6 +181,35 @@ model Offer {
   course      Course      @relation(fields: [courseId], references: [id], onDelete: Cascade)
 }
 
+model Coupon {
+  id            Int      @id @default(autoincrement())
+  code          String   @unique       // Unikalny kod kuponu
+  percentage    Float                  // Wartość procentowa zniżki
+  quantity      Int                    // Ilość dostępnych kuponów
+  usedQuantity  Int      @default(0)   // Ilość wykorzystanych kuponów
+  expiresAt     DateTime               // Data ważności kuponu
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+   usedCoupons   UsedCoupon[]   
+}
+
+model UsedCoupon {
+  id          Int       @id @default(autoincrement())
+  couponId    Int                             // ID kuponu
+  coupon      Coupon    @relation(fields: [couponId], references: [id], onDelete: Cascade)
+  
+  userId      Int                             // ID użytkownika
+  firstName   String                          // Imię użytkownika
+  lastName    String                          // Nazwisko użytkownika
+  email       String                          // Email użytkownika
+  
+  usedFor     Json                            // Zrzutka danych zasobu (kursu/oferty), do którego kupon został wykorzystany
+  
+  createdAt   DateTime   @default(now())      // Data wykorzystania kuponu
+}
+
 enum PaymentStatus {
   AWAITING
   SUCCESS
