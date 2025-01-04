@@ -2,11 +2,7 @@
 
 import { FormatResponse } from './response';
 import prisma from '../../prisma/client';
-import * as path from 'path';
-import * as fs from 'fs';
-import { generateInvoicePdf } from '@/services/pdf';
 import sendEmail from '@/services/Email/operations/sendEmail';
-import { saveAs } from 'file-saver';
 import { generateInvoicePdfLib } from '@/services/pdf/generatePdf';
 
 export const createInvoice = FormatResponse(async (paymentId: number) => {
@@ -48,7 +44,7 @@ export const createInvoice = FormatResponse(async (paymentId: number) => {
     },
   });
 
-  const pdfBuffer = await generateInvoicePdf(invoice);
+  const pdfBuffer = await generateInvoicePdfLib(invoice);
   //   console.log(payment.email);
   await sendEmail('pl', {
     to: payment.email,
@@ -89,7 +85,7 @@ export const sendInvoiceById = FormatResponse(
     }
 
     // Wygeneruj plik PDF faktury
-    const pdfBuffer = await generateInvoicePdf(invoice);
+    const pdfBuffer = await generateInvoicePdfLib(invoice);
 
     // Wyślij fakturę jako załącznik e-mail
     await sendEmail('pl', {
@@ -112,7 +108,6 @@ export const sendInvoiceById = FormatResponse(
 
 export const handleDownloadInvoice = async (invoiceId: number) => {
   try {
-
     const invoice = await prisma.invoice.findUnique({
       where: { id: invoiceId },
     });
@@ -122,8 +117,7 @@ export const handleDownloadInvoice = async (invoiceId: number) => {
     }
 
     // Wygeneruj plik PDF faktury
-    // const pdfBuffer = await generateInvoicePdf(invoice);
-    const pdfBuffer = await generateInvoicePdfLib(invoice)
+    const pdfBuffer = await generateInvoicePdfLib(invoice);
     return {
       base64: pdfBuffer.toString('base64'),
       fileName: `${invoice.invoice_number}.pdf`,
