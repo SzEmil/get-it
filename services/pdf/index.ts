@@ -7,6 +7,7 @@ import * as fs from 'fs/promises';
 import * as path from 'path';
 import { Invoice, Payment } from '@prisma/client';
 import { formatDate } from '@/helpers/date';
+import { INVOICE_TEMPLATE } from '@/templates/invoiceRegularVat';
 const PriceToPolishWords = require('price-to-polish-words');
 
 export const generateInvoicePdf = async (
@@ -20,8 +21,8 @@ export const generateInvoicePdf = async (
 
   const generatedTime = currentDate.toISOString();
 
-  const htmlPath = path.join(process.cwd(), 'templates', 'invoiceRegularVat.html');
-  html = await fs.readFile(path.join(htmlPath), 'utf8');
+  // const htmlPath = path.join(process.cwd(), 'templates', 'invoiceRegularVat.html');
+  // html = await fs.readFile(path.join(htmlPath), 'utf8');
 
   //   try {
   //     if (existsSync(logo)) {
@@ -37,7 +38,7 @@ export const generateInvoicePdf = async (
   //     );
   //   }
 
-  const replacedHtml = replaceInvoicePlaceholders(html, invoice);
+  const replacedHtml = replaceInvoicePlaceholders(INVOICE_TEMPLATE, invoice);
 
   const browser = await puppeteer.launch({
     headless: true,

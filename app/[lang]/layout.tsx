@@ -1,6 +1,6 @@
 import '@mantine/core/styles.css';
 import '@mantine/carousel/styles.css';
-import "@mantine/notifications/styles.css";
+import '@mantine/notifications/styles.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
@@ -19,10 +19,11 @@ import { I18nProps } from '@/types/types';
 import { Header } from '@/components/Header/Header';
 import { Footer } from '@/components/Footer/Footer';
 import { ClerkProvider } from '@clerk/nextjs';
-import { Notifications } from "@mantine/notifications";
+import { Notifications } from '@mantine/notifications';
 import { ROUTES } from '@/constants';
 import { PrivacyBanner } from '@/components/PrivacyBanner/PrivacyBanner';
 import { TestModeModal } from '@/components/TestModeModal/TestModeModal';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 export const generateStaticParams = getLanguagesStaticParams;
 
@@ -66,6 +67,7 @@ const RootLayout = async ({ children, params: { lang } }: RootLayoutProps) => {
               </AppShellHeader>
               <AppShellMain pos={'relative'}>
                 {children}
+                <SpeedInsights />
                 <Notifications />
                 <PrivacyBanner lang={lang} />
                 <TestModeModal lang={lang} />
