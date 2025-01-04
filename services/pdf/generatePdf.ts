@@ -80,27 +80,27 @@ export const generateInvoicePdfLib = async (
   // .toISOString().split('T')[0];
   replaceInvoicePlaceholders(INVOICE_TEMPLATE, invoice);
 
-  const fontPath = path.join(
-    process.cwd(),
-    'public',
-    'fonts',
-    'Roboto-Regular.ttf'
-  );
-  const fontBytes = fs.readFileSync(fontPath);
+  const fontUrl = process.env.NODE_ENV === 'production'
+  ? 'https://myapp.vercel.app/fonts/Roboto-Regular.ttf'
+  : 'http://localhost:3000/fonts/Roboto-Regular.ttf';
 
-  const fontPathBold = path.join(
-    process.cwd(),
-    'public',
-    'fonts',
-    'Roboto-Bold.ttf'
-  );
-  const fontBytesBold = fs.readFileSync(fontPathBold);
+  const responseFontUrl = await fetch(fontUrl);
+const fontArrayBuffer = await responseFontUrl.arrayBuffer();
+
+  const fontUrlBold = process.env.NODE_ENV === 'production'
+  ? 'https://myapp.vercel.app/fonts/Roboto-Regular.ttf'
+  : 'http://localhost:3000/fonts/Roboto-Bold.ttf';
+
+  const responseBoldFont = await fetch(fontUrl);
+const fontBoldArrayBuffer = await responseBoldFont.arrayBuffer();
+  // const fontBytes = fs.readFileSync(fontPath);
+
 
   const pdfDoc = await PDFDocument.create();
   pdfDoc.registerFontkit(fontkit);
 
-  const customFont = await pdfDoc.embedFont(new Uint8Array(fontBytes));
-  const customFontBold = await pdfDoc.embedFont(new Uint8Array(fontBytesBold));
+  const customFont = await pdfDoc.embedFont(new Uint8Array(fontArrayBuffer));
+  const customFontBold = await pdfDoc.embedFont(new Uint8Array(fontBoldArrayBuffer));
 
   // Utworzenie dokumentu PDF
   const page = pdfDoc.addPage();
@@ -116,10 +116,8 @@ export const generateInvoicePdfLib = async (
   const fontRegular = customFont;
   const fontBold = customFontBold;
 
-
   const containerWidth = pageWidth - 2 * margin; // ok. 495 pt
   let cursorY = pageHeight - margin;
-
 
   const containerX = margin;
   let containerY = cursorY;
@@ -272,6 +270,7 @@ export const generateInvoicePdfLib = async (
   });
   rightBoxY -= sectionFontSize + 6;
 
+  // ----------------------------------------------------------------------------
   // Ustalamy, który box jest niższy:
   const sectionBottomY = Math.min(leftBoxY, rightBoxY);
   cursorY = sectionBottomY - 10; // "margin-bottom: 10px"
@@ -475,6 +474,7 @@ export const generateInvoicePdfLib = async (
   // Ustalamy, jak nisko zaszliśmy
   const nabywcaBottomY = buyerBoxY;
   cursorY = Math.min(sellerBottomY, nabywcaBottomY);
+  // -------------------------------------------------------------------------
 
   // =============== TABELA  ===============
   // Tabela w HTML jest <table style="width: 100%; border-collapse: collapse"> ...
@@ -644,9 +644,6 @@ export const generateInvoicePdfLib = async (
     borderColor: rgb(0, 0, 0),
     borderWidth: 2,
     borderLineCap: LineCapStyle.Round,
-    // pdf-lib nie ma wbudowanego parametru cornerRadius w drawRectangle (trzeba rysować path).
-    // Zrobimy uproszczenie: pominęmy faktyczne rysowanie łuku.
-    // Jeśli bardzo chcesz, musisz skorzystać z "page.moveTo(...) / curveTo(...)".
   });
 
   // Ostatecznie "containerHeight" to od containerY do bieżącego cursorY
@@ -656,14 +653,14 @@ export const generateInvoicePdfLib = async (
   // W HTML jest "border: 1px solid #ddd;", max-width: 800px. My narysujemy 1pt solid #aaa (zbliżony).
   // containerY - to był wierzch, cursorY - to jest dół.
   const cardHeight = containerY - cursorY + 20;
-  page.drawRectangle({
-    x: containerX,
-    y: cursorY,
-    width: containerWidth,
-    height: cardHeight,
-    borderWidth: 1,
-    borderColor: rgb(0.8, 0.8, 0.8), // ~#ccc / #ddd
-  });
+  // page.drawRectangle({
+  //   x: containerX,
+  //   y: cursorY,
+  //   width: containerWidth,
+  //   height: cardHeight,
+  //   borderWidth: 1,
+  //   borderColor: rgb(0.8, 0.8, 0.8), // ~#ccc / #ddd
+  // });
 
   // Ewentualnie można narysować białe wypełnienie w środku, jeśli chcesz.
 
