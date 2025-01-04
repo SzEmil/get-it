@@ -73,6 +73,14 @@ export const MyPaymentsItem = ({ lang, payment }: MyPaymentsItemProps) => {
             onChange={value =>
               setSelectedInvoiceId(value ? parseInt(value) : null)
             }
+            styles={theme => ({
+              dropdown: {
+                color: 'black',
+              },
+              input: {
+                color: 'black',
+              },
+            })}
           />
         )}
 
