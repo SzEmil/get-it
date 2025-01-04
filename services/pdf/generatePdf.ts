@@ -81,14 +81,14 @@ export const generateInvoicePdfLib = async (
   replaceInvoicePlaceholders(INVOICE_TEMPLATE, invoice);
 
   const fontUrl = process.env.NODE_ENV === 'production'
-  ? 'https://myapp.vercel.app/fonts/Roboto-Regular.ttf'
+  ? 'https://get-it-sigma.vercel.app/fonts/Roboto-Regular.ttf'
   : 'http://localhost:3000/fonts/Roboto-Regular.ttf';
 
   const responseFontUrl = await fetch(fontUrl);
 const fontArrayBuffer = await responseFontUrl.arrayBuffer();
 
   const fontUrlBold = process.env.NODE_ENV === 'production'
-  ? 'https://myapp.vercel.app/fonts/Roboto-Regular.ttf'
+  ? 'https://get-it-sigma.vercel.app/fonts/Roboto-Regular.ttf'
   : 'http://localhost:3000/fonts/Roboto-Bold.ttf';
 
   const responseBoldFont = await fetch(fontUrl);
@@ -418,7 +418,7 @@ const fontBoldArrayBuffer = await responseBoldFont.arrayBuffer();
 
   // Teraz "Nabywca" – w HTML jest z prawej strony, stąd przerzucimy go do pewnego X
   const buyerBoxX = innerBoxX + innerBoxWidth / 2 + 5;
-  let buyerBoxY = cursorY + (labelFontSize + 5); // cofnijmy do momentu sprzedawca
+  let buyerBoxY = cursorY + (labelFontSize + 5) + 37; // cofnijmy do momentu sprzedawca
   // przeniesiemy się w prawo
 
   page.drawText('Nabywca', {
@@ -590,7 +590,7 @@ const fontBoldArrayBuffer = await responseBoldFont.arrayBuffer();
     font: fontBold,
     size: 14,
   });
-  cellInnerY -= 14 + 2;
+  cellInnerY -= (14 + 2);
 
   // price_words
   page.drawText(priceInWords || '', {
