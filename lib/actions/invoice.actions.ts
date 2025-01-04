@@ -111,18 +111,18 @@ export const sendInvoiceById = FormatResponse(
 
 export const handleDownloadInvoice = async (invoiceId: number) => {
   try {
-    console.log('Received invoiceId:', invoiceId);
+
     const invoice = await prisma.invoice.findUnique({
       where: { id: invoiceId },
     });
-    console.log('Found invoice:', invoice);
+
     if (!invoice) {
       throw new Error(`Invoice with ID ${invoiceId} not found`);
     }
 
     // Wygeneruj plik PDF faktury
     const pdfBuffer = await generateInvoicePdf(invoice);
-    console.log('Generated PDF buffer size:', pdfBuffer.length);
+
     return {
       base64: pdfBuffer.toString('base64'),
       fileName: `${invoice.invoice_number}.pdf`,

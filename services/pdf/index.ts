@@ -20,10 +20,13 @@ export const generateInvoicePdf = async (
 
   const generatedTime = currentDate.toISOString();
 
-  html = await fs.readFile(
-    path.join(process.cwd(), 'services', 'pdf', 'htmlTemplates', 'invoiceRegularVat.html'),
-    'utf8'
+  const htmlPath = path.join(
+    process.cwd(),
+    'public',
+    'templates',
+    'invoiceRegularVat.html'
   );
+  html = await fs.readFile(path.join(htmlPath), 'utf8');
 
   //   try {
   //     if (existsSync(logo)) {
@@ -109,8 +112,8 @@ function replaceInvoicePlaceholders(html: string, invoice: Invoice): string {
       .replace(/{{buyer_NIP}}/g, invoice.buyer_NIP)
       .replace(/{{buyer_postalCode}}/g, invoice.buyer_postalCode)
       .replace(/{{buyer_city}}/g, invoice.buyer_town)
-      .replace(/{{buyer_NIP}}/g, invoice.buyer_NIP ?? "")
-      .replace(/{{product_name}}/g, invoice.product_name ?? "")
+      .replace(/{{buyer_NIP}}/g, invoice.buyer_NIP ?? '')
+      .replace(/{{product_name}}/g, invoice.product_name ?? '')
       .replace(/{{price}}/g, invoice.price.toString())
       .replace(/{{currency}}/g, invoice.currency)
       .replace(/{{payment_name}}/g, invoice.payment_name)
