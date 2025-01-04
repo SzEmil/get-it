@@ -16,10 +16,10 @@ export const FooterNavigation = ({ lang }: FooterNavigationProps) => {
           Centrum pomocy
         </Typography>
         <Link href={Routes.termsOfService}>
-          Regulamin Sprzedaży i Polityka Zwrotów
+          Regulamin
         </Link>
-        <Link href={Routes.privacyPolicy}>Polityka prwyatności</Link>
-        <Link href={Routes.privacyPolicy}>Zasady korzsytania z cookies</Link>
+        <Link href={Routes.privacyPolicyAndCookies}>Polityka prwyatności i pliki cookies</Link>
+      
       </Flex>
     </Flex>
   );
