@@ -21,9 +21,10 @@ export const MyPaymentsItem = ({ lang, payment }: MyPaymentsItemProps) => {
     if (!selectedInvoiceId) return;
     try {
       const response = await handleDownloadInvoice(Number(selectedInvoiceId));
-
+      console.log('Response from handleDownloadInvoice:', response);
       if (response) {
         const { base64, fileName } = response;
+        console.log('File name:', fileName);
         const binary = atob(base64);
         const array = new Uint8Array(binary.length);
         for (let i = 0; i < binary.length; i++) {
@@ -39,6 +40,7 @@ export const MyPaymentsItem = ({ lang, payment }: MyPaymentsItemProps) => {
         document.body.appendChild(a);
         a.click();
         a.remove();
+        console.log('Download triggered for:', fileName);
       }
     } catch (e) {
       console.error('Failed to download invoice:', e);
