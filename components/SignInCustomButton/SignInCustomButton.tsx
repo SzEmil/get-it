@@ -20,7 +20,7 @@ export const SignInCustomButton = ({
         color="themePrimary.0"
         {...rest}
       >
-        Dołącz do nas
+        Dołącz
       </Button>
     </SignInButton>
   );
