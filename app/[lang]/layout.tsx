@@ -70,7 +70,7 @@ const RootLayout = async ({ children, params: { lang } }: RootLayoutProps) => {
                 <SpeedInsights />
                 <Notifications />
                 <PrivacyBanner lang={lang} />
-                <TestModeModal lang={lang} />
+                {/* <TestModeModal lang={lang} /> */}
               </AppShellMain>
               <AppShellFooter
                 bg={'rgb(6, 1, 17)'}
