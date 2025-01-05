@@ -3,7 +3,7 @@ import { LineCapStyle, PDFDocument, StandardFonts, rgb } from 'pdf-lib';
 import { ToWords } from 'to-words';
 import { readFileSync, existsSync } from 'fs';
 import { Invoice, Payment } from '@prisma/client';
-import { formatDate } from '@/helpers/date';
+import { formatDate, formatInvoiceDate } from '@/helpers/date';
 import { INVOICE_TEMPLATE } from '@/templates/invoiceRegularVat';
 const PriceToPolishWords = require('price-to-polish-words');
 import fs from 'fs';
@@ -74,33 +74,37 @@ export const generateInvoicePdfLib = async (
     'zl-words zl-full gr-words gr-short'
   );
 
-  const soldDate = formatDate(invoice.sold_date);
-  // .toISOString().split('T')[0];
-  const paymentDate = formatDate(invoice.payment_date);
-  // .toISOString().split('T')[0];
+  const soldDate = formatInvoiceDate(invoice.sold_date)
+
+  const paymentDate = formatInvoiceDate(invoice.payment_date)
+
+
   replaceInvoicePlaceholders(INVOICE_TEMPLATE, invoice);
 
-  const fontUrl = process.env.NODE_ENV === 'production'
-  ? 'https://get-it-sigma.vercel.app/fonts/Roboto-Regular.ttf'
-  : 'http://localhost:3000/fonts/Roboto-Regular.ttf';
+  const fontUrl =
+    process.env.NODE_ENV === 'production'
+      ? 'https://get-it-sigma.vercel.app/fonts/Roboto-Regular.ttf'
+      : 'http://localhost:3000/fonts/Roboto-Regular.ttf';
 
   const responseFontUrl = await fetch(fontUrl);
-const fontArrayBuffer = await responseFontUrl.arrayBuffer();
+  const fontArrayBuffer = await responseFontUrl.arrayBuffer();
 
-  const fontUrlBold = process.env.NODE_ENV === 'production'
-  ? 'https://get-it-sigma.vercel.app/fonts/Roboto-Regular.ttf'
-  : 'http://localhost:3000/fonts/Roboto-Bold.ttf';
+  const fontUrlBold =
+    process.env.NODE_ENV === 'production'
+      ? 'https://get-it-sigma.vercel.app/fonts/Roboto-Regular.ttf'
+      : 'http://localhost:3000/fonts/Roboto-Bold.ttf';
 
   const responseBoldFont = await fetch(fontUrl);
-const fontBoldArrayBuffer = await responseBoldFont.arrayBuffer();
+  const fontBoldArrayBuffer = await responseBoldFont.arrayBuffer();
   // const fontBytes = fs.readFileSync(fontPath);
-
 
   const pdfDoc = await PDFDocument.create();
   pdfDoc.registerFontkit(fontkit);
 
   const customFont = await pdfDoc.embedFont(new Uint8Array(fontArrayBuffer));
-  const customFontBold = await pdfDoc.embedFont(new Uint8Array(fontBoldArrayBuffer));
+  const customFontBold = await pdfDoc.embedFont(
+    new Uint8Array(fontBoldArrayBuffer)
+  );
 
   // Utworzenie dokumentu PDF
   const page = pdfDoc.addPage();
@@ -210,7 +214,7 @@ const fontBoldArrayBuffer = await responseBoldFont.arrayBuffer();
     size: sectionFontSize,
   });
   leftBoxY -= sectionFontSize + 2;
-  page.drawText(invoice.createdAt.toDateString(), {
+  page.drawText(soldDate.toString(), {
     x: leftBoxX,
     y: leftBoxY,
     font: fontRegular,
@@ -226,7 +230,7 @@ const fontBoldArrayBuffer = await responseBoldFont.arrayBuffer();
     size: sectionFontSize,
   });
   leftBoxY -= sectionFontSize + 2;
-  page.drawText(invoice.createdAt.toDateString(), {
+  page.drawText(soldDate.toString(), {
     x: leftBoxX,
     y: leftBoxY,
     font: fontRegular,
@@ -262,7 +266,7 @@ const fontBoldArrayBuffer = await responseBoldFont.arrayBuffer();
     size: sectionFontSize,
   });
   rightBoxY -= sectionFontSize + 2;
-  page.drawText(invoice.payment_date.toDateString(), {
+  page.drawText(paymentDate.toString(), {
     x: rightBoxX,
     y: rightBoxY,
     font: fontRegular,
@@ -490,7 +494,7 @@ const fontBoldArrayBuffer = await responseBoldFont.arrayBuffer();
   //   Lp. / Nazwa towaru / Jednostka miary / Ilość / Cena / Wartość
   // Mamy 6 kolumn, z dość ciasną szerokością. Ustalmy w miarę logiczny podział:
 
-  const colWidths = [30, 190, 60, 40, 70, 70];
+  const colWidths = [30, 190, 95, 40, 70, 70];
   // Suma = 30+190+60+40+70+70 = 460, a my mamy wewnątrz ~ (innerBoxWidth=495).
   // Starczy, plus jakieś wcięcie.
 
@@ -550,7 +554,7 @@ const fontBoldArrayBuffer = await responseBoldFont.arrayBuffer();
       tableRowHeight,
       rowData[i],
       fontRegular,
-      10,
+      8,
       {
         borderWidth: 2,
         align: 'center',
@@ -564,12 +568,12 @@ const fontBoldArrayBuffer = await responseBoldFont.arrayBuffer();
   // Wiersz PODSUMOWANIA
   // Według HTML: colspan=5, i w jednej komórce jest "Do zapłaty: ... / price_words / Razem PLN"
   // a w drugiej "price" wyrównane do prawej.
-  const summaryHeight = 30;
+  const summaryHeight = 40;
   // Komórka 1 (colspan=5)
   drawCell(
     page,
     tableStartX,
-    tableY,
+    tableY - 20,
     colWidths[0] + colWidths[1] + colWidths[2] + colWidths[3] + colWidths[4],
     summaryHeight,
     '', // w środku i tak rysujemy niestandardowo
@@ -583,21 +587,21 @@ const fontBoldArrayBuffer = await responseBoldFont.arrayBuffer();
   );
   // Zawartość niestandardowa – rysujemy wewnątrz
   let cellInnerX = tableStartX + 5;
-  let cellInnerY = tableY + summaryHeight - 12; // 12 jako offset
+  let cellInnerY = tableY + summaryHeight - 35; // 12 jako offset
   page.drawText(`Do zapłaty: ${invoice.price} ${invoice.currency}`, {
     x: cellInnerX,
     y: cellInnerY,
     font: fontBold,
-    size: 14,
+    size: 10,
   });
-  cellInnerY -= (14 + 2);
+  cellInnerY -= 14 + 2;
 
   // price_words
   page.drawText(priceInWords || '', {
     x: cellInnerX,
     y: cellInnerY,
     font: fontRegular,
-    size: 10,
+    size: 8,
   });
   // "Razem PLN" – w HTML jest to obok. My zrobimy z prawej strony tej komórki:
   const cell5Width =
@@ -607,7 +611,7 @@ const fontBoldArrayBuffer = await responseBoldFont.arrayBuffer();
     x: rightTextX,
     y: cellInnerY,
     font: fontRegular,
-    size: 10,
+    size: 8,
   });
 
   // Komórka 2 (ostatnia kolumna)
@@ -615,17 +619,17 @@ const fontBoldArrayBuffer = await responseBoldFont.arrayBuffer();
   drawCell(
     page,
     lastColX,
-    tableY,
+    tableY - 20,
     colWidths[5],
     summaryHeight,
     `${invoice.price} ${invoice.currency}`,
     fontRegular,
-    10,
+    8,
     {
       borderWidth: 2,
       align: 'right',
       verticalAlign: 'middle',
-      offsetX: -5, // by tekst był od prawej
+      offsetX: 10, // by tekst był od prawej
     }
   );
 
@@ -638,9 +642,9 @@ const fontBoldArrayBuffer = await responseBoldFont.arrayBuffer();
   // Rysujemy tę czarną ramkę z zaokrąglonymi rogami
   page.drawRectangle({
     x: innerBoxX,
-    y: cursorY,
+    y: cursorY+30,
     width: innerBoxWidth,
-    height: innerBoxHeight,
+    height: innerBoxHeight-30,
     borderColor: rgb(0, 0, 0),
     borderWidth: 2,
     borderLineCap: LineCapStyle.Round,

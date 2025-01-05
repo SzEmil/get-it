@@ -18,7 +18,7 @@ export const MyPaymentsItem = ({ lang, payment }: MyPaymentsItemProps) => {
   const [loading, setLoading] = useState(false);
 
   const handleDownload = async () => {
-    console.log(selectedInvoiceId);
+    setLoading(true)
     if (!selectedInvoiceId) return;
     try {
       const response = await handleDownloadInvoice(Number(selectedInvoiceId));
@@ -44,28 +44,11 @@ export const MyPaymentsItem = ({ lang, payment }: MyPaymentsItemProps) => {
       }
     } catch (e) {
       console.error('Failed to download invoice:', e);
+    }finally{
+      setLoading(false)
     }
   };
-  // const handleDownload = async () => {
-  //   setLoading(true);
-  //   if(!selectedInvoiceId) return;
-  //   try {
-  //     // Fetch invoice data from the server
-  //     const invoice = await handleDownloadInvoice(Number(selectedInvoiceId));
 
-  //     if (invoice) {
-  //       // Use the client-side PDF generation function
-  //       await generateInvoicePdfClientSide(INVOICE_TEMPLATE, invoice, `${invoice.invoice_number}.pdf`);
-  //       console.log('PDF generated successfully');
-  //     } else {
-  //       console.error('Invoice data not found');
-  //     }
-  //   } catch (error) {
-  //     console.error('Failed to generate or download the invoice:', error);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
   return (
     <Flex w={'100%'} justify={'space-between'} align={'flex-start'} p={10}>
       <Flex direction={'column'}>
@@ -109,7 +92,7 @@ export const MyPaymentsItem = ({ lang, payment }: MyPaymentsItemProps) => {
         <Button
           mt={10}
           onClick={() => handleDownload()}
-          disabled={!selectedInvoiceId}
+          disabled={!selectedInvoiceId || loading}
           color="themePrimary.0"
         >
           Pobierz fakturę

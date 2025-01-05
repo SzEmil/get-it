@@ -20,6 +20,7 @@ import { SignedIn, SignedOut } from '@clerk/nextjs';
 import { PickOfferButton } from './components/PickOfferButton';
 import Link from 'next/link';
 import { ROUTES } from '@/constants';
+import { Typography } from '../Typography/Typohraphy';
 
 type OfferCardProps = {
   lang: string;
@@ -77,6 +78,14 @@ export const OfferCard = ({ lang, offer, userCoursesIds }: OfferCardProps) => {
             </Flex>
           ))}
         </List>
+        <Typography fz={12} mt={10}>
+          💡 30-dniowa gwarancja satysfakcji Wierzymy, że nasz kurs dostarczy Ci
+          ogrom wartościowej, praktycznej wiedzy. Jednak jeśli z jakiegoś powodu
+          uznasz, że nie spełnia Twoich oczekiwań, masz 30 dni na rezygnację.
+          Wystarczy, że napiszesz na info@toknowai.pl, a zwrócimy Ci pieniądze —
+          bez zadawania zbędnych pytań i bez ryzyka! Rozpocznij swoją przygodę z
+          AI już dziś!
+        </Typography>
         <Group className={styles.btnBox}>
           <SignedIn>
             {userCoursesIds.some(courseId => courseId === offer.courseId) ? (

@@ -8,7 +8,7 @@
 .item {
   transform: translateY(-10px);
 
-  max-width: 550px;
+  max-width: 100%;
   opacity: 0;
 }
 .item:nth-child(n) {
@@ -184,7 +184,7 @@ li:nth-child(odd) .imgBox {
     padding-top: 100px;
   }
   .item {
-    max-width: 800px;
+    max-width: 100%;
   }
   .card {
     background: rgb(3, 3, 33);
@@ -222,13 +222,13 @@ li:nth-child(odd) .imgBox {
     align-items: center;
     flex-direction: row;
     gap: 10px;
-    margin-top: 40px;
+    margin-top: 30px;
   }
 }
 
 @media screen and (min-width: 1200px) {
   .item {
-    max-width: 1200px;
+    max-width: 100%;
   }
   .imgBox {
     display: block;

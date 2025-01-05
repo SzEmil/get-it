@@ -49,7 +49,7 @@ export default async function Offer({ params: { lang } }: PageProps) {
             </Typography>
           </Center>
           <Center>
-            <SimpleGrid cols={2} spacing="100px" mt={50}>
+            <Flex wrap={'wrap'} justify={'center'} gap={50} mt={50}>
               {offers.map(offer => (
                 <OfferCard
                   key={offer.id}
@@ -62,7 +62,7 @@ export default async function Offer({ params: { lang } }: PageProps) {
                   }
                 />
               ))}
-            </SimpleGrid>
+            </Flex>
           </Center>
         </Box>
       </Container>

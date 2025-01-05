@@ -10,6 +10,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Routes } from '@/constants/endpoints';
 import { CourseImage } from '@/components/CourseImage/CourseImage';
+import { formatInvoiceDate } from '@/helpers/date';
+import { Typography } from '@/components/Typography/Typohraphy';
+import { List, ListItem } from '@mantine/core';
 
 type MyCoursesItemProps = {
   lang: string;
@@ -30,14 +33,20 @@ export const MyCoursesItem = ({
     : 0;
 
   // Łączna liczba lekcji w kursie
-  const totalLessons = Array.isArray(course.lessons) ? course.lessons.length : 0;
+  const totalLessons = Array.isArray(course.lessons)
+    ? course.lessons.length
+    : 0;
 
   // Oblicz procent ukończenia
   const progressPercentage =
     totalLessons > 0 ? Math.round((completedLessons / totalLessons) * 100) : 0;
 
   return (
-    <li key={nanoid()} className={`${css.item} ${css.itemVisible}`}>
+    <li
+      key={nanoid()}
+      className={`${css.item} ${css.itemVisible}`}
+      style={{ listStyle: 'none' }}
+    >
       <div className={css.card}>
         <div className={css.infoBox} key={course.id}>
           <h2 className={css.title}>{course.name}</h2>
@@ -45,12 +54,28 @@ export const MyCoursesItem = ({
             <BsFillCalendarDateFill size={16} color="white" />
             <p className={css.date}>
               Ostatnia aktywność:{' '}
-              {progress?.updatedAt.toISOString() || 'Brak aktywności'}
+              {formatInvoiceDate(progress?.updatedAt) || 'Brak aktywności'}
             </p>
           </div>
 
           <div className={`${css.spanLine} ${css.lineVisible}`}></div>
           <p className={css.description}>{course.description}</p>
+          <Typography>Co znajdziesz w kursie?</Typography>
+          <List c={"white"}>
+            <ListItem>
+              Filmy instruktażowe: Każdy krok dokładnie wyjaśniony.
+            </ListItem>
+            <ListItem>Materiały uzupełniające wiedzę z wideo.</ListItem>
+            <ListItem>
+              Przykłady praktyczne: Realne zastosowania Flowise AI.
+            </ListItem>
+          </List>
+
+          <Typography>
+            Nie zapomnij, że masz pełen dostęp do kursu przez cały czas.
+            Powodzenia i miłej nauki!
+          </Typography>
+
           <div className={css.btnBox}>
             <Link className={css.btn} href={`${Routes.myCourses}/${course.id}`}>
               <FaPlay size={16} />

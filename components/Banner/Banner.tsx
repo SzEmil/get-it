@@ -73,15 +73,15 @@ const Banner = ({ lang }: BannerProps) => {
           <Box className={styles.sloganWrapper}>
             <Title
               style={{
-                fontSize: '1.5rem',
                 fontWeight: 100,
                 color: 'white',
                 textAlign: 'center',
                 marginBottom: '2rem',
                 zIndex: 10,
               }}
+              fz={{base: 18, sm: 24}}
             >
-              Zostań programistą AI!
+              Zostań ekspertem AI bez pisania kodu!
             </Title>
             <Title
               style={{
@@ -91,12 +91,12 @@ const Banner = ({ lang }: BannerProps) => {
                 zIndex: 10,
               }}
               fw={900}
-              fz={{ base: 24, sm: 48, md: 58 }}
+              fz={{ base: 28, sm: 48, md: 48 }}
               mb={2}
             >
-              Kursy programowania dla poczatkujących
+              Twórz potężne aplikacje oparte na Flowise AI — szybko, intuicyjnie
             </Title>
-            <div
+            <Flex
               style={{
                 display: 'flex',
                 justifyContent: 'center',
@@ -104,6 +104,7 @@ const Banner = ({ lang }: BannerProps) => {
                 marginTop: '3rem',
                 zIndex: 10,
               }}
+              direction={{ base: 'column', sm: 'row' }}
             >
               {isSignedIn ? (
                 <Button
@@ -114,7 +115,7 @@ const Banner = ({ lang }: BannerProps) => {
                   color="themePrimary.0"
                   onClick={() => router.push('/offer')}
                 >
-                  {'Kup Teraz'}
+                  {'Rozpocznij'}
                 </Button>
               ) : (
                 <SignInCustomButton lang={lang} />
@@ -126,11 +127,11 @@ const Banner = ({ lang }: BannerProps) => {
                 size="lg"
                 radius={30}
                 component={Link}
-                href="#howItWorks"
+                href="#courseDemo"
               >
-                Jak to Działa
+                Zobacz przykładową lekcję
               </Button>
-            </div>
+            </Flex>
           </Box>
         </Flex>
       </Container>

@@ -20,3 +20,20 @@ const parseDate = (date: any): Date | null => {
   const parsedDate = new Date(date);
   return isNaN(parsedDate.getTime()) ? null : parsedDate;
 };
+
+
+export function formatInvoiceDate(dateInput?: string | Date): string {
+  if (!dateInput) return '';
+  
+  const date = new Date(dateInput);
+  if (isNaN(date.getTime())) {
+    // Niepoprawna data
+    return '';
+  }
+
+  const day = String(date.getDate()).padStart(2, '0');
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const year = date.getFullYear();
+
+  return `${day}-${month}-${year}`;
+}

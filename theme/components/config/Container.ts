@@ -2,7 +2,7 @@ import { Container as ContainerConfig } from "@mantine/core";
 
 const containerPadding = {
   base: 20,
-  lg: 0,
+  xl: 0,
 };
 
 export const Container = ContainerConfig.extend({

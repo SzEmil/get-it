@@ -231,6 +231,7 @@ export const CourseLayout = ({ courseId }: CourseLayoutProps) => {
           alignItems: 'center',
           justifyContent: 'space-between',
           padding: '10px 0',
+          gap: '10px',
         }}
       >
         <Burger
@@ -238,7 +239,7 @@ export const CourseLayout = ({ courseId }: CourseLayoutProps) => {
           onClick={() => setOpened(o => !o)}
           size="sm"
           color="white"
-          hiddenFrom="md"
+          hiddenFrom="lg"
         />
         <h1 style={{ margin: 0 }}>{course?.name ?? 'Loading...'}</h1>
       </div>
@@ -246,7 +247,7 @@ export const CourseLayout = ({ courseId }: CourseLayoutProps) => {
       {/* Grid for desktop view */}
       <Grid gutter="md">
         {/* Lesson Navigation (Visible on large screens) */}
-        <GridCol span={3} hidden={opened}>
+        <GridCol span={3} visibleFrom="lg">
           <LessonNavigation
             course={course}
             activeLessonId={activeLessonId}
@@ -256,13 +257,13 @@ export const CourseLayout = ({ courseId }: CourseLayoutProps) => {
         </GridCol>
 
         {/* Lesson Viewer */}
-        <Grid.Col span={9}>
+        <GridCol span={{ base: 12, lg: 9 }}>
           <LessonViewer
             course={course}
             activeLessonId={activeLessonId}
             onScrollProgress={handleLessonScrollProgress}
           />
-        </Grid.Col>
+        </GridCol>
       </Grid>
 
       {/* Drawer for mobile navigation */}
@@ -270,7 +271,7 @@ export const CourseLayout = ({ courseId }: CourseLayoutProps) => {
         opened={opened}
         onClose={() => setOpened(false)}
         padding="md"
-        size="300px"
+  
         title="Nawigacja Lekcji"
         bg={theme.colors.dark[9]}
         zIndex={999999}

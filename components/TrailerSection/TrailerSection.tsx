@@ -10,11 +10,13 @@ import {
   ThemeIcon,
   Container,
   Title,
+  Flex,
 } from '@mantine/core';
 import { FaPlay, FaBrain, FaCode, FaRobot } from 'react-icons/fa';
 import VideoPlayer from '../VideoPlayer/VideoPlayer';
 import styles from './TrailerSection.module.css';
 import { Routes } from '@/constants/endpoints';
+import { Typography } from '../Typography/Typohraphy';
 
 export const TrailerSection = () => {
   return (
@@ -36,17 +38,24 @@ export const TrailerSection = () => {
 
       <Container size="lg">
         <Stack gap="xl" align="center">
-          <Title
-            ta="center"
-            order={2}
-            style={{ color: 'white', marginBottom: '1rem' }}
-          >
-            Dołącz do świata LangChain i Flowise AI
-          </Title>
+          <Stack gap={1} align="center">
+            <Title
+              ta="center"
+              order={2}
+              style={{ color: 'white', marginBottom: '1rem' }}
+            >
+              Dołącz do świata LangChain i Flowise AI
+            </Title>
+
+            <Typography c="dimmed">
+              Twój pierwszy krok do tworzenia aplikacji AI bez kodowania!
+            </Typography>
+          </Stack>
 
           {/* Video Section */}
           <Box style={{ maxWidth: '800px', width: '100%' }}>
-            <VideoPlayer width='800px'
+            <VideoPlayer
+              width="800px"
               videoSrc={
                 'https://drive.google.com/file/d/16YRYhURFzjwIOBOOO9m7oP75JlipDoG8/preview'
               }
@@ -69,11 +78,16 @@ export const TrailerSection = () => {
           </Text>
 
           {/* Key Features */}
-          <Group align="center" gap="xl" style={{ marginTop: '1rem' }}>
+          <Flex
+            align="center"
+            gap="xl"
+            style={{ marginTop: '1rem' }}
+            direction={{ base: 'column', sm: 'row' }}
+          >
             <FeatureIcon icon={FaBrain} text="Zrozum podstawy LangChain" />
             <FeatureIcon icon={FaRobot} text="Twórz aplikacje z Flowise AI" />
             <FeatureIcon icon={FaCode} text="Łącz programowanie z AI" />
-          </Group>
+          </Flex>
 
           {/* Call to Action Button */}
           <Anchor href={Routes.offer} underline={'never'}>
@@ -89,14 +103,14 @@ export const TrailerSection = () => {
           </Anchor>
 
           {/* Promo Banner */}
-          <Box style={{ textAlign: 'center', marginTop: '2rem' }}>
+          {/* <Box style={{ textAlign: 'center', marginTop: '2rem' }}>
             <Image
               src="https://picsum.photos/700/350"
               alt="Promocyjny baner"
               radius="md"
               style={{ maxWidth: '700px', width: '100%' }}
             />
-          </Box>
+          </Box> */}
         </Stack>
       </Container>
     </Box>
@@ -113,7 +127,7 @@ const FeatureIcon = ({
 }) => (
   <Stack align="center" gap={8}>
     <ThemeIcon size="lg" radius="xl" variant="light" color="#cf0e81">
-      <Icon size={24} />
+      <Icon size={32} />
     </ThemeIcon>
     <Text size="sm" ta={'center'} fw={500}>
       {text}

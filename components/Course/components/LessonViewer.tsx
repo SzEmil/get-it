@@ -1,6 +1,6 @@
 'use client';
 import React, { useCallback, useRef, useState } from 'react';
-import { Box, Center, Flex, Loader, Stack, Text } from '@mantine/core';
+import { Box, Center, Flex, Loader, Stack, Text, Title } from '@mantine/core';
 import * as DB from '@prisma/client';
 import Image from 'next/image';
 import { CourseType } from '@/types/types';
@@ -39,7 +39,6 @@ export const LessonViewer = ({
       setMaxScroll(currentScroll);
       onScrollProgress(currentScroll);
     }
-
   }, [maxScroll, onScrollProgress]);
 
   if (!course) {
@@ -76,7 +75,7 @@ export const LessonViewer = ({
           >
             <Center>
               <Stack>
-                <Text mb={2}>{video.name}</Text>
+                <Title mb={2} order={4}>{video.name}</Title>
                 <ProtectedVideoPlayer
                   videoId={video.link}
                   courseId={course.id.toString()}
