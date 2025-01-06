@@ -41,6 +41,7 @@ export const MyCoursesItem = ({
   const progressPercentage =
     totalLessons > 0 ? Math.round((completedLessons / totalLessons) * 100) : 0;
 
+     const imageUrl = course.images.length > 0 ?`/assets/coursesAssets/${course.id}/${course.images[0]}` : null
   return (
     <li
       key={nanoid()}
@@ -95,7 +96,7 @@ export const MyCoursesItem = ({
         <div className={css.imgBox}>
           <Image
             className={css.galleryImage}
-            src={'https://picsum.photos/350'}
+            src={imageUrl ??'https://picsum.photos/350'}
             alt="random pic"
             width={350}
             height={200}
