@@ -17,7 +17,7 @@ type MyPaymentsListPropss = {
 
 export type PaymentWithOrdrCourse = {
   courses: DB.OrderCourse[];
-   invoices: DB.Invoice[];
+  invoices: DB.Invoice[];
 } & DB.Payment;
 
 export const MyPaymentsList = ({ lang }: MyPaymentsListPropss) => {
@@ -49,7 +49,9 @@ export const MyPaymentsList = ({ lang }: MyPaymentsListPropss) => {
     }
   }, [fetchPayments]);
 
-
+  const handleTestInvoice = async () => {
+    await createInvoice(40);
+  };
   return (
     <Flex
       direction={'column'}
