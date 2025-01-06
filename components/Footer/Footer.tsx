@@ -14,10 +14,15 @@ export const Footer = ({ lang }: FooterProps) => {
   return (
     <Box w={'100%'} pb={20}>
       <Container fluid pt={50} pb={40}>
-        <ContactForm lang={lang} type='footer'/>
+        <ContactForm lang={lang} type="footer" />
       </Container>
       <Container>
-        <Flex w={'100%'} justify={'space-between'}>
+        <Flex
+          w={'100%'}
+          justify={'space-between'}
+          direction={{ base: 'column', sm: 'row' }}
+          gap={10}
+        >
           <Typography fz={34} fw={700}>
             {APP_NAME}
           </Typography>

@@ -1,6 +1,7 @@
 import { Container, Stack, Title, Text, Box, AspectRatio } from '@mantine/core';
 import VideoPlayer from '../VideoPlayer/VideoPlayer';
 import { Typography } from '../Typography/Typohraphy';
+import styles from './TrailerSection.module.css';
 
 export const CourseDemo = () => {
   return (
@@ -13,12 +14,12 @@ export const CourseDemo = () => {
       }}
     >
       {/* Background Paint Strokes */}
-      {/* <div
+      <div
         className={`${styles.backgroundPaint} ${styles.backgroundPaint1}`}
       ></div>
       <div
         className={`${styles.backgroundPaint} ${styles.backgroundPaint2}`}
-      ></div> */}
+      ></div>
 
       <Container size="lg">
         <Stack gap="xl" align="center">

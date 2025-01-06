@@ -1,0 +1,27 @@
+.backgroundPaint {
+    position: absolute;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.3;
+  }
+  
+  .backgroundPaint1 {
+    top: 60%;
+    left: -50px;
+    width: 300px;
+    height: 300px;
+    background: linear-gradient(135deg, #eb49a8 0%, rgba(235, 73, 168, 0) 100%);
+    transform: rotate(20deg);
+    filter: blur(40px);
+  }
+  
+  .backgroundPaint2 {
+    bottom: 40%;
+    right: -80px;
+    width: 400px;
+    height: 400px;
+    background: linear-gradient(135deg, #ff6ec7 0%, rgba(255, 110, 199, 0) 100%);
+    transform: rotate(-30deg);
+    filter: blur(50px);
+  }
+  
