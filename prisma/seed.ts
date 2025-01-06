@@ -9,11 +9,11 @@ const main = async () => {
     const {  Offer, ...courseData } = course;
 
     // Upsert dla kursu
-    // await prisma.course.upsert({
-    //   where: { id: course.id },
-    //   update: courseData,
-    //   create: courseData,
-    // });
+    await prisma.course.upsert({
+      where: { id: course.id },
+      update: courseData,
+      create: courseData,
+    });
 
     // Upsert dla wideo
     // for (const video of videos.create) {
@@ -24,14 +24,14 @@ const main = async () => {
     //   });
     // }
 
-    // Upsert dla oferty
-    // if (Offer) {
-    //   await prisma.offer.upsert({
-    //     where: { id: Offer.create.id },
-    //     update: Offer.create,
-    //     create: Offer.create,
-    //   });
-    // }
+    //Upsert dla oferty
+    if (Offer) {
+      await prisma.offer.upsert({
+        where: { id: Offer.create.id },
+        update: Offer.create,
+        create: Offer.create,
+      });
+    }
 
 
   }

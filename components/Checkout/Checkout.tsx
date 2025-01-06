@@ -30,6 +30,8 @@ const Checkout = ({ lang, offer, userId }: CheckoutProps) => {
 
   const customerForm = useOrderForm(lang, isCompanyInvoice);
 
+  const [couponCode, setCouponCode] = useState<string | null>(null);
+
   useEffect(() => {
     setCustomer(customerForm.values);
   }, [customerForm.values, setCustomer]);
@@ -64,6 +66,8 @@ const Checkout = ({ lang, offer, userId }: CheckoutProps) => {
           : values.country,
         invoice_nip: isCompanyInvoice ? values.invoice_nip : undefined,
         invoice_type: isCompanyInvoice ? 'COMPANY' : 'PERSONAL',
+
+        couponCode
       };
 
       const data = await createOrder(orderData);
@@ -257,7 +261,10 @@ const Checkout = ({ lang, offer, userId }: CheckoutProps) => {
           </Button>
         </Box>
       </form>
-      <OrderSummary offer={offer} />
+      <OrderSummary
+        offer={offer}
+        setCouponCode={setCouponCode}
+      />
     </Flex>
   );
 };

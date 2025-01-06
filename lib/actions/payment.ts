@@ -7,10 +7,12 @@ import { UserOrderDataType } from './orderProcessing';
 import { revalidatePath } from 'next/cache';
 import { Routes } from '@/constants/endpoints';
 import { FormatResponse } from './response';
+import { getCouponDetails, verifyAndUseCoupon } from './coupon.actions';
 
 export const savePayment = async (
   customer: UserOrderDataType,
-  courses: CartItem[]
+  courses: CartItem[],
+  couponCode: string | null
 ) => {
   const totalAmount = courses
     .reduce(
@@ -19,6 +21,22 @@ export const savePayment = async (
       0
     )
     .toFixed(2);
+
+  let discountedAmount = totalAmount; // Domyślnie kwota bez zniżki
+  let usedCoupon = false;
+  let couponData: DB.Coupon | null = null;
+
+  if (couponCode) {
+    const { data: coupon } = await getCouponDetails(couponCode);
+    if (coupon) {
+      discountedAmount = (
+        Number(discountedAmount) -
+        (Number(discountedAmount) * coupon.percentage) / 100
+      ).toFixed(2);
+      usedCoupon = true;
+      couponData = coupon;
+    }
+  }
 
   const payment = await prisma.payment.create({
     data: {
@@ -29,10 +47,10 @@ export const savePayment = async (
       phone: customer.phone ?? '',
       postalCode: customer.postalCode ?? '',
       userId: customer.id,
-      amount: +totalAmount,
+      amount: +discountedAmount,
       currency: 'PLN',
       address: customer.address,
-      paymentMethod: "Płatność online",
+      paymentMethod: 'Płatność online',
 
       invoice_name: customer.invoice_name,
       invoice_address: customer.invoice_address,
@@ -43,6 +61,15 @@ export const savePayment = async (
       invoice_type: customer.invoice_type,
     },
   });
+
+  if (usedCoupon && couponData) {
+    await verifyAndUseCoupon({
+      code: couponData.code,
+      paymentId: payment.id,
+      userId: customer.id,
+      userDetails: customer,
+    });
+  }
 
   await createOrderCourse(payment.id, courses);
 

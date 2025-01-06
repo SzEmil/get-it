@@ -24,6 +24,8 @@ export type OrderData = {
   invoice_country?: String;
   invoice_nip?: String;
   invoice_type?: DB.InvoiceType;
+
+  couponCode: string | null;
 };
 export type Lesson = {
   id: number;

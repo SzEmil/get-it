@@ -22,7 +22,7 @@ export type UserOrderDataType = {
   Pick<DB.User, 'id'>;
 
 export const createOrder = FormatResponse(
-  async ({ courses, customer, userId }: OrderData) => {
+  async ({ courses, customer, userId, couponCode }: OrderData) => {
     // Success scenario
     const user = await getUserById(userId);
 
@@ -35,8 +35,7 @@ export const createOrder = FormatResponse(
       id: user.id,
     } satisfies UserOrderDataType;
 
-
-    const orderDb = await savePayment(customerData, courses);
+    const orderDb = await savePayment(customerData, courses, couponCode);
 
     const { data: coursesData } = await findOfferCoursesByCourseIds(courses);
     if (orderDb && coursesData) {

@@ -79,6 +79,7 @@ export const verifyAndUseCoupon = FormatResponse(
           firstName: userDetails.firstName,
           lastName: userDetails.lastName,
           email: userDetails.email,
+          paymentId: paymentId,
           usedFor: { paymentId }, // Dodatkowe dane w JSON
         },
       });

@@ -100,6 +100,9 @@ model Payment {
   invoice_type      InvoiceType @default(PERSONAL)
 
   invoices         Invoice[]     @relation("PaymentInvoices")
+  usedCoupons      UsedCoupon[]  @relation("PaymentUsedCoupons")
+ 
+
 }
 
 model Invoice {
@@ -207,6 +210,9 @@ model UsedCoupon {
   
   usedFor     Json                            // Zrzutka danych zasobu (kursu/oferty), do którego kupon został wykorzystany
   
+  paymentId   Int
+  payment     Payment   @relation("PaymentUsedCoupons", fields: [paymentId], references: [id], onDelete: Cascade)
+
   createdAt   DateTime   @default(now())      // Data wykorzystania kuponu
 }
 
