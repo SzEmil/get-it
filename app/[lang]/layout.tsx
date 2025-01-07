@@ -24,6 +24,7 @@ import { ROUTES } from '@/constants';
 import { PrivacyBanner } from '@/components/PrivacyBanner/PrivacyBanner';
 import { TestModeModal } from '@/components/TestModeModal/TestModeModal';
 import { SpeedInsights } from '@vercel/speed-insights/next';
+import { Affix } from '@/components/Affix/Affix';
 
 export const generateStaticParams = getLanguagesStaticParams;
 
@@ -71,6 +72,7 @@ const RootLayout = async ({ children, params: { lang } }: RootLayoutProps) => {
                 <Notifications />
                 <PrivacyBanner lang={lang} />
                 {/* <TestModeModal lang={lang} /> */}
+                <Affix />
               </AppShellMain>
               <AppShellFooter
                 bg={'rgb(6, 1, 17)'}

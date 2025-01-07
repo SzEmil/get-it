@@ -5,6 +5,7 @@ import { FooterNavigation } from './components/FooterNavigation';
 import { Socials } from './components/Socials';
 import { APP_NAME } from '@/config';
 import { ContactForm } from '../ContactForm/ContactForm';
+import Image from 'next/image';
 
 type FooterProps = {
   lang: string;
@@ -23,9 +24,23 @@ export const Footer = ({ lang }: FooterProps) => {
           direction={{ base: 'column', sm: 'row' }}
           gap={10}
         >
-          <Typography fz={34} fw={700}>
-            {APP_NAME}
-          </Typography>
+          <Flex align={'center'} gap={10}>
+            <Image
+              width={200}
+              height={200}
+              src={'/logo_tkai.png'}
+              alt="logo"
+              style={{
+                display: 'block',
+                width: '30px',
+                height: 'auto',
+                marginTop: '4px',
+              }}
+            />
+            <Typography fz={34} fw={700} lh={1} display={'block'}>
+              {APP_NAME}
+            </Typography>
+          </Flex>
           <FooterNavigation lang={lang} />
           <Socials lang={lang} />
         </Flex>

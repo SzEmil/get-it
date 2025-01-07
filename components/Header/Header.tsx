@@ -12,6 +12,7 @@ import { HeaderNavigation } from './components/HeaderNavigation';
 import { UserBtn } from '../UserBtn/UserBtn';
 import { useState } from 'react';
 import { FiMenu } from 'react-icons/fi';
+import Image from 'next/image';
 
 type HeaderProps = {
   lang: string;
@@ -37,9 +38,23 @@ export const Header = ({ lang }: HeaderProps) => {
       >
         {/* Logo */}
         <Link href={Routes.home}>
-          <Typography fz={34} fw={700}>
-            {APP_NAME}
-          </Typography>
+          <Flex align={'center'} gap={10}>
+            <Image
+              width={200}
+              height={200}
+              src={'/logo_tkai.png'}
+              alt="logo"
+              style={{
+                display: 'block',
+                width: '30px',
+                height: 'auto',
+                marginTop: "4px",
+              }}
+            />
+            <Typography fz={34} fw={700} lh={1} display={'block'}>
+              {APP_NAME}
+            </Typography>
+          </Flex>
         </Link>
 
         {/* Desktop Navigation */}
