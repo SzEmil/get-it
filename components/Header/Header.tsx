@@ -34,6 +34,7 @@ export const Header = ({ lang }: HeaderProps) => {
         style={{
           backgroundColor: 'rgba(0, 0, 0, 0.1)',
           transition: 'background-color 0.3s ease',
+          position: 'relative',
         }}
       >
         {/* Logo */}
@@ -48,7 +49,7 @@ export const Header = ({ lang }: HeaderProps) => {
                 display: 'block',
                 width: '30px',
                 height: 'auto',
-                marginTop: "4px",
+                marginTop: '4px',
               }}
             />
             <Typography fz={34} fw={700} lh={1} display={'block'}>
@@ -58,7 +59,15 @@ export const Header = ({ lang }: HeaderProps) => {
         </Link>
 
         {/* Desktop Navigation */}
-        <Flex display={{ base: 'none', md: 'flex' }} align="center">
+        <Flex
+          display={{ base: 'none', md: 'flex' }}
+          align="center"
+          style={{
+            position: 'absolute', // Wyśrodkowujemy absolutnie
+            left: '50%', // Punkt odniesienia: środek kontenera
+            transform: 'translateX(-50%)', // Przesunięcie na środek
+          }}
+        >
           <HeaderNavigation lang={lang} />
         </Flex>
 
