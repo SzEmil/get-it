@@ -39,8 +39,10 @@ export const CourseLayout = ({ courseId }: CourseLayoutProps) => {
   const [progress, setProgress] = useState<UserProgressType | null>(null);
   const [loading, setLoading] = useState(false);
   const [completionPercentage, setCompletionPercentage] = useState<number>(0);
+  const [scrollToTop, setScrollToTop] = useState(false);
 
   const progressRef = useRef<boolean>(false);
+  const lessonContainerRef = useRef<HTMLDivElement | null>(null);
 
   const { isLoaded, user } = useUser();
 
@@ -166,10 +168,12 @@ export const CourseLayout = ({ courseId }: CourseLayoutProps) => {
         progressRef.current = true;
       } else {
         // c) W przeciwnym razie zaczynamy od 0%
+        setScrollToTop(true);
         setCompletionPercentage(0);
         progressRef.current = false;
       }
     }
+    setTimeout(() => setScrollToTop(false), 100);
   };
 
   useEffect(() => {
@@ -184,20 +188,20 @@ export const CourseLayout = ({ courseId }: CourseLayoutProps) => {
         lesson => lesson.id === activeLessonId
       );
       if (currentIndex > 0) {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        setActiveLessonId(course.lessons[currentIndex - 1].id);
+        const newLessonId = course.lessons[currentIndex - 1].id;
+        handleLessonChange(newLessonId);
       }
     }
   };
-
+  
   const handleNextLesson = () => {
     if (course && activeLessonId !== null) {
       const currentIndex = course.lessons.findIndex(
         lesson => lesson.id === activeLessonId
       );
       if (currentIndex < course.lessons.length - 1) {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        setActiveLessonId(course.lessons[currentIndex + 1].id);
+        const newLessonId = course.lessons[currentIndex + 1].id;
+        handleLessonChange(newLessonId);
       }
     }
   };
@@ -257,11 +261,12 @@ export const CourseLayout = ({ courseId }: CourseLayoutProps) => {
         </GridCol>
 
         {/* Lesson Viewer */}
-        <GridCol span={{ base: 12, lg: 9 }}>
+        <GridCol span={{ base: 12, lg: 9 }} ref={lessonContainerRef}>
           <LessonViewer
             course={course}
             activeLessonId={activeLessonId}
             onScrollProgress={handleLessonScrollProgress}
+            scrollToTop={scrollToTop}
           />
         </GridCol>
       </Grid>
@@ -271,7 +276,6 @@ export const CourseLayout = ({ courseId }: CourseLayoutProps) => {
         opened={opened}
         onClose={() => setOpened(false)}
         padding="md"
-  
         title="Nawigacja Lekcji"
         bg={theme.colors.dark[9]}
         zIndex={999999}
@@ -284,7 +288,7 @@ export const CourseLayout = ({ courseId }: CourseLayoutProps) => {
         />
       </Drawer>
 
-      <Flex
+      {/* <Flex
         justify="space-between"
         style={{
           marginTop: '2rem',
@@ -315,7 +319,7 @@ export const CourseLayout = ({ courseId }: CourseLayoutProps) => {
         >
           Następna Lekcja
         </Button>
-      </Flex>
+      </Flex> */}
     </Container>
   );
 };

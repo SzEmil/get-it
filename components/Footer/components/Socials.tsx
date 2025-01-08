@@ -20,9 +20,9 @@ export const Socials = ({ lang }: SocialsProps) => {
         <Link href={SocialLinks.facebook}>
           <FaFacebookF size={24} />
         </Link>
-        <Link href={SocialLinks.tiktok}>
+        {/* <Link href={SocialLinks.tiktok}>
           <SiTiktok size={24} />
-        </Link>
+        </Link> */}
       </Flex>
     </Flex>
   );

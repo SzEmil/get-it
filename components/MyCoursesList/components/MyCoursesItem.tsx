@@ -93,7 +93,7 @@ export const MyCoursesItem = ({
           </div>
         </div>
 
-        <div className={css.imgBox}>
+        {/* <div className={css.imgBox}>
           <Image
             className={css.galleryImage}
             src={imageUrl ??'https://picsum.photos/350'}
@@ -102,7 +102,7 @@ export const MyCoursesItem = ({
             height={200}
             style={{ display: 'block', width: '100%', height: '100%' }}
           />
-        </div>
+        </div> */}
       </div>
     </li>
   );

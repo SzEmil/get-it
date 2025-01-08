@@ -28,11 +28,6 @@ export const FAQ = () => {
         'Łączny czas materiałów wideo to około 2,5 godziny. Kurs zawiera również dodatkowe materiały w formie grafik i tekstów, a powtarzanie przykładów przedstawionych w kursie może zająć dodatkowy czas.',
     },
     {
-      question: 'Czy mogę otrzymać fakturę za zakup kursu?',
-      answer:
-        'Tak, wystawiamy faktury bez VAT. Wystarczy podać dane do faktury podczas zakupu.',
-    },
-    {
       question: 'Na ile czasu otrzymuję dostęp do kursu?',
       answer:
         'Dostęp jest bezterminowy — możesz wracać do materiałów w dowolnym momencie.',

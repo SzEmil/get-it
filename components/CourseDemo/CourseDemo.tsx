@@ -28,9 +28,9 @@ export const CourseDemo = () => {
               Demo kursu
             </Title>
             <Typography ta="center" c="dimmed">
-              🎥 Przykładowa lekcja: Zobacz, jak wygląda nauka z nami! <br />
-              Obejrzyj wybrany fragment kursu, by samodzielnie ocenić jakość
-              materiałów.
+              🎥 Przykładowa lekcja: Zobacz, jak zacząć z Flowise AI! <br />
+              Poznaj podstawy, które mogą pomóc w przyszłości stworzyć bota do
+              tradingu, kryptowalut i nie tylko.
             </Typography>
           </Stack>
 
@@ -39,7 +39,7 @@ export const CourseDemo = () => {
             <VideoPlayer
               width="800px"
               videoSrc={
-                'https://drive.google.com/file/d/16YRYhURFzjwIOBOOO9m7oP75JlipDoG8/preview'
+                'https://drive.google.com/file/d/1SLEgnp7Fm5FPOplX6LWDwYrF7hASr0jg/preview'
               }
             />
           </Box>

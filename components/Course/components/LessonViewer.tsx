@@ -1,5 +1,5 @@
 'use client';
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Box, Center, Flex, Loader, Stack, Text, Title } from '@mantine/core';
 import * as DB from '@prisma/client';
 import Image from 'next/image';
@@ -14,12 +14,14 @@ type LessonViewerProps = {
   course: CourseType | null;
   activeLessonId: number | null;
   onScrollProgress: (scrolledPercentage: number) => Promise<void>;
+  scrollToTop: boolean;
 };
 
 export const LessonViewer = ({
   course,
   activeLessonId,
   onScrollProgress,
+  scrollToTop,
 }: LessonViewerProps) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
 
@@ -40,6 +42,14 @@ export const LessonViewer = ({
       onScrollProgress(currentScroll);
     }
   }, [maxScroll, onScrollProgress]);
+
+  useEffect(() => {
+    console.log('aktywacja use efekta');
+    if (scrollToTop && containerRef.current) {
+      console.log('zmiana pozycji');
+      containerRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, [scrollToTop]);
 
   if (!course) {
     return <Loader />;
@@ -75,7 +85,9 @@ export const LessonViewer = ({
           >
             <Center>
               <Stack>
-                <Title mb={2} order={4}>{video.name}</Title>
+                <Title mb={2} order={4}>
+                  {video.name}
+                </Title>
                 <ProtectedVideoPlayer
                   videoId={video.link}
                   courseId={course.id.toString()}

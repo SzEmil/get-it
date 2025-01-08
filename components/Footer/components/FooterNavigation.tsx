@@ -21,6 +21,7 @@ export const FooterNavigation = ({ lang }: FooterNavigationProps) => {
         <Link href={Routes.privacyPolicyAndCookies}>Polityka prwyatności i pliki cookies</Link>
       
       </Flex>
+
     </Flex>
   );
 };
