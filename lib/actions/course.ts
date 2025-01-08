@@ -30,6 +30,24 @@ export const findUserCourses = FormatResponse(async (userId: number) => {
   return userCourses;
 });
 
+export const findUserCourseIds = FormatResponse(async (userId: number) => {
+  const userCourseIds = await prisma.course.findMany({
+    where: {
+      users: {
+        some: {
+          id: userId,
+        },
+      },
+    },
+    select: {
+      id: true,
+    },
+  });
+
+  // Wyciągamy same identyfikatory do tablicy
+  return userCourseIds.map(course => course.id);
+});
+
 export const findUserCourseById = FormatResponse(
   async ({ userId, courseId }: { userId: string; courseId: number }) => {
     const userCourse = await prisma.course.findFirst({

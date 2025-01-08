@@ -1,12 +1,14 @@
 'use client';
 
 import { useUser } from '@clerk/nextjs';
-import { Center, Flex, Loader } from '@mantine/core';
+import { Button, Center, Flex, Loader } from '@mantine/core';
 import React, { useCallback, useEffect, useState } from 'react';
 import * as DB from '@prisma/client';
 import { MyCoursesItem } from './components/MyCoursesItem';
 import { findUserCourses } from '@/lib/actions/course';
 import { getUserProgressByCourse } from '@/lib/actions/userProgress.actions';
+import Link from 'next/link';
+import { Routes } from '@/constants/endpoints';
 
 type MyCoursesListProps = {
   lang: string;
@@ -85,16 +87,22 @@ export const MyCoursesList = ({ lang }: MyCoursesListProps) => {
         </Center>
       ) : (
         <Center w={'100%'}>
-          <Flex direction={'column'} gap={50} w={'100%'}>
-            {courses.map(course => (
-              <MyCoursesItem
-                key={course.id}
-                lang={lang}
-                course={course}
-                progress={course.userProgress}
-              />
-            ))}
-          </Flex>
+          {courses.length === 0 ? (
+            <Button component={Link} href={Routes.offer}>
+              Przejdź do oferty
+            </Button>
+          ) : (
+            <Flex direction={'column'} gap={50} w={'100%'}>
+              {courses.map(course => (
+                <MyCoursesItem
+                  key={course.id}
+                  lang={lang}
+                  course={course}
+                  progress={course.userProgress}
+                />
+              ))}
+            </Flex>
+          )}
         </Center>
       )}
     </Flex>

@@ -1,5 +1,12 @@
 import Image from 'next/image';
-import { BackgroundImage, Box, Container, Text } from '@mantine/core'; // Imported Text component
+import {
+  BackgroundImage,
+  Box,
+  Button,
+  Container,
+  Flex,
+  Text,
+} from '@mantine/core'; // Imported Text component
 import { Typography } from '@/components/Typography/Typohraphy';
 import { I18nProps } from '@/types/types';
 import { addLanguagesToStaticParams } from '@/i18n/helpers';
@@ -11,6 +18,8 @@ import { currentUser } from '@clerk/nextjs/server';
 import { getUserCourses } from '@/lib/actions/user.actions';
 // import { Checkout } from '@/components/Checkout/Checkout';
 import dynamic from 'next/dynamic';
+import Link from 'next/link';
+import { Routes } from '@/constants/endpoints';
 
 export const revalidate = 600;
 
@@ -73,9 +82,18 @@ export default async function CheckoutPage({
 
   if (!user || !user.data) {
     return (
-      <Box pt={100}>
-        <Container>
-          <Text>Zaloguj sie aby kupić</Text>
+      <Box pt={150}>
+        <Container display={'flex'} w={'100%'}>
+          <Flex justify={'center'} gap={20} w={'100%'} align={'center'}>
+            <Box
+              style={{ display: 'flex', gap: '20px', flexDirection: 'column' }}
+            >
+              <Text>Zaloguj się aby kupić.</Text>
+              <Button component={Link} href={Routes.signIn}>
+                Zaloguj się
+              </Button>
+            </Box>
+          </Flex>
         </Container>
       </Box>
     );
@@ -83,9 +101,24 @@ export default async function CheckoutPage({
 
   if (alreadyOwnsCourse) {
     return (
-      <Box pt={100}>
-        <Container>
-          <Text>Posiadasz już ten kurs.</Text>
+      <Box pt={150}>
+        <Container display={'flex'} w={'100%'}>
+          <Flex justify={'center'} gap={20} w={'100%'} align={'center'}>
+            <Box
+              style={{
+                display: 'flex',
+                gap: '20px',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <Text>Posiadasz już ten kurs.</Text>
+              <Button component={Link} href={Routes.myCourses}>
+                Przejdź do Twoich kursów
+              </Button>
+            </Box>
+          </Flex>
         </Container>
       </Box>
     );

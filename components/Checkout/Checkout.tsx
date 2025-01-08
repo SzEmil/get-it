@@ -12,6 +12,8 @@ import { createOrder } from '@/lib/actions/orderProcessing';
 import { OrderData } from '@/types/types';
 import { useRouter } from 'next/navigation';
 import { notify } from '@/services/Email/notifications';
+import { useUser } from '@clerk/nextjs';
+import { findUserCourseIds } from '@/lib/actions/course';
 
 type CheckoutProps = {
   lang: string;
@@ -29,52 +31,75 @@ const Checkout = ({ lang, offer, userId }: CheckoutProps) => {
   const [isCompanyInvoice, setIsCompanyInvoice] = useState(false);
 
   const customerForm = useOrderForm(lang, isCompanyInvoice);
-
+  const [userOwnsCourse, setUserOwnsCourse] = useState(false);
   const [couponCode, setCouponCode] = useState<string | null>(null);
+
+  const { isLoaded, user } = useUser();
 
   useEffect(() => {
     setCustomer(customerForm.values);
   }, [customerForm.values, setCustomer]);
 
+  useEffect(() => {
+    const checkUserCourses = async () => {
+      if (!isLoaded || !user) return;
+
+      // @ts-expect-error
+      const userIdData = +user.publicMetadata.userId;
+      const { data: userCourseIds } = await findUserCourseIds(userIdData);
+
+      const userCoursesIdsData = userCourseIds ?? [];
+
+      // Sprawdź, czy użytkownik posiada kurs
+      if (userCoursesIdsData.includes(offer.courseId)) {
+        setUserOwnsCourse(true); // Ustaw stan, jeśli użytkownik już posiada kurs
+      }
+    };
+
+    checkUserCourses();
+  }, [isLoaded, user, offer.courseId]);
+
   const onSubmitCheckoutForm = async (values: Customer) => {
-    try {
-      setIsSubmmiting(true);
-      const orderData: OrderData = {
-        customer: values,
-        userId,
-        courses: [
-          {
-            courseId: offer.courseId,
-            courseName: offer.name,
-            amount: offer.price,
-            currency: offer.currency,
-          },
-        ],
+    if (!userOwnsCourse) {
+      try {
+        setIsSubmmiting(true);
+        const orderData: OrderData = {
+          customer: values,
+          userId,
+          courses: [
+            {
+              courseId: offer.courseId,
+              courseName: offer.name,
+              amount: offer.price,
+              currency: offer.currency,
+            },
+          ],
 
-        invoice_name: isCompanyInvoice
-          ? values.invoice_name
-          : values.firstName + ' ' + values.lastName,
-        invoice_address: isCompanyInvoice
-          ? values.invoice_address
-          : values.address,
-        invoice_postal_code: isCompanyInvoice
-          ? values.invoice_postal_code
-          : values.postalCode,
-        invoice_town: isCompanyInvoice ? values.invoice_town : values.city,
-        invoice_country: isCompanyInvoice
-          ? values.invoice_country
-          : values.country,
-        invoice_nip: isCompanyInvoice ? values.invoice_nip : undefined,
-        invoice_type: isCompanyInvoice ? 'COMPANY' : 'PERSONAL',
+          invoice_name: isCompanyInvoice
+            ? values.invoice_name
+            : values.firstName + ' ' + values.lastName,
+          invoice_address: isCompanyInvoice
+            ? values.invoice_address
+            : values.address,
+          invoice_postal_code: isCompanyInvoice
+            ? values.invoice_postal_code
+            : values.postalCode,
+          invoice_town: isCompanyInvoice ? values.invoice_town : values.city,
+          invoice_country: isCompanyInvoice
+            ? values.invoice_country
+            : values.country,
+          invoice_nip: isCompanyInvoice ? values.invoice_nip : undefined,
+          invoice_type: isCompanyInvoice ? 'COMPANY' : 'PERSONAL',
 
-        couponCode
-      };
+          couponCode,
+        };
 
-      const data = await createOrder(orderData);
-      if (data.data) router.push(data.data?.paymentUrl);
-      // notify.onErrorMessage('Płatności są obecnie nieaktywne');
-    } finally {
-      setIsSubmmiting(false);
+        const data = await createOrder(orderData);
+        if (data.data) router.push(data.data?.paymentUrl);
+        // notify.onErrorMessage('Płatności są obecnie nieaktywne');
+      } finally {
+        setIsSubmmiting(false);
+      }
     }
   };
 
@@ -255,16 +280,13 @@ const Checkout = ({ lang, offer, userId }: CheckoutProps) => {
             size="md"
             radius={20}
             color={'themePrimary.0'}
-            disabled={isSubmmiting}
+            disabled={isSubmmiting || userOwnsCourse}
           >
             {isSubmmiting ? 'Ładowanie' : 'Złóż zamówienie'}
           </Button>
         </Box>
       </form>
-      <OrderSummary
-        offer={offer}
-        setCouponCode={setCouponCode}
-      />
+      <OrderSummary offer={offer} setCouponCode={setCouponCode} />
     </Flex>
   );
 };
