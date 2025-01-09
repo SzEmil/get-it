@@ -9,8 +9,6 @@ import {
 } from '@mantine/core';
 import { Typography } from '@/components/Typography/Typohraphy';
 import { I18nProps } from '@/types/types';
-import { findAllOffers } from '@/lib/actions/offer';
-import { OfferCard } from '@/components/OfferCard/OfferCard';
 import { currentUser } from '@clerk/nextjs/server';
 import { getCurrentUser } from '@/lib/actions/user.actions';
 import { GetServerSideProps } from 'next';
