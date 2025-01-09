@@ -9,20 +9,16 @@ import React, { useState } from 'react';
 type PriceProps = {
   price: number;
   currency: string;
-  setCouponCode: React.Dispatch<React.SetStateAction<string | null>>
+  setCouponCode: React.Dispatch<React.SetStateAction<string | null>>;
 };
 
-export const Price = ({
-  price,
-  currency,
-  setCouponCode,
-}: PriceProps) => {
+export const Price = ({ price, currency, setCouponCode }: PriceProps) => {
   const [foundCoupon, setFoundCoupon] = useState<Coupon | null>(null);
 
   const [couponInput, setCouponInput] = useState<string>('');
-  const [loading, setLoading] = useState<boolean>(false); 
+  const [loading, setLoading] = useState<boolean>(false);
 
- const handleCheckCoupon = async () => {
+  const handleCheckCoupon = async () => {
     setLoading(true); // Ustawiamy `loading` na true przed rozpoczęciem akcji
     try {
       const { data: coupon } = await getCouponDetails(couponInput);
@@ -40,22 +36,22 @@ export const Price = ({
     }
   };
 
-
   const discountedPrice = foundCoupon
     ? price - (price * foundCoupon.percentage) / 100
     : price;
 
-
   return (
     <Box mt={20}>
       {/* Sekcja wpisywania kuponu i przycisk */}
-      <Group align='center'>
+      <Group align="center">
         <TextInput
           placeholder="Wpisz kod kuponu:"
           value={couponInput}
           onChange={event => setCouponInput(event.currentTarget.value)}
         />
-        <Button disabled={loading} onClick={handleCheckCoupon}>Sprawdź kupon</Button>
+        <Button disabled={loading} onClick={handleCheckCoupon}>
+          Sprawdź kupon
+        </Button>
       </Group>
 
       {/* Sekcja wyświetlania cen */}
@@ -66,7 +62,7 @@ export const Price = ({
         {foundCoupon && (
           <Text size="sm" color="green">
             Cena po obniżce: <strong>{discountedPrice.toFixed(2)}</strong>{' '}
-            {currency} (zniżka {foundCoupon.percentage}%)
+            {currency} (zniżka {Math.round(foundCoupon?.percentage ?? 0)}%)
           </Text>
         )}
       </Box>

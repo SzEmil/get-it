@@ -1,9 +1,11 @@
 "use server";
 
+import { parseBooleanFromEnv } from "@/helpers/enviromentVariables";
+
 export const getPaymentData = async (url: string, body?: object) => {
   const res = await fetch(
     `https://${
-      process.env.PAYMENT_SANDBOX_MODE ? "sandbox" : "secure"
+      parseBooleanFromEnv(process.env.PAYMENT_SANDBOX_MODE) ? "sandbox" : "secure"
     }.przelewy24.pl/api/v1/${url}`,
     {
       headers: {
