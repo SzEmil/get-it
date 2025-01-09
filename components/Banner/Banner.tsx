@@ -79,7 +79,7 @@ const Banner = ({ lang }: BannerProps) => {
                 marginBottom: '2rem',
                 zIndex: 10,
               }}
-              fz={{base: 18, sm: 24}}
+              fz={{ base: 18, sm: 24 }}
             >
               Zostań ekspertem AI bez pisania kodu!
             </Title>

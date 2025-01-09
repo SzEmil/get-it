@@ -126,7 +126,12 @@ const CallToAction = () => {
                     Regularna cena kursu:
                   </Text>
                 </Flex>
-                <Text c="white" size="sm" fw={700}>
+                <Text
+                  c="white"
+                  size="sm"
+                  fw={700}
+                  style={{ textDecoration: 'line-through', opacity: 0.7 }}
+                >
                   {offer?.price} {offer?.currency}
                 </Text>
               </Flex>
