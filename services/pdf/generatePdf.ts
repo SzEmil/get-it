@@ -347,7 +347,7 @@ export const generateInvoicePdfLib = async (
     font: fontBold,
     size: infoFontSize,
   });
-  page.drawText(invoice.seller_NIP, {
+  page.drawText(invoice.seller_NIP && invoice.seller_NIP.trim() !== '' ? invoice.seller_NIP : 'Brak', {
     x: leftColX + 30,
     y: colY,
     font: fontRegular,
@@ -505,7 +505,7 @@ export const generateInvoicePdfLib = async (
   let colX = tableStartX;
   const headerLabels = [
     'Lp.',
-    'Nazwa towaru (usługi)',
+    'Nazwa towaru',
     'Jednostka miary',
     'Ilość',
     'Cena',
