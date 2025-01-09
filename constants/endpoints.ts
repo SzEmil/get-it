@@ -17,5 +17,5 @@ export enum Routes {
 
 export enum SocialLinks {
   tiktok = '/',
-  facebook = '/',
+  facebook = 'https://www.facebook.com/profile.php?id=61571576409370',
 }
