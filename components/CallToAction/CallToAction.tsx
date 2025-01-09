@@ -150,19 +150,6 @@ const CallToAction = () => {
                 </Text>
               </Flex>
 
-              <Flex justify="space-between" align="center">
-                <Flex align="center" gap="sm">
-                  <ThemeIcon color="blue" size={32} radius="xl">
-                    <FaTag size={20} />
-                  </ThemeIcon>
-                  <Text c="white" size="sm">
-                    Najniższa cena w ostatnich 30 dniach:
-                  </Text>
-                </Flex>
-                <Text c="blue" size="sm" fw={700}>
-                  {offer?.price} {offer?.currency}
-                </Text>
-              </Flex>
             </Stack>
           )}
         </Box>
