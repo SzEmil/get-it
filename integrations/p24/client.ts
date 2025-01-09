@@ -10,22 +10,14 @@ export class PaymentClient {
   private constructor() {}
 
   public static getInstance(): P24 {
-    console.log(
-      parseBooleanFromEnv(
-        process.env.PAYMENT_SANDBOX_MODE,
-      ),
-      process.env.PAYMENT_MERCHANT_ID,
-      process.env.PAYMENT_API_KEY,
-      process.env.PAYMENT_CRC_KEY,
-      process.env.PAYMENT_POS_ID
-    );
+
     if (!PaymentClient.instance) {
       PaymentClient.instance = new P24(
         parseInt(process.env.PAYMENT_MERCHANT_ID!),
         parseInt(process.env.PAYMENT_POS_ID!),
         process.env.PAYMENT_API_KEY!,
         process.env.PAYMENT_CRC_KEY!,
-        
+
         {
           sandbox: parseBooleanFromEnv(process.env.PAYMENT_SANDBOX_MODE),
         }
