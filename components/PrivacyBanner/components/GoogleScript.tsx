@@ -22,6 +22,7 @@ export const GoogleAnalyticsScript = () => (
         async
         src="https://www.googletagmanager.com/gtag/js?id=AW-11513086855"
       ></script>
+
       <Script strategy="lazyOnload" id="google-ads">
         {` window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -29,7 +30,6 @@ export const GoogleAnalyticsScript = () => (
 
   gtag('config', 'AW-11513086855');`}
       </Script>
-
     </>
     {/* )} */}
   </>
