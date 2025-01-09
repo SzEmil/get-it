@@ -25,6 +25,19 @@ export const GoogleAnalyticsScript = () => (
           style={{ display: 'none', visibility: 'hidden' }}
         ></iframe>
       </noscript>
+
+      <script
+        async
+        src="https://www.googletagmanager.com/gtag/js?id=AW-11513086855"
+      ></script>
+      <Script strategy="lazyOnload" id="google-ads">
+        {` window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-11513086855');`}
+      </Script>
+
       {/* <Script
         async
         id="GTM1"
@@ -35,8 +48,6 @@ export const GoogleAnalyticsScript = () => (
               'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
             })(window,document,'script','dataLayer','${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_GTM1}');`}
       /> */}
-
-
     </>
     {/* )} */}
   </>
