@@ -14,12 +14,12 @@ import {
   ThemeIcon,
   Skeleton,
 } from '@mantine/core';
-import { FaGift, FaTag } from 'react-icons/fa';
+import { FaGift, FaTag, FaUsers } from 'react-icons/fa';
 import { Coupon, Offer } from '@prisma/client';
 import Link from 'next/link';
 import { Routes } from '@/constants/endpoints';
 
- const CallToAction = () => {
+const CallToAction = () => {
   const [offer, setOffer] = useState<Offer | null>(null);
   const [coupon, setCoupon] = useState<Coupon | null>(null);
   const [loading, setLoading] = useState(true);
@@ -88,6 +88,35 @@ import { Routes } from '@/constants/endpoints';
                 miejsc.
               </Text>
 
+              {/* Ilość pozostałych kuponów */}
+              <Flex justify="center" align="center" gap="sm">
+                <ThemeIcon color="blue" size={40} radius="xl">
+                  <FaUsers size={24} />
+                </ThemeIcon>
+                <Text
+                  c="white"
+                  size="lg"
+                  ta="center"
+                  style={{ fontWeight: 'bold' }}
+                >
+                  Zgarnij rabat przed innymi! Pozostało{' '}
+                  <Text
+                    component="span"
+                    style={{
+                      color: 'yellow',
+                      fontWeight: 'bold',
+                      fontSize: '1.5rem',
+                    }}
+                  >
+                    {coupon
+                      ? Number(coupon.quantity || 0) -
+                        Number(coupon.usedQuantity || 0)
+                      : '...'}
+                  </Text>{' '}
+                  kuponów.
+                </Text>
+              </Flex>
+
               <Flex justify="space-between" align="center">
                 <Flex align="center" gap="sm">
                   <ThemeIcon color="yellow" size={32} radius="xl">
@@ -149,4 +178,4 @@ import { Routes } from '@/constants/endpoints';
   );
 };
 
-export default CallToAction
+export default CallToAction;
