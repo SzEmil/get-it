@@ -83,14 +83,6 @@ export const Footer = ({ lang }: FooterProps) => {
                 </Typography>
               </Flex>
 
-              <Flex direction={'row'} gap={5}>
-                <Typography fz={18} fw={400}>
-                  tel:
-                </Typography>
-                <Typography fz={18} fw={500}>
-                  +48 887 600 255
-                </Typography>
-              </Flex>
             </Flex>
           </Flex>
           <FooterNavigation lang={lang} />

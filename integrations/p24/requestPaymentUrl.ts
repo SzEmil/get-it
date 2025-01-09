@@ -27,7 +27,7 @@ export const requestPaymentUrl = async ({
     Endpoints.p24Integration
   }`;
 
-  const amount = payment.amount * 100;
+  const amount = Math.round(payment.amount * 100 * 100) / 100;
 
   const order: Order = {
     sessionId,
@@ -45,9 +45,8 @@ export const requestPaymentUrl = async ({
     regulationAccept: false,
   };
 
-    const paymentClient = PaymentClient.getInstance();
+  const paymentClient = PaymentClient.getInstance();
 
-    const { link } = await paymentClient.createTransaction(order);
-    return { paymentUrl: link, sessionId };
-  
+  const { link } = await paymentClient.createTransaction(order);
+  return { paymentUrl: link, sessionId };
 };
