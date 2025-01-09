@@ -8,7 +8,6 @@ import * as DB from '@prisma/client';
 import { MyPaymentsItem } from './components/MyPaymentsItem';
 import { findUserPayments } from '@/lib/actions/payment.actions';
 
-import sendEmail from '@/services/Email/operations/sendEmail';
 import { createInvoice, sendInvoiceById } from '@/lib/actions/invoice.actions';
 
 type MyPaymentsListPropss = {

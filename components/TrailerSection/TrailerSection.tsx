@@ -18,7 +18,7 @@ import styles from './TrailerSection.module.css';
 import { Routes } from '@/constants/endpoints';
 import { Typography } from '../Typography/Typohraphy';
 
-export const TrailerSection = () => {
+ const TrailerSection = () => {
   return (
     <Box
       style={{
@@ -116,7 +116,7 @@ export const TrailerSection = () => {
     </Box>
   );
 };
-
+export default TrailerSection
 // Feature Icon Component
 const FeatureIcon = ({
   icon: Icon,

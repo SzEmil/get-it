@@ -180,3 +180,5 @@ export const CourseProgram = () => {
     </Container>
   );
 };
+
+export default CourseProgram

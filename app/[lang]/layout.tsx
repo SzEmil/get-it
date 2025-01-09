@@ -14,31 +14,33 @@ import {
 } from '@mantine/core';
 import { Providers } from '@/components/providers';
 import { getLanguagesStaticParams } from '@/i18n/helpers';
-import { ReactNode } from 'react';
+import { ReactNode, Suspense } from 'react';
 import { I18nProps } from '@/types/types';
 import { Header } from '@/components/Header/Header';
 import { Footer } from '@/components/Footer/Footer';
 import { ClerkProvider } from '@clerk/nextjs';
 import { Notifications } from '@mantine/notifications';
 import { ROUTES } from '@/constants';
-import { PrivacyBanner } from '@/components/PrivacyBanner/PrivacyBanner';
 import { TestModeModal } from '@/components/TestModeModal/TestModeModal';
 import { SpeedInsights } from '@vercel/speed-insights/next';
-import { Affix } from '@/components/Affix/Affix';
+import { SEO } from '@/seo';
+import dynamic from 'next/dynamic';
 
 export const generateStaticParams = getLanguagesStaticParams;
 
 const inter = Inter({ subsets: ['latin'], display: 'swap' });
 
-export const metadata: Metadata = {
-  title: 'ToKnowAI',
-  description: 'Take one step into IT',
-};
+export const metadata = SEO.defaultMetadata;
 
 type RootLayoutProps = {
   children: ReactNode;
   params: I18nProps;
 };
+
+const PrivacyBanner = dynamic(
+  () => import('@/components/PrivacyBanner/PrivacyBanner')
+);
+const Affix = dynamic(() => import('@/components/Affix/Affix'));
 
 const RootLayout = async ({ children, params: { lang } }: RootLayoutProps) => {
   return (
@@ -70,9 +72,10 @@ const RootLayout = async ({ children, params: { lang } }: RootLayoutProps) => {
                 {children}
                 <SpeedInsights />
                 <Notifications />
-                <PrivacyBanner lang={lang} />
-                {/* <TestModeModal lang={lang} /> */}
-                <Affix />
+                <Suspense fallback={<div>Ładowanie powiadomień...</div>}>
+                  <PrivacyBanner lang={lang} />
+                  <Affix />
+                </Suspense>
               </AppShellMain>
               <AppShellFooter
                 bg={'rgb(6, 1, 17)'}

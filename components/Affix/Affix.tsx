@@ -6,7 +6,7 @@ import { useWindowScroll } from "@mantine/hooks";
 import {  Text, Transition, rem } from "@mantine/core";
 import { Button } from "@mantine/core";
 
-export const Affix = () => {
+ const Affix = () => {
   const [scroll, scrollTo] = useWindowScroll();
   return (
     <ScrollBtn position={{ bottom: 40, right: 40 }}>
@@ -20,3 +20,4 @@ export const Affix = () => {
     </ScrollBtn>
   );
 };
+export default Affix

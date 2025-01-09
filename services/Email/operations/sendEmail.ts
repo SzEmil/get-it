@@ -6,7 +6,7 @@ import { transporter } from '../transporter';
 
 const sendEmail = async (
   lang: string = 'en',
-  { to = process.env.SERVICE_EMAIL_TARGET, html, attachments }: Mail.Options
+  { to = process.env.SERVICE_EMAIL_TARGET, html, attachments, subject }: Mail.Options
 ) => {
   const recipients = Array.isArray(to)
     ? to.filter(Boolean)
@@ -15,7 +15,7 @@ const sendEmail = async (
   const mailOptions: Mail.Options = {
     from: 'ToKnowAI',
     to: recipients as string | Mail.Address | (string | Mail.Address)[],
-    subject: `New subject: Ticket #${nanoid()}`,
+    subject: subject ?? `Ticket #${nanoid()}`,
     html,
     attachments,
   };

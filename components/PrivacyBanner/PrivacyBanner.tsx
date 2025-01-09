@@ -11,7 +11,7 @@ type PrivacyBannerProps = {
   lang: string;
 };
 
-export const PrivacyBanner = ({ lang }: PrivacyBannerProps) => {
+ const PrivacyBanner = ({ lang }: PrivacyBannerProps) => {
   const isPrivacyValid = useValidatePrivacy();
 
   return (
@@ -28,3 +28,4 @@ export const PrivacyBanner = ({ lang }: PrivacyBannerProps) => {
     </Box>
   );
 };
+export default PrivacyBanner

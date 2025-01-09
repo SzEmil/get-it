@@ -19,7 +19,7 @@ import { Routes } from '@/constants/endpoints';
 import { Typography } from '../Typography/Typohraphy';
 import { FaRocket, FaBullseye, FaLightbulb } from 'react-icons/fa';
 
-export const WhyChoseCourse = () => {
+ const WhyChoseCourse = () => {
   return (
     <Container size="lg" my="100px">
       <Stack gap="xl" align="center">
@@ -133,3 +133,4 @@ export const WhyChoseCourse = () => {
     </Container>
   );
 };
+export default WhyChoseCourse

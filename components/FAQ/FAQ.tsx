@@ -10,7 +10,7 @@ import {
 } from '@mantine/core';
 import { Typography } from '../Typography/Typohraphy';
 
-export const FAQ = () => {
+ const FAQ = () => {
   const faqs = [
     {
       question: 'Czym jest kurs Flowise AI?',
@@ -119,3 +119,5 @@ export const FAQ = () => {
     </Container>
   );
 };
+
+export default FAQ

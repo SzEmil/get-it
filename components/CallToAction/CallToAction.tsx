@@ -19,7 +19,7 @@ import { Coupon, Offer } from '@prisma/client';
 import Link from 'next/link';
 import { Routes } from '@/constants/endpoints';
 
-export const CallToAction = () => {
+ const CallToAction = () => {
   const [offer, setOffer] = useState<Offer | null>(null);
   const [coupon, setCoupon] = useState<Coupon | null>(null);
   const [loading, setLoading] = useState(true);
@@ -148,3 +148,5 @@ export const CallToAction = () => {
     </Container>
   );
 };
+
+export default CallToAction

@@ -10,7 +10,9 @@ import {
 import { Typography } from '@/components/Typography/Typohraphy';
 import { I18nProps } from '@/types/types';
 import { getLanguagesStaticParams } from '@/i18n/helpers';
-import { MyCoursesList } from '@/components/MyCoursesList/MyCoursesList';
+
+import { Suspense } from 'react';
+import dynamic from 'next/dynamic';
 
 export const revalidate = 1800;
 export const generateStaticParams = getLanguagesStaticParams;
@@ -19,19 +21,35 @@ type Params = I18nProps;
 type PageProps = {
   params: Params;
 };
+const MyCoursesList = dynamic(
+  () => import('@/components/MyCoursesList/MyCoursesList'),
+  {
+    suspense: true,
+  }
+);
+
 export default async function MyCourses({ params: { lang } }: PageProps) {
   return (
-    <BackgroundImage
-      src={'/background/polygonSVG.svg'}
+    <div
       style={{
+        position: 'relative',
         width: '100%',
-        height: '100%',
         minHeight: '100vh',
         backgroundColor: 'black',
-        zIndex: -1,
       }}
     >
-      <Container pt={100} pb={100}>
+      {/* Optymalizowany obraz tła */}
+      <Image
+        src="/background/polygonSVG.svg"
+        alt="Tło strony"
+        fill // Zastępuje layout="fill"
+        style={{ objectFit: 'cover' }} // Zastępuje objectFit="cover"
+        quality={75}
+        priority
+      />
+
+      {/* Zawartość strony */}
+      <Container pt={100} pb={100} style={{ position: 'relative', zIndex: 1 }}>
         <Box w={'100%'}>
           <Center>
             <Typography tt={'uppercase'} fw={700} fz={38}>
@@ -39,10 +57,13 @@ export default async function MyCourses({ params: { lang } }: PageProps) {
             </Typography>
           </Center>
           <Center>
-            <MyCoursesList lang={lang} />
+            {/* Suspense dla MyCoursesList */}
+            <Suspense fallback={<p></p>}>
+              <MyCoursesList lang={lang} />
+            </Suspense>
           </Center>
         </Box>
       </Container>
-    </BackgroundImage>
+    </div>
   );
 }

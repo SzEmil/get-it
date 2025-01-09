@@ -28,7 +28,7 @@ type OfferCardProps = {
   userCoursesIds: number[];
 };
 
-export const OfferCard = ({ lang, offer, userCoursesIds }: OfferCardProps) => {
+ const OfferCard = ({ lang, offer, userCoursesIds }: OfferCardProps) => {
   return (
     <li className={styles.courseItem}>
       <Box className={styles.courseCard}>
@@ -128,3 +128,5 @@ export const OfferCard = ({ lang, offer, userCoursesIds }: OfferCardProps) => {
     </li>
   );
 };
+
+export default OfferCard

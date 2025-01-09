@@ -3,7 +3,7 @@ import VideoPlayer from '../VideoPlayer/VideoPlayer';
 import { Typography } from '../Typography/Typohraphy';
 import styles from './TrailerSection.module.css';
 
-export const CourseDemo = () => {
+ const CourseDemo = () => {
   return (
     <Box
       style={{
@@ -48,3 +48,5 @@ export const CourseDemo = () => {
     </Box>
   );
 };
+
+export default CourseDemo

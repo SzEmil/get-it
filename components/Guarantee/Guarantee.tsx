@@ -9,7 +9,7 @@ import {
 } from '@mantine/core';
 import { FaShieldAlt, FaMoneyBillWave, FaRegSmile } from 'react-icons/fa';
 
-export const Guarantee = () => {
+ const Guarantee = () => {
   return (
     <Container size="lg" my="100px">
       <Stack gap="xl" align="center">
@@ -78,3 +78,5 @@ export const Guarantee = () => {
     </Container>
   );
 };
+
+export default Guarantee

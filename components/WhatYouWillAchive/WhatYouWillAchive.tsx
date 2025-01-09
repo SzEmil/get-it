@@ -19,7 +19,7 @@ import {
 } from 'react-icons/fa';
 import { Typography } from '../Typography/Typohraphy';
 
-export const WhatYouWillAchieve = () => {
+ const WhatYouWillAchieve = () => {
   return (
     <Container size="lg" my="100px">
       <Stack gap="xl">
@@ -152,3 +152,5 @@ export const WhatYouWillAchieve = () => {
     </Container>
   );
 };
+
+export default WhatYouWillAchieve

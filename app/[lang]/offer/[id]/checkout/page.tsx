@@ -20,6 +20,7 @@ import { getUserCourses } from '@/lib/actions/user.actions';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { Routes } from '@/constants/endpoints';
+import { Suspense } from 'react';
 
 export const revalidate = 600;
 
@@ -125,19 +126,26 @@ export default async function CheckoutPage({
   }
 
   return (
-    <BackgroundImage
-      src={'/background/polygonSVG.svg'}
-      style={{
-        width: '100%',
-        height: '100%',
-        minHeight: '100vh',
-        backgroundColor: 'black',
-        zIndex: -1,
-      }}
-    >
-      <Container pt={150} w={'100%'}>
-        <Checkout lang={lang} offer={offer} userId={+user?.data.id} />
+    <div style={{ position: 'relative', width: '100%', minHeight: '100vh' }}>
+      {/* Optymalizowany obraz jako tło */}
+      <Image
+        src="/background/polygonSVG.svg"
+        alt="Tło strony"
+        fill
+        style={{ objectFit: 'cover' }}
+        quality={75}
+        priority
+      />
+
+      <Container
+        pt={150}
+        w={'100%'}
+        style={{ position: 'relative', zIndex: 1 }}
+      >
+        <Suspense>
+          <Checkout lang={lang} offer={offer} userId={+user?.data.id} />
+        </Suspense>
       </Container>
-    </BackgroundImage>
+    </div>
   );
 }

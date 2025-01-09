@@ -18,7 +18,7 @@ export type CourseWithProgress = DB.Course & {
   userProgress: DB.UserProgress | null;
 };
 
-export const MyCoursesList = ({ lang }: MyCoursesListProps) => {
+ const MyCoursesList = ({ lang }: MyCoursesListProps) => {
   const [courses, setCourses] = useState<CourseWithProgress[]>([]);
   const [loading, setLoading] = useState(false);
 
@@ -108,3 +108,5 @@ export const MyCoursesList = ({ lang }: MyCoursesListProps) => {
     </Flex>
   );
 };
+
+export default MyCoursesList
