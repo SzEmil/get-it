@@ -3,7 +3,7 @@
 import { useUser } from '@clerk/nextjs';
 import { Flex, Text } from '@mantine/core';
 
-export const UserData = () => {
+ const UserData = () => {
   const { user } = useUser();
   return (
     <Flex
@@ -39,3 +39,5 @@ export const UserData = () => {
     </Flex>
   );
 };
+
+export default UserData

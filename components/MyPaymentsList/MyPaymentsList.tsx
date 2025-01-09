@@ -19,7 +19,7 @@ export type PaymentWithOrdrCourse = {
   invoices: DB.Invoice[];
 } & DB.Payment;
 
-export const MyPaymentsList = ({ lang }: MyPaymentsListPropss) => {
+ const MyPaymentsList = ({ lang }: MyPaymentsListPropss) => {
   const [payments, setPayments] = useState<PaymentWithOrdrCourse[]>([]);
   const [loading, setLoading] = useState(false);
 
@@ -57,8 +57,6 @@ export const MyPaymentsList = ({ lang }: MyPaymentsListPropss) => {
       gap={50}
       w={'100%'}
       mt={80}
-      mah={500}
-      style={{ overflowY: 'scroll' }}
     >
       {/* <Button onClick={handleTestInvoice}>Wyslij fakture o id 8</Button> */}
       {loading ? (
@@ -85,3 +83,5 @@ export const MyPaymentsList = ({ lang }: MyPaymentsListPropss) => {
     </Flex>
   );
 };
+
+export default MyPaymentsList
