@@ -83,7 +83,7 @@ const CallToAction = () => {
                 >
                   {coupon ? `"${coupon.code}"` : 'Loading...'}
                 </Text>
-                , który obniży cenę kursu aż o {coupon?.percentage}%! Nie
+                , który obniży cenę kursu aż o {Math.round(coupon?.percentage ?? 0)}%! Nie
                 przegap tej okazji — promocja obowiązuje tylko do wyczerpania
                 miejsc.
               </Text>
