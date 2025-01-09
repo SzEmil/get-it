@@ -79,7 +79,7 @@ export const Footer = ({ lang }: FooterProps) => {
                   email:
                 </Typography>
                 <Typography fz={18} fw={500}>
-                  info@narevka.com
+                  info@toknowai.pl
                 </Typography>
               </Flex>
 
