@@ -3,7 +3,7 @@ import VideoPlayer from '../VideoPlayer/VideoPlayer';
 import { Typography } from '../Typography/Typohraphy';
 import styles from './TrailerSection.module.css';
 
- const CourseDemo = () => {
+const CourseDemo = () => {
   return (
     <Box
       style={{
@@ -21,7 +21,7 @@ import styles from './TrailerSection.module.css';
         className={`${styles.backgroundPaint} ${styles.backgroundPaint2}`}
       ></div>
 
-      <Container size="lg">
+      <Container size="lg" id="courseDemo">
         <Stack gap="xl" align="center">
           <Stack gap={1} align="center">
             <Title ta="center" order={2} mb="sm" style={{ color: 'white' }}>
@@ -49,4 +49,4 @@ import styles from './TrailerSection.module.css';
   );
 };
 
-export default CourseDemo
+export default CourseDemo;
