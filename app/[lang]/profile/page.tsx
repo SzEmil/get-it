@@ -27,7 +27,6 @@ const UserData = dynamic(() => import('@/components/UserData/UserData'), {
   suspense: true,
 });
 
-
 export default async function Profile({ params: { lang } }: PageProps) {
   return (
     <div
@@ -38,30 +37,45 @@ export default async function Profile({ params: { lang } }: PageProps) {
         backgroundColor: 'black',
       }}
     >
-      {/* Optymalizowany obraz jako tło */}
-      <Image
-        src="/background/polygonSVG.svg"
-        alt="Tło strony"
-        fill
-        style={{ objectFit: 'cover' }}
-        quality={75}
-        priority
-      />
-      <Container pt={100} pb={100}>
+      {/* Obraz tła */}
+      <div
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          zIndex: -1, // Obraz znajduje się pod treścią
+        }}
+      >
+        <Image
+          src="/background/polygonSVG.svg"
+          alt="Tło strony"
+          fill
+          style={{ objectFit: 'cover' }}
+          quality={75}
+          priority
+        />
+      </div>
+
+      {/* Treść */}
+      <Container pt={100} pb={100} style={{ position: 'relative', zIndex: 1 }}>
         <Box w={'100%'}>
           <Center>
             <Typography tt={'uppercase'} fw={700} fz={38}>
               Profil
             </Typography>
           </Center>
+
           {/* Suspense dla UserData */}
-          <Suspense fallback={<Text>=</Text>}>
+          <Suspense fallback={<Text>Ładowanie danych użytkownika...</Text>}>
             <UserData />
           </Suspense>
-          {/* Suspense dla MyPaymentsList */}
 
+          {/* Suspense dla MyPaymentsList */}
+          <Suspense fallback={<Text>Ładowanie listy płatności...</Text>}>
             <MyPaymentsList lang={lang} />
-  
+          </Suspense>
         </Box>
       </Container>
     </div>
