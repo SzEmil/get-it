@@ -13,20 +13,6 @@ export const requestPaymentUrl = async ({
 }: OrderInput) => {
   const sessionId = nanoid();
 
-  const p24 = new P24(
-    +process.env.PAYMENT_MERCHANT_ID!,
-    +process.env.PAYMENT_POS_ID!,
-    "05e8526b7ba646c77fe28fede51a0c4f",
-    "3bd6f66a1948a008",
-
-    {
-      sandbox: false, // enable or disable sandbox
-    }
-  );
-
-  const result = await p24.testAccess();
-  console.log(result);
-
   const payment = await prisma.payment.findFirst({ where: { id } });
 
   if (!payment) {
