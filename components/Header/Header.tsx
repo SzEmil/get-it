@@ -1,7 +1,7 @@
 'use client';
 
 import css from './Header.module.css';
-import { Burger, Button, Drawer, Flex, Stack } from '@mantine/core';
+import { Box, Burger, Button, Drawer, Flex, Stack } from '@mantine/core';
 import { Typography } from '../Typography/Typohraphy';
 import { APP_NAME } from '@/config';
 import Link from 'next/link';
@@ -73,9 +73,11 @@ export const Header = ({ lang }: HeaderProps) => {
 
         {/* Mobile Menu and User Section */}
         <Flex align="center" gap={16}>
-          <SignedOut>
-            <SignInCustomButton lang={lang} variant="outline" color="white" />
-          </SignedOut>
+          <Box display={{ base: 'none', md: 'block' }}>
+            <SignedOut>
+              <SignInCustomButton lang={lang} variant="outline" color="white" />
+            </SignedOut>
+          </Box>
           <SignedIn>
             <UserBtn lang={lang} />
           </SignedIn>
@@ -110,6 +112,14 @@ export const Header = ({ lang }: HeaderProps) => {
             backgroundColor: 'black', // Czarny kolor tła dla Drawer
             paddingTop: '20px', // Padding od góry
           },
+          header: {
+            color: 'black', // Czarny kolor tekstu tytułu
+          },
+          title: {
+            color: 'black', // Jeśli tylko tytuł ma mieć inny kolor
+            fontSize: '1.25rem', // Możesz dostosować rozmiar czcionki
+            fontWeight: 700, // Opcjonalnie pogrubienie
+          },
         }}
         overlayProps={{
           opacity: 0.55,
@@ -118,6 +128,11 @@ export const Header = ({ lang }: HeaderProps) => {
         withCloseButton
       >
         <Stack>
+          <Box mt={20} w={'100%'}>
+            <SignedOut>
+              <SignInCustomButton lang={lang} variant="outline" color="white" />
+            </SignedOut>
+          </Box>
           <Link
             href={Routes.home}
             onClick={() => setOpened(false)}
