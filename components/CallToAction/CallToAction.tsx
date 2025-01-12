@@ -76,7 +76,7 @@ const CallToAction = () => {
           ) : (
             <Stack gap="sm">
               <Text c="white" size="sm" ta="center">
-                Pierwsze 100 osób ma szansę skorzystać z kodu rabatowego{' '}
+                Pierwsi kursanci mają szansę skorzystać z kodu rabatowego{' '}
                 <Text
                   component="span"
                   style={{ color: 'yellow', fontWeight: 'bold' }}
