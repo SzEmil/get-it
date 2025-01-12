@@ -6,14 +6,14 @@ import { transporter } from '../transporter';
 
 const sendEmail = async (
   lang: string = 'en',
-  { to = process.env.SERVICE_EMAIL_TARGET, html, attachments, subject }: Mail.Options
+  { to = process.env.SERVICE_EMAIL_TARGET, html, attachments, subject, from = 'ToKnowAI' }: Mail.Options
 ) => {
   const recipients = Array.isArray(to)
     ? to.filter(Boolean)
     : [to].filter(Boolean);
 
   const mailOptions: Mail.Options = {
-    from: 'ToKnowAI',
+    from,
     to: recipients as string | Mail.Address | (string | Mail.Address)[],
     subject: subject ?? `Ticket #${nanoid()}`,
     html,
@@ -25,7 +25,7 @@ const sendEmail = async (
     console.log('Error', e.message);
 
     await transporter.sendMail({
-      from: 'ToKnowAI',
+      from,
       to: process.env.SERVICE_EMAIL_TARGET,
       subject: 'Błąd wysyłania wiadomości. Wiadomość niedostarczona',
       html: `<p> wiaodmość niedostarczona </p>`,
