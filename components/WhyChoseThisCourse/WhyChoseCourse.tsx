@@ -18,8 +18,9 @@ import styles from './TrailerSection.module.css';
 import { Routes } from '@/constants/endpoints';
 import { Typography } from '../Typography/Typohraphy';
 import { FaRocket, FaBullseye, FaLightbulb } from 'react-icons/fa';
+import Link from 'next/link';
 
- const WhyChoseCourse = () => {
+const WhyChoseCourse = () => {
   return (
     <Container size="lg" my="100px">
       <Stack gap="xl" align="center">
@@ -129,8 +130,18 @@ import { FaRocket, FaBullseye, FaLightbulb } from 'react-icons/fa';
             </Text>
           </Card>
         </Flex>
+        <Button
+          size="lg"
+          color="themePrimary.0"
+          radius="md"
+          style={{ fontWeight: 'bold' }}
+          component={Link}
+          href={Routes.offer}
+        >
+          Zobacz
+        </Button>
       </Stack>
     </Container>
   );
 };
-export default WhyChoseCourse
+export default WhyChoseCourse;

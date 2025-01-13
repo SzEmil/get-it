@@ -1,3 +1,4 @@
+import { Routes } from '@/constants/endpoints';
 import {
   Container,
   Stack,
@@ -6,10 +7,12 @@ import {
   Box,
   ThemeIcon,
   Flex,
+  Button,
 } from '@mantine/core';
+import Link from 'next/link';
 import { FaShieldAlt, FaMoneyBillWave, FaRegSmile } from 'react-icons/fa';
 
- const Guarantee = () => {
+const Guarantee = () => {
   return (
     <Container size="lg" my="100px">
       <Stack gap="xl" align="center">
@@ -74,9 +77,19 @@ import { FaShieldAlt, FaMoneyBillWave, FaRegSmile } from 'react-icons/fa';
             </Text>
           </Stack>
         </Box>
+        <Button
+          size="lg"
+          color="themePrimary.0"
+          radius="md"
+          style={{ fontWeight: 'bold' }}
+          component={Link}
+          href={Routes.offer}
+        >
+          Przekonaj sie
+        </Button>
       </Stack>
     </Container>
   );
 };
 
-export default Guarantee
+export default Guarantee;

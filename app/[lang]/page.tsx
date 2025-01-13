@@ -44,12 +44,12 @@ export default function Home({ params: { lang } }: PageProps) {
       <Stack gap={10}>
         <Suspense fallback={<div></div>}>
           <TrailerSection />
+          <CallToAction />
           <WhyChoseCourse />
-          <WhatYouWillAchieve />
           <CourseProgram />
           <CourseDemo />
+          <WhatYouWillAchieve />
           <Guarantee />
-          <CallToAction />
           <FAQ />
         </Suspense>
       </Stack>

@@ -50,7 +50,7 @@ export const Footer = ({ lang }: FooterProps) => {
 
             <Flex direction={'column'} gap={10}>
               <Typography fz={18} fw={500}>
-                Karol Sapiołko Narevka
+              Karol Sapiołko ToKnowAI
               </Typography>
 
               <Flex direction={'row'} gap={5}>
@@ -63,23 +63,20 @@ export const Footer = ({ lang }: FooterProps) => {
               </Flex>
 
               <Flex direction={'row'} gap={5}>
-                <Typography fz={18} fw={500}>
-                  17-220 Narewka{' '}
-                </Typography>
-              </Flex>
-
-              <Flex direction={'row'} gap={5}>
-                <Typography fz={18} fw={500}>
-                  Hajnowska 1 A{' '}
-                </Typography>
-              </Flex>
-
-              <Flex direction={'row'} gap={5}>
                 <Typography fz={18} fw={400}>
                   email:
                 </Typography>
                 <Typography fz={18} fw={500}>
                   info@toknowai.pl
+                </Typography>
+              </Flex>
+
+              <Flex direction={'row'} gap={5}>
+                <Typography fz={18} fw={400}>
+                  tel:
+                </Typography>
+                <Typography fz={18} fw={500}>
+                +48 887 600 255
                 </Typography>
               </Flex>
 

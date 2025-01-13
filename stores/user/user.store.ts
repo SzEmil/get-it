@@ -3,35 +3,48 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-export type Privacy = {
-  isAnalytics: boolean;
+export type ServicePrivacy = {
+  isEnabled: boolean;
   expiriesOn: Date | null;
 };
 
 type UserStoreData = {
-  privacy: Privacy | null;
+  googleAnalytics: ServicePrivacy;
+  clarity: ServicePrivacy;
 };
 
-type OrderStoreActions = {
-  setIsAnalyticsAccepted: (privacy: Privacy) => void;
-  setAnalyticsDisabled: () => void;
+type UserStoreActions = {
+  setGoogleAnalyticsAccepted: (privacy: ServicePrivacy) => void;
+  setClarityAccepted: (privacy: ServicePrivacy) => void;
+  disableGoogleAnalytics: () => void;
+  disableClarity: () => void;
 };
 
 const initialStoreData: UserStoreData = {
-  privacy: null,
+  googleAnalytics: { isEnabled: false, expiriesOn: null },
+  clarity: { isEnabled: false, expiriesOn: null },
 };
 
-export type State = UserStoreData & OrderStoreActions;
+export type State = UserStoreData & UserStoreActions;
 
 export const useUserStore = create<State>()(
   persist(
-    (set, get) => ({
+    (set) => ({
       ...initialStoreData,
-      setIsAnalyticsAccepted: privacy => set({ privacy }),
-      setAnalyticsDisabled: () =>
+      setGoogleAnalyticsAccepted: (privacy) =>
+        set({ googleAnalytics: privacy }),
+      setClarityAccepted: (privacy) => set({ clarity: privacy }),
+      disableGoogleAnalytics: () =>
         set({
-          privacy: {
-            isAnalytics: false,
+          googleAnalytics: {
+            isEnabled: false,
+            expiriesOn: null,
+          },
+        }),
+      disableClarity: () =>
+        set({
+          clarity: {
+            isEnabled: false,
             expiriesOn: null,
           },
         }),

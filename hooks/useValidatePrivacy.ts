@@ -1,23 +1,27 @@
-import useStore from "../stores/store";
+'use client';
+
 import { useUserStore } from "../stores/user/user.store";
 
 export const useValidatePrivacy = () => {
-  const privacy = useStore(useUserStore, (state) => state.privacy);
-  if (privacy === undefined) return false;
-  if (privacy) {
-    if (privacy.isAnalytics) {
-      if (privacy.expiriesOn !== null) {
-        const today = new Date();
-        const expirationDate = new Date(privacy.expiriesOn);
+  const googleAnalytics = useUserStore((state) => state.googleAnalytics);
+  const clarity = useUserStore((state) => state.clarity);
 
-        if (expirationDate >= today) {
-          return true;
-        } else {
-          return null;
-        }
-      }
+  const isServiceValid = (service: { isEnabled: boolean; expiriesOn: Date | null }) => {
+    if (!service.isEnabled) return false;
+    if (service.expiriesOn) {
+      const today = new Date();
+      const expirationDate = new Date(service.expiriesOn);
+      return expirationDate >= today;
     }
     return false;
-  }
-  return null;
+  };
+
+  const isGoogleAnalyticsValid = isServiceValid(googleAnalytics);
+  const isClarityValid = isServiceValid(clarity);
+
+  // Jeśli oba stany są wyłączone lub wygasły, zwróć null (wyświetli baner)
+  if (!isGoogleAnalyticsValid && !isClarityValid) return null;
+
+  // Jeśli jakakolwiek usługa jest włączona i ważna, zwróć true
+  return true;
 };

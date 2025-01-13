@@ -1,7 +1,9 @@
-import { Container, Stack, Title, Text, Box, AspectRatio } from '@mantine/core';
+import { Container, Stack, Title, Text, Box, AspectRatio, Button } from '@mantine/core';
 import VideoPlayer from '../VideoPlayer/VideoPlayer';
 import { Typography } from '../Typography/Typohraphy';
 import styles from './TrailerSection.module.css';
+import Link from 'next/link';
+import { Routes } from '@/constants/endpoints';
 
 const CourseDemo = () => {
   return (
@@ -43,6 +45,16 @@ const CourseDemo = () => {
               }
             />
           </Box>
+          <Button
+          size="lg"
+          color="themePrimary.0"
+          radius="md"
+          style={{ fontWeight: 'bold' }}
+          component={Link}
+          href={Routes.offer}
+        >
+          Poznaj reszte kursu
+        </Button>
         </Stack>
       </Container>
     </Box>
