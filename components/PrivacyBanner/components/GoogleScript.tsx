@@ -14,8 +14,10 @@ export const GoogleAnalyticsScript = () => (
         {`  window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-
+            
+            gtag('config', 'AW-11550321972');
             gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_SIGNAL_ID}', { 'debug_mode':true });`}
+            
       </Script>
 
       <script

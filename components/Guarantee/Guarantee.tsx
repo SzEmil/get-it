@@ -77,7 +77,7 @@ const Guarantee = () => {
             </Text>
           </Stack>
         </Box>
-        <Button
+        {/* <Button
           size="lg"
           color="themePrimary.0"
           radius="md"
@@ -86,7 +86,7 @@ const Guarantee = () => {
           href={Routes.offer}
         >
           Przekonaj sie
-        </Button>
+        </Button> */}
       </Stack>
     </Container>
   );

@@ -16,7 +16,6 @@ export const POST = errorHandler(
       if (payment) {
         const invoice = await createInvoice(payment.id);
         await createUserProgressFromPayment(payment.id);
-        //send mail to karol i klient
       }
     }
     return NextResponse.json({ message: 'Success' });
