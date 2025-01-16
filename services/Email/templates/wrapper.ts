@@ -9,14 +9,6 @@ export const wrapper = (children: string) => ` <!doctype html>
     ${children}
 
     <div id="sig-container" style="margin-top: 15px; padding-top: 6px; border-top: 1px dashed #ddd">
-      <div style="float: left; margin: 2px 5px 5px 0; padding-right: 5px" id="photoWrapper">
-        <img
-          src="https://media.licdn.com/dms/image/D560BAQGYGCz11ISJ4g/company-logo_100_100/0/1707247281924?e=1719446400&amp;v=beta&amp;t=VrZXjFnUqX486h8INi8aIRh6gG737lGosR6lgReL8iE"
-          width="65px"
-          height="65px"
-          id="sigPhoto"
-        />
-      </div>
       <div style="margin-top: 0px; margin-left: 74px" id="sigDetailsWrapper">
         <p
           style="
@@ -47,7 +39,7 @@ export const wrapper = (children: string) => ` <!doctype html>
           "
           id="sigCompanyWrapper"
         >
-          <strong><span id="sigCompany">Minfdev sp. z o.o.</span></strong
+          <strong><span id="sigCompany">Karol Sapiołko ToKnowAI</span></strong
           ><br />
           <span
             ><a href="https://toknowai.pl" id="sigWebsite" style="color: #428bca"
