@@ -60,7 +60,7 @@ const MyPaymentsList = ({ lang }: MyPaymentsListPropss) => {
       mah={700}
       style={{ overflow: 'scroll' }}
     >
-      <Button onClick={handleTestInvoice}>Wyslij fakture o id 8</Button>
+      {/* <Button onClick={handleTestInvoice}>Wyslij fakture o id 8</Button> */}
       {loading ? (
         <Center w={'100%'}>
           <Loader mt={50} />
