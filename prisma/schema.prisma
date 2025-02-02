@@ -129,8 +129,8 @@ model Invoice {
   buyer_NIP           String  
   buyer_country       String
 
-  bank_name           String?    @default("mbank")
-  bank_account        String?    @default("661140 2004 0000 3502 7459 8267")
+  bank_name           String?    @default("Alior Bank")
+  bank_account        String?    @default("32249000050000453000447452")
   bank_swift          String?    
  
   price               Float

@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Invoice" ALTER COLUMN "bank_name" SET DEFAULT 'Alior Bank',
+ALTER COLUMN "bank_account" SET DEFAULT '32249000050000453000447452';

@@ -74,10 +74,9 @@ export const generateVATInvoicePdfLib = async (
     'zl-words zl-full gr-words gr-short'
   );
 
-  const soldDate = formatInvoiceDate(invoice.sold_date)
+  const soldDate = formatInvoiceDate(invoice.sold_date);
 
-  const paymentDate = formatInvoiceDate(invoice.payment_date)
-
+  const paymentDate = formatInvoiceDate(invoice.payment_date);
 
   replaceVATInvoicePlaceholders(INVOICE_TEMPLATE, invoice);
 
@@ -341,7 +340,10 @@ export const generateVATInvoicePdfLib = async (
   const colGap = 100; // np. 80 pt odstępu
   const rightColX = leftColX + colGap;
 
-  const sellerNIP = invoice.seller_NIP && invoice.seller_NIP.trim() !== '' ? invoice.seller_NIP : 'Brak'
+  const sellerNIP =
+    invoice.seller_NIP && invoice.seller_NIP.trim() !== ''
+      ? invoice.seller_NIP
+      : 'Brak';
 
   page.drawText('NIP:', {
     x: leftColX,
@@ -463,7 +465,10 @@ export const generateVATInvoicePdfLib = async (
   buyerBoxY -= infoFontSize + 4;
 
   // NIP
-  const buyerNIP = invoice.buyer_NIP && invoice.buyer_NIP.trim() !== '' ? invoice.buyer_NIP : 'Brak'
+  const buyerNIP =
+    invoice.buyer_NIP && invoice.buyer_NIP.trim() !== ''
+      ? invoice.buyer_NIP
+      : 'Brak';
   page.drawText('NIP:', {
     x: buyerBoxX,
     y: buyerBoxY,
@@ -497,7 +502,7 @@ export const generateVATInvoicePdfLib = async (
   //   Lp. / Nazwa towaru / Jednostka miary / Ilość / Cena / Wartość
   // Mamy 6 kolumn, z dość ciasną szerokością. Ustalmy w miarę logiczny podział:
 
-  const colWidths = [30, 180, 60, 40, 70, 40, 75];
+  const colWidths = [30, 180, 60, 30, 60, 30, 40, 65];
   // Suma = 30+190+60+40+70+70 = 460, a my mamy wewnątrz ~ (innerBoxWidth=495).
   // Starczy, plus jakieś wcięcie.
 
@@ -513,6 +518,7 @@ export const generateVATInvoicePdfLib = async (
     'Ilość',
     'Kwota Netto',
     'VAT',
+    'Kwota Vat',
     'Kwota Brutto',
   ];
 
@@ -542,7 +548,14 @@ export const generateVATInvoicePdfLib = async (
   // Tworzymy ten wiersz:
   colX = tableStartX;
 
-  const net = invoice.price * (1 - 0.23);
+  const taxRate = invoice.tax / 100;
+
+  // Obliczamy netto (zaokrąglamy wedle potrzeb - tutaj do 2 miejsc):
+  const net = invoice.price / (1 + taxRate);
+  
+  // Obliczamy VAT (różnica brutto - netto):
+  const vatPrice = invoice.price - net;
+  
   const rowData = [
     '1',
     invoice.product_name,
@@ -550,6 +563,7 @@ export const generateVATInvoicePdfLib = async (
     '1',
     `${net.toFixed(2)} ${invoice.currency}`,
     `${invoice.tax} %`,
+    `${vatPrice.toFixed(2)} ${invoice.currency}`,
     `${invoice.price} ${invoice.currency}`,
   ];
   for (let i = 0; i < rowData.length; i++) {
@@ -649,13 +663,22 @@ export const generateVATInvoicePdfLib = async (
   // Rysujemy tę czarną ramkę z zaokrąglonymi rogami
   page.drawRectangle({
     x: innerBoxX,
-    y: cursorY+30,
+    y: cursorY + 30,
     width: innerBoxWidth,
-    height: innerBoxHeight-30,
+    height: innerBoxHeight - 30,
     borderColor: rgb(0, 0, 0),
     borderWidth: 2,
     borderLineCap: LineCapStyle.Round,
   });
+
+  const paidLabelY = cursorY - 15; // odsunięcie w dół o 15 punktów (możesz dostosować)
+  page.drawText('Zapłacone w całości', {
+    x: tableStartX,
+    y: paidLabelY,
+    font: fontBold, // lub fontRegular
+    size: 10,
+  });
+  cursorY = paidLabelY - 10;
 
   // Ostatecznie "containerHeight" to od containerY do bieżącego cursorY
   containerHeight = containerY - cursorY + 20; // bo mieliśmy początkowy "padding:20" w DIV
