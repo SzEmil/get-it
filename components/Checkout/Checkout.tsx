@@ -94,9 +94,9 @@ const Checkout = ({ lang, offer, userId }: CheckoutProps) => {
           couponCode,
         };
 
-        // const data = await createOrder(orderData);
-        // if (data.data) router.push(data.data?.paymentUrl);
-         notify.onErrorMessage('Płatności są obecnie nieaktywne. Przerwa techniczna.');
+        const data = await createOrder(orderData);
+        if (data.data) router.push(data.data?.paymentUrl);
+        //  notify.onErrorMessage('Płatności są obecnie nieaktywne. Przerwa techniczna.');
       } finally {
         setIsSubmmiting(false);
       }

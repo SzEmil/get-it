@@ -40,6 +40,11 @@
   z-index: 10;
   opacity: 1;
   animation: sloganWrapperShow 1000ms ease;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .sloganWrapper::before {
@@ -49,11 +54,11 @@
   width: 100%;
   aspect-ratio: 1 / 1;
 
-  max-width: 550px;
-  max-height: 550px;
+  max-width: 850px;
+  max-height: 850px;
   border-radius: 50%;
   background-color: rgba(255, 255, 255, 0.05);
-  top: -35%;
+  top: -25%;
   left: 50%;
   z-index: 0;
   transform: translateX(-50%);
@@ -70,7 +75,7 @@
 
   /* Media queries dla tablet i mobile */
   @media (max-width: 1024px) {
-    top: -35%; /* Wersja tablet */
+    top: -25%; /* Wersja tablet */
   }
 
   @media (max-width: 768px) {

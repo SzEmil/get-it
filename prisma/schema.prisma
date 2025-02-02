@@ -143,6 +143,8 @@ model Invoice {
   sold_date           DateTime
   exchange_rate       Float? 
   exchange_rate_date  DateTime?
+  tax                 Int         @default(23)
+  variant              InviceVariant @default(REGULAR)
 
   type                InvoiceType
 
@@ -152,6 +154,10 @@ model Invoice {
   payment             Payment   @relation("PaymentInvoices", fields: [paymentId], references: [id], onDelete: Cascade)
 }
 
+enum InviceVariant {
+  VAT
+  REGULAR
+}
 // Definicja enum dla invoice_type
 enum InvoiceType {
   PERSONAL

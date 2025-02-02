@@ -4,74 +4,86 @@ import { FormatResponse } from './response';
 import prisma from '../../prisma/client';
 import sendEmail from '@/services/Email/operations/sendEmail';
 import { generateInvoicePdfLib } from '@/services/pdf/generatePdf';
+import { InviceVariant } from '@prisma/client';
+import { generateVATInvoicePdfLib } from '@/services/pdf/generateInvoiceVatPdf';
 
-export const createInvoice = FormatResponse(async (paymentId: number) => {
-  const payment = await prisma.payment.findUnique({
-    where: { id: paymentId },
-    include: { courses: true },
-  });
+export const createInvoice =
+  // FormatResponse(
+  async (paymentId: number) => {
+    const payment = await prisma.payment.findUnique({
+      where: { id: paymentId },
+      include: { courses: true },
+    });
 
-  if (!payment) {
-    throw new Error(`Payment with ID ${paymentId} not found`);
-  }
+    if (!payment) {
+      throw new Error(`Payment with ID ${paymentId} not found`);
+    }
 
-  const existingInvoicesCount = await prisma.invoice.count();
+    const existingInvoicesCount = await prisma.invoice.count({
+      where: { variant: InviceVariant.VAT },
+    });
 
-  const currentYear = new Date().getFullYear();
-  const invoiceNumber = `AI/${existingInvoicesCount + 1}/${currentYear}`;
+    const currentYear = new Date().getFullYear();
+    const invoiceNumber = `AIv2/${existingInvoicesCount + 1}/${currentYear}`;
 
-  const invoice = await prisma.invoice.create({
-    data: {
-      invoice_number: invoiceNumber,
-      buyer_name:
-        payment.invoice_name || `${payment.firstName} ${payment.lastName}`,
-      buyer_address: payment.invoice_address || payment.address,
-      buyer_postalCode: payment.invoice_postal_code || payment.postalCode,
-      buyer_town: payment.invoice_town || payment.city,
-      buyer_NIP: payment.invoice_nip || '',
-      buyer_country: payment.invoice_country || 'Polska',
-      price: payment.amount,
-      currency: payment.currency,
-      paymentId: payment.id,
-      paymentMethod: payment.paymentMethod || 'Nieznany',
-      payment_name: `${payment.firstName} ${payment.lastName}`,
-      payment_date: payment.createdAt,
-      sold_date: payment.createdAt,
-      type: payment.invoice_type,
-
-      product_id: payment.courses[0].courseId,
-      product_name: payment.courses[0].courseName,
-    },
-  });
-
-  const pdfBuffer = await generateInvoicePdfLib(invoice);
-  //   console.log(payment.email);
-  await sendEmail('pl', {
-    to: payment.email,
-    subject: `Faktura potwierdzenia opłaty za produkt: ${invoice.product_name}`,
-    html: `<p> Dziekujemy za zakup. Twoja płatność o id ${payment.paymentSessionId} zostałą zakończona pomyślnie. W załączniku znajdziesz fakturę. </p>`,
-    attachments: [
-      {
-        filename: `${invoice.invoice_number}.pdf`,
-        content: pdfBuffer,
+    const invoice = await prisma.invoice.create({
+      data: {
+        invoice_number: invoiceNumber,
+        buyer_name:
+          payment.invoice_name || `${payment.firstName} ${payment.lastName}`,
+        buyer_address: payment.invoice_address || payment.address,
+        buyer_postalCode: payment.invoice_postal_code || payment.postalCode,
+        buyer_town: payment.invoice_town || payment.city,
+        buyer_NIP: payment.invoice_nip || '',
+        buyer_country: payment.invoice_country || 'Polska',
+        price: payment.amount,
+        currency: payment.currency,
+        paymentId: payment.id,
+        paymentMethod: payment.paymentMethod || 'Nieznany',
+        payment_name: `${payment.firstName} ${payment.lastName}`,
+        payment_date: payment.createdAt,
+        sold_date: payment.createdAt,
+        type: payment.invoice_type,
+        variant: InviceVariant.VAT,
+        product_id: payment.courses[0].courseId,
+        product_name: payment.courses[0].courseName,
       },
-    ],
-  });
+    });
 
-  await sendEmail('pl', {
-    to: "info@toknowai.pl",
-    subject: `Faktura potwierdzenia opłaty za produkt: ${invoice.product_name} użytkownika ${payment.firstName} ${payment.lastName} ${payment.email}`,
-    html: `<p> Użytkownik o adresie email: ${payment.email} zakupił produkt ${payment.courses[0].courseName}. Płatność o id ${payment.paymentSessionId} zostałą zakończona pomyślnie. W załączniku znajduje się faktura. </p>`,
-    attachments: [
-      {
-        filename: `${invoice.invoice_number}.pdf`,
-        content: pdfBuffer,
-      },
-    ],
-  });
+    let pdfBuffer;
+    if (invoice.variant === InviceVariant.REGULAR) {
+      pdfBuffer = await generateInvoicePdfLib(invoice);
+    } else {
+      pdfBuffer = await generateVATInvoicePdfLib(invoice);
+    }
+    //   console.log(payment.email);
+    await sendEmail('pl', {
+      to: payment.email,
+      subject: `Faktura potwierdzenia opłaty za produkt: ${invoice.product_name}`,
+      html: `<p> Dziekujemy za zakup. Twoja płatność o id ${payment.paymentSessionId} zostałą zakończona pomyślnie. W załączniku znajdziesz fakturę. </p>`,
+      attachments: [
+        {
+          filename: `${invoice.invoice_number}.pdf`,
+          content: pdfBuffer,
+        },
+      ],
+    });
 
-  return invoice;
-});
+    // await sendEmail('pl', {
+    //   to: 'info@toknowai.pl',
+    //   subject: `Faktura potwierdzenia opłaty za produkt: ${invoice.product_name} użytkownika ${payment.firstName} ${payment.lastName} ${payment.email}`,
+    //   html: `<p> Użytkownik o adresie email: ${payment.email} zakupił produkt ${payment.courses[0].courseName}. Płatność o id ${payment.paymentSessionId} zostałą zakończona pomyślnie. W załączniku znajduje się faktura. </p>`,
+    //   attachments: [
+    //     {
+    //       filename: `${invoice.invoice_number}.pdf`,
+    //       content: pdfBuffer,
+    //     },
+    //   ],
+    // });
+
+    return invoice;
+  };
+// );
 
 export const sendInvoiceById = FormatResponse(
   async ({ invoiceId, email }: { invoiceId: number; email: string }) => {
@@ -85,7 +97,12 @@ export const sendInvoiceById = FormatResponse(
     }
 
     // Wygeneruj plik PDF faktury
-    const pdfBuffer = await generateInvoicePdfLib(invoice);
+    let pdfBuffer;
+    if (invoice.variant === InviceVariant.REGULAR) {
+      pdfBuffer = await generateInvoicePdfLib(invoice);
+    } else {
+      pdfBuffer = await generateVATInvoicePdfLib(invoice);
+    }
 
     // Wyślij fakturę jako załącznik e-mail
     await sendEmail('pl', {
@@ -117,7 +134,13 @@ export const handleDownloadInvoice = async (invoiceId: number) => {
     }
 
     // Wygeneruj plik PDF faktury
-    const pdfBuffer = await generateInvoicePdfLib(invoice);
+    let pdfBuffer;
+    if (invoice.variant === InviceVariant.REGULAR) {
+      pdfBuffer = await generateInvoicePdfLib(invoice);
+    } else {
+      pdfBuffer = await generateVATInvoicePdfLib(invoice);
+    }
+
     return {
       base64: pdfBuffer.toString('base64'),
       fileName: `${invoice.invoice_number}.pdf`,

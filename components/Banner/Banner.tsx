@@ -78,23 +78,26 @@ const Banner = ({ lang }: BannerProps) => {
                 textAlign: 'center',
                 marginBottom: '2rem',
                 zIndex: 10,
+                maxWidth: "600px"
               }}
               fz={{ base: 18, sm: 24 }}
             >
-              Zostań ekspertem AI bez pisania kodu!
+              Stwórz aplikacje AI dopasowane do Twojej branży: księgowość,
+              marketing, biznes i wiele więcej.
             </Title>
             <Title
               style={{
                 color: 'white',
                 textAlign: 'center',
-                maxWidth: '650px',
+                maxWidth: '750px',
                 zIndex: 10,
               }}
               fw={900}
               fz={{ base: 28, sm: 48, md: 48 }}
               mb={2}
             >
-              Twórz potężne aplikacje oparte na Flowise AI — szybko, intuicyjnie
+              Zostań ekspertem AI bez pisania kodu! Odkryj, jak Flowise AI może
+              usprawnić Twoje procesy w księgowości, marketingu i zarządzaniu
             </Title>
             <Flex
               style={{
@@ -115,7 +118,7 @@ const Banner = ({ lang }: BannerProps) => {
                   color="themePrimary.0"
                   onClick={() => router.push('/offer')}
                 >
-                  {'Rozpocznij'}
+                  {'Rozpocznij teraz'}
                 </Button>
               ) : (
                 <SignInCustomButton lang={lang} />
@@ -129,7 +132,7 @@ const Banner = ({ lang }: BannerProps) => {
                 component={Link}
                 href="#courseDemo"
               >
-                Zobacz przykładową lekcję
+                Zobacz zastosowanie dla Twojej branży
               </Button>
             </Flex>
           </Box>
