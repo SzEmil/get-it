@@ -69,17 +69,17 @@ export const createInvoice =
       ],
     });
 
-    // await sendEmail('pl', {
-    //   to: 'info@toknowai.pl',
-    //   subject: `Faktura potwierdzenia opłaty za produkt: ${invoice.product_name} użytkownika ${payment.firstName} ${payment.lastName} ${payment.email}`,
-    //   html: `<p> Użytkownik o adresie email: ${payment.email} zakupił produkt ${payment.courses[0].courseName}. Płatność o id ${payment.paymentSessionId} zostałą zakończona pomyślnie. W załączniku znajduje się faktura. </p>`,
-    //   attachments: [
-    //     {
-    //       filename: `${invoice.invoice_number}.pdf`,
-    //       content: pdfBuffer,
-    //     },
-    //   ],
-    // });
+    await sendEmail('pl', {
+      to: 'info@toknowai.pl',
+      subject: `Faktura potwierdzenia opłaty za produkt: ${invoice.product_name} użytkownika ${payment.firstName} ${payment.lastName} ${payment.email}`,
+      html: `<p> Użytkownik o adresie email: ${payment.email} zakupił produkt ${payment.courses[0].courseName}. Płatność o id ${payment.paymentSessionId} zostałą zakończona pomyślnie. W załączniku znajduje się faktura. </p>`,
+      attachments: [
+        {
+          filename: `${invoice.invoice_number}.pdf`,
+          content: pdfBuffer,
+        },
+      ],
+    });
 
     return invoice;
   };
