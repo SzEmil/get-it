@@ -12,3 +12,7 @@ body {
   color: white;
   background-color: black;
 }
+
+.ql-editor {
+  color: black !important;
+}

@@ -12,7 +12,8 @@ export enum Routes {
   offer = '/offer',
   myCourses = '/my-courses',
   profile = '/profile',
-  contact = "/contact"
+  contact = '/contact',
+  admin = '/admin',
 }
 
 export enum SocialLinks {

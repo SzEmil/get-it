@@ -58,7 +58,7 @@
   max-height: 850px;
   border-radius: 50%;
   background-color: rgba(255, 255, 255, 0.05);
-  top: -25%;
+  top: -55%;
   left: 50%;
   z-index: 0;
   transform: translateX(-50%);
@@ -75,7 +75,7 @@
 
   /* Media queries dla tablet i mobile */
   @media (max-width: 1024px) {
-    top: -25%; /* Wersja tablet */
+    top: -55%; /* Wersja tablet */
   }
 
   @media (max-width: 768px) {

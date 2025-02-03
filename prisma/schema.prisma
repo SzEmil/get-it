@@ -26,11 +26,16 @@ model User {
   courses  Course[]  // Implicit many-to-many relation with Course
   progress UserProgress[]
 
+   role        Role     @default(USER) // Nowe pole dla ról użytkownika
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
-
+enum Role {
+  USER
+  ADMIN
+}
 
 model Course {
   id          Int          @id @default(autoincrement())
@@ -221,6 +226,18 @@ model UsedCoupon {
 
   createdAt   DateTime   @default(now())      // Data wykorzystania kuponu
 }
+
+model BlogPost {
+  id          Int       @id @default(autoincrement())
+
+  title   String
+   img       String?  // Pole obrazka, domyślnie null
+  html      String?  // Pole treści HTML, domyślnie null
+ 
+  createdAt   DateTime   @default(now()) 
+   updatedAt     DateTime @updatedAt
+}
+
 
 enum PaymentStatus {
   AWAITING

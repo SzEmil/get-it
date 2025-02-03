@@ -70,6 +70,8 @@ export const MyPaymentsItem = ({ lang, payment }: MyPaymentsItemProps) => {
           <Select
             label="Wybierz fakturę"
             placeholder="Faktura"
+            c={"black"}
+            color='black'
             data={payment.invoices.map(invoice => ({
               value: invoice.id.toString(),
               label: `Faktura ${invoice.invoice_number}`,

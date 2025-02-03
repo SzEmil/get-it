@@ -13,6 +13,8 @@ import {
 } from '@mantine/core';
 import Link from 'next/link';
 import { Routes } from '@/constants/endpoints';
+import { Role, User } from '@prisma/client';
+import { getCurrentUser } from '@/lib/actions/user.actions';
 
 type UserBtnProps = {
   lang: string;
@@ -20,6 +22,29 @@ type UserBtnProps = {
 
 export const UserBtn = ({ lang }: UserBtnProps) => {
   const { user } = useUser();
+
+  const [userData, setUserData] = useState<User | null>(null);
+  const [userLoading, setUserLoading] = useState(false);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      if (!user) return;
+
+      setUserLoading(true);
+      try {
+        const userResponse = await getCurrentUser(user.id);
+        if (userResponse) {
+          setUserData(userResponse);
+        }
+      } catch (error) {
+        console.error('Błąd podczas pobierania użytkownika:', error);
+      } finally {
+        setUserLoading(false);
+      }
+    };
+
+    fetchUserData();
+  }, [user]);
 
   return (
     <Popover width={200} position="bottom" withArrow shadow="md">
@@ -46,6 +71,14 @@ export const UserBtn = ({ lang }: UserBtnProps) => {
               Moje kursy
             </Button>
           </Link>
+
+          {!userLoading && userData && userData.role === Role.ADMIN && (
+            <Link href={Routes.admin}>
+              <Button variant="light" fullWidth>
+                Dashboard
+              </Button>
+            </Link>
+          )}
 
           <SignOutButton>
             <Button variant="outline" color="red" fullWidth>
