@@ -6,7 +6,7 @@ a:hover {
   color: var(--mantine-color-themePrimary-0);
 }
 p {
-  color: white;
+  color: black;
 }
 body {
   color: white;
@@ -14,5 +14,9 @@ body {
 }
 
 .ql-editor {
+  color: black !important;
+}
+
+.custom-quill .ql-editor {
   color: black !important;
 }

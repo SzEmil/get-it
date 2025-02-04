@@ -109,12 +109,17 @@ export const LessonViewer = ({
 
           {/* Renderowanie HTML z klasą dla stylów */}
           {detail.description && isArray(detail.description) ? (
-            <Box component="ul" className={styles.descriptionContainer}>
+            <Box
+              component="ul"
+              className={styles.descriptionContainer}
+              style={{ color: 'white' }}
+            >
               {detail.description.map((item, index) => (
                 <Box key={index} component="li">
                   <div
                     className={styles.descriptionContainer}
-                    dangerouslySetInnerHTML={{ __html: item }} // Renderowanie HTML dla każdego elementu tablicy
+                    style={{ color: 'white' }}
+                    dangerouslySetInnerHTML={{ __html: item }}
                   />
                 </Box>
               ))}

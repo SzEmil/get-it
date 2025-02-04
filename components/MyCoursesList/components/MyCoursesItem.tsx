@@ -41,7 +41,10 @@ export const MyCoursesItem = ({
   const progressPercentage =
     totalLessons > 0 ? Math.round((completedLessons / totalLessons) * 100) : 0;
 
-     const imageUrl = course.images.length > 0 ?`/assets/coursesAssets/${course.id}/${course.images[0]}` : null
+  const imageUrl =
+    course.images.length > 0
+      ? `/assets/coursesAssets/${course.id}/${course.images[0]}`
+      : null;
   return (
     <li
       key={nanoid()}
@@ -62,7 +65,7 @@ export const MyCoursesItem = ({
           <div className={`${css.spanLine} ${css.lineVisible}`}></div>
           <p className={css.description}>{course.description}</p>
           <Typography>Co znajdziesz w kursie?</Typography>
-          <List c={"white"}>
+          <List c={'white'}>
             <ListItem>
               Filmy instruktażowe: Każdy krok dokładnie wyjaśniony.
             </ListItem>
@@ -85,7 +88,7 @@ export const MyCoursesItem = ({
 
             <div className={css.statsBox}>
               <TbProgressCheck size={24} />
-              <p className={css.frame}>
+              <p className={css.frame} style={{ color: 'white' }}>
                 Ukończono {completedLessons}/{totalLessons} (
                 {progressPercentage}%)
               </p>
