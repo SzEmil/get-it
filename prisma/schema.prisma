@@ -233,7 +233,7 @@ model BlogPost {
   title   String
    img       String?  // Pole obrazka, domyślnie null
   html      String?  // Pole treści HTML, domyślnie null
- 
+ isPublic   Boolean @default(false)
   createdAt   DateTime   @default(now()) 
    updatedAt     DateTime @updatedAt
 }

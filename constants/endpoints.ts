@@ -14,6 +14,7 @@ export enum Routes {
   profile = '/profile',
   contact = '/contact',
   admin = '/admin',
+  blog='/blog'
 }
 
 export enum SocialLinks {

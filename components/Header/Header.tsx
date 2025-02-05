@@ -144,6 +144,16 @@ export const Header = ({ lang }: HeaderProps) => {
             Start
           </Link>
           <Link
+            href={Routes.blog}
+            onClick={() => setOpened(false)}
+            style={{
+              color: 'white', // Białe linki
+              textDecoration: 'none', // Usuń podkreślenie
+            }}
+          >
+            Blog
+          </Link>
+          <Link
             href={Routes.offer}
             onClick={() => setOpened(false)}
             style={{

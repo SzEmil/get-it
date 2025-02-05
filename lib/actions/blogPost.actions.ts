@@ -5,8 +5,9 @@ import * as DB from '@prisma/client';
 import { FormatResponse } from './response';
 
 // Pobranie wszystkich postów
-export async function getAllBlogPosts() {
+export async function getAllBlogPosts(isPublic?: boolean) {
     return await prisma.blogPost.findMany({
+      where:{isPublic},
       orderBy: { createdAt: "desc" },
     });
   }
@@ -19,24 +20,26 @@ export async function getAllBlogPosts() {
   }
   
   // Tworzenie nowego posta
-  export async function createBlogPost(title: string, img?: string, html?: string) {
+  export async function createBlogPost(title: string,isPublic: boolean, img?: string, html?: string, ) {
     return await prisma.blogPost.create({
       data: {
         title,
         img,
         html,
+        isPublic
       },
     });
   }
   
   // Aktualizacja posta po ID
-  export async function updateBlogPost(id: number, title?: string, img?: string, html?: string) {
+  export async function updateBlogPost(id: number,isPublic: boolean, title?: string, img?: string, html?: string) {
     return await prisma.blogPost.update({
       where: { id },
       data: {
         title,
         img,
         html,
+        isPublic,
         updatedAt: new Date(),
       },
     });

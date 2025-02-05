@@ -13,6 +13,7 @@ export const HeaderNavigation = ({ lang }: HeaderNavigationProps) => {
   return (
     <nav className={css.navigation}>
       <Link href={Routes.home}>Start</Link>
+      <Link href={Routes.blog}>Blog</Link>
       <Link href={Routes.offer}>Oferta</Link>
       <Link href={Routes.contact}>Kontakt</Link>
     </nav>

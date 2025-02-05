@@ -33,6 +33,7 @@
     "@types/mdx": "^2.0.13",
     "@types/nodemailer": "^6.4.15",
     "@vercel/speed-insights": "^1.1.0",
+    "dayjs": "^1.11.13",
     "decimal.js-light": "^2.5.1",
     "embla-carousel-react": "^8.0.4",
     "file-saver": "^2.0.5",
